@@ -247,11 +247,11 @@
     .topbar-user {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 4px 12px;
-      border: 1px solid var(--border);
+      gap: 12px;
+      padding: 2px 12px;
+      border: 1px solid #e0e0e0;
       border-radius: 5px;
-      height: 46px;
+      height: 48px;
       background: white;
       cursor: pointer;
       transition: border-color 0.15s;
@@ -261,19 +261,27 @@
     .user-avatar {
       width: 30px; height: 30px;
       border-radius: 50%;
-      background: var(--primary);
+      background: linear-gradient(135deg, #4fc3f7 0%, #80deea 100%);
       display: flex; align-items: center; justify-content: center;
       color: white;
-      font-size: 11px; font-weight: 600;
+      font-size: 10px; font-weight: 700;
       flex-shrink: 0;
+      overflow: hidden;
     }
 
-    .topbar-brand {
+    .topbar-wordmark {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .topbar-wordmark-text {
       font-family: var(--font-inter);
       font-weight: 700;
-      font-size: 12px;
-      color: var(--primary);
-      letter-spacing: 0.5px;
+      font-size: 13px;
+      letter-spacing: 1px;
+      color: #212C58;
+      white-space: nowrap;
     }
 
     /* ============================================================
@@ -2443,8 +2451,21 @@
           </svg>
         </button>
         <div class="topbar-user" role="button" tabindex="0" aria-label="User menu">
-          <div class="user-avatar" aria-hidden="true">JN</div>
-          <span class="topbar-brand">INNOVAPPTIVE</span>
+          <div class="user-avatar" aria-hidden="true">
+            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+              <circle cx="15" cy="11" r="6" fill="rgba(255,255,255,0.7)"/>
+              <ellipse cx="15" cy="26" rx="10" ry="7" fill="rgba(255,255,255,0.7)"/>
+            </svg>
+          </div>
+          <div class="topbar-wordmark">
+            <svg width="20" height="20" viewBox="0 0 33.196 32" fill="none" aria-hidden="true">
+              <path d="M 0.083 9.562 L 16.670 0 L 32.999 9.390 L 29.108 11.763 L 16.753 4.401 L 0 13.791 Z" fill="#212C58"/>
+              <path d="M 0.083 17.090 L 16.670 7.531 L 26.398 13.285 L 22.507 15.399 L 16.753 11.932 L 0 21.322 Z" fill="#212C58"/>
+              <path d="M 33.113 22.634 L 16.863 32 L 0.861 22.799 L 4.676 20.478 L 16.780 27.689 L 33.196 18.488 Z" fill="#212C58"/>
+              <path d="M 32.913 15.062 L 16.329 24.621 L 6.601 18.870 L 10.492 16.752 L 16.247 20.223 L 32.999 10.830 Z" fill="#6CB8E7"/>
+            </svg>
+            <span class="topbar-wordmark-text">INNOVAPPTIVE</span>
+          </div>
         </div>
       </div>
     </header>
