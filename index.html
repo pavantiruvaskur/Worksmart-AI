@@ -1979,6 +1979,47 @@
     }
 
   /* ================================================================
+     MORE MENU DROPDOWN
+  ================================================================ */
+  .more-menu-wrap { position:relative; display:inline-flex; }
+  .more-dropdown {
+    position:absolute; top:calc(100% + 6px); right:0; z-index:500;
+    background:white; border:1px solid #e2e4e9; border-radius:10px;
+    box-shadow:0 4px 16px rgba(0,0,0,.12); min-width:180px;
+    padding:6px 0; display:none; flex-direction:column;
+  }
+  .more-dropdown.open { display:flex; }
+  .more-dropdown-item {
+    display:flex; align-items:center; gap:10px; padding:9px 14px;
+    font-size:13px; color:#1b1b3c; cursor:pointer; background:none; border:none;
+    text-align:left; width:100%; transition:background .12s;
+  }
+  .more-dropdown-item:hover { background:#f4f4f6; }
+  .more-dropdown-item svg { flex-shrink:0; color:#525560; }
+  .more-dropdown-sep { height:1px; background:#f0f0f2; margin:4px 0; }
+
+  /* ================================================================
+     DATE FILTER DROPDOWN
+  ================================================================ */
+  .filter-btn-wrap { position:relative; display:inline-flex; }
+  .date-filter-dropdown {
+    position:absolute; top:calc(100% + 6px); right:0; z-index:500;
+    background:white; border:1px solid #e2e4e9; border-radius:10px;
+    box-shadow:0 4px 16px rgba(0,0,0,.12); min-width:164px;
+    padding:6px 0; display:none; flex-direction:column;
+  }
+  .date-filter-dropdown.open { display:flex; }
+  .dfd-item {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:9px 14px; font-size:13px; color:#1b1b3c;
+    cursor:pointer; background:none; border:none; text-align:left; width:100%;
+    transition:background .12s;
+  }
+  .dfd-item:hover { background:#f4f4f6; }
+  .dfd-item.active { color:#3d5afe; font-weight:500; }
+  .dfd-item.active::after { content:'✓'; font-size:12px; color:#3d5afe; }
+
+  /* ================================================================
      UPLOAD ICON BUTTON
   ================================================================ */
   .btn-upload-icon {
@@ -2208,90 +2249,79 @@
 
     <nav class="nav-section" aria-label="Module navigation">
 
-      <!-- Analytics -->
+      <!-- Operator Rounds -->
       <div>
-        <div class="nav-item" tabindex="0" role="button" aria-label="Analytics" aria-expanded="false" aria-controls="analytics-sub" onclick="toggleSubNav('analytics-sub',this,'analytics-chev')">
-          <div class="nav-icon">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-              <rect x="1.5" y="7" width="2" height="5.5" rx="0.5" fill="#666975"/>
-              <rect x="4.5" y="4.5" width="2" height="8" rx="0.5" fill="#666975"/>
-              <rect x="7.5" y="2" width="2" height="10.5" rx="0.5" fill="#666975"/>
-              <rect x="10.5" y="5.5" width="2" height="7" rx="0.5" fill="#666975"/>
-            </svg>
-          </div>
-          <span class="nav-label">Analytics</span>
-          <span class="nav-chevron" id="analytics-chev" aria-hidden="true">›</span>
+        <div class="nav-item" tabindex="0" role="button" aria-label="Operator Rounds" aria-expanded="false" aria-controls="or-sub" onclick="toggleSubNav('or-sub',this,'or-chev')">
+          <div class="nav-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="5" stroke="#666975" stroke-width="1.3"/><path d="M7 4v3.5l2 1.5" stroke="#666975" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+          <span class="nav-label">Operator Rounds</span>
+          <span class="nav-chevron" id="or-chev" aria-hidden="true">›</span>
         </div>
-        <div class="collapsible" id="analytics-sub">
-          <div class="nav-sub">
-            <div class="nav-sub-item" tabindex="0" role="button">
-              <div class="nav-sub-divider"></div>
-              <span class="nav-sub-label">Reports</span>
-            </div>
-            <div class="nav-sub-item" tabindex="0" role="button">
-              <div class="nav-sub-divider"></div>
-              <span class="nav-sub-label">Dashboards</span>
-            </div>
-          </div>
-        </div>
+        <div class="collapsible" id="or-sub"><div class="nav-sub">
+          <div class="nav-sub-item" tabindex="0" role="button"><div class="nav-sub-divider"></div><span class="nav-sub-label">My Rounds</span></div>
+          <div class="nav-sub-item" tabindex="0" role="button"><div class="nav-sub-divider"></div><span class="nav-sub-label">Templates</span></div>
+        </div></div>
       </div>
 
-      <!-- Maintenance Control Center -->
-      <div class="nav-item" tabindex="0" role="button" aria-label="Maintenance Control Center" onclick="showInfoToast('Maintenance Control Center')">
-        <div class="nav-icon">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-            <circle cx="7" cy="7" r="5" stroke="#666975" stroke-width="1.3" fill="none"/>
-            <path d="M9.5 4.5L6 8l-1.5-1.5" stroke="#666975" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+      <!-- Shift Handover Report -->
+      <div>
+        <div class="nav-item" tabindex="0" role="button" aria-label="Shift Handover Report" aria-expanded="false" aria-controls="shr-sub" onclick="toggleSubNav('shr-sub',this,'shr-chev')">
+          <div class="nav-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><rect x="2" y="1.5" width="10" height="11" rx="1" stroke="#666975" stroke-width="1.3"/><path d="M4.5 5h5M4.5 7.5h5M4.5 10h3" stroke="#666975" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+          <span class="nav-label">Shift Handover Report</span>
+          <span class="nav-chevron" id="shr-chev" aria-hidden="true">›</span>
         </div>
-        <span class="nav-label">Maintenance Control Center</span>
+        <div class="collapsible" id="shr-sub"><div class="nav-sub">
+          <div class="nav-sub-item" tabindex="0" role="button"><div class="nav-sub-divider"></div><span class="nav-sub-label">Reports</span></div>
+        </div></div>
       </div>
 
       <!-- Digital Work Instructions -->
       <div class="nav-item" tabindex="0" role="button" aria-label="Digital Work Instructions" onclick="showInfoToast('Digital Work Instructions')">
-        <div class="nav-icon">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-            <rect x="2" y="1.5" width="8" height="10.5" rx="1" stroke="#666975" stroke-width="1.3" fill="none"/>
-            <path d="M4 5h4M4 7.5h4M4 10h2" stroke="#666975" stroke-width="1.2" stroke-linecap="round"/>
-          </svg>
-        </div>
+        <div class="nav-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><rect x="2" y="1.5" width="8" height="10.5" rx="1" stroke="#666975" stroke-width="1.3"/><path d="M4 5h4M4 7.5h4M4 10h2" stroke="#666975" stroke-width="1.2" stroke-linecap="round"/></svg></div>
         <span class="nav-label">Digital Work Instructions</span>
       </div>
 
-      <!-- User Management -->
+      <!-- Environment Health & Safety -->
       <div>
-        <div class="nav-item" tabindex="0" role="button" aria-label="User Management" aria-expanded="false" aria-controls="um-sub" onclick="toggleSubNav('um-sub',this,'um-chev')">
-          <div class="nav-icon">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-              <circle cx="7" cy="5" r="2.5" stroke="#666975" stroke-width="1.3" fill="none"/>
-              <path d="M2.5 12c0-2.5 2-4.5 4.5-4.5S11.5 9.5 11.5 12" stroke="#666975" stroke-width="1.3" fill="none" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <span class="nav-label">User Management</span>
-          <span class="nav-chevron" id="um-chev" aria-hidden="true">›</span>
+        <div class="nav-item" tabindex="0" role="button" aria-label="Environment Health &amp; Safety" aria-expanded="false" aria-controls="ehs-sub" onclick="toggleSubNav('ehs-sub',this,'ehs-chev')">
+          <div class="nav-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 1.5L2 4v4c0 2.5 2.2 4.8 5 5.5 2.8-.7 5-3 5-5.5V4L7 1.5Z" stroke="#666975" stroke-width="1.3"/></svg></div>
+          <span class="nav-label">Environment Health &amp; Safety</span>
+          <span class="nav-chevron" id="ehs-chev" aria-hidden="true">›</span>
         </div>
-        <div class="collapsible" id="um-sub">
-          <div class="nav-sub">
-            <div class="nav-sub-item" tabindex="0" role="button">
-              <div class="nav-sub-divider"></div>
-              <span class="nav-sub-label">Users</span>
-            </div>
-            <div class="nav-sub-item" tabindex="0" role="button">
-              <div class="nav-sub-divider"></div>
-              <span class="nav-sub-label">Roles</span>
-            </div>
-          </div>
+        <div class="collapsible" id="ehs-sub"><div class="nav-sub">
+          <div class="nav-sub-item" tabindex="0" role="button"><div class="nav-sub-divider"></div><span class="nav-sub-label">Incidents</span></div>
+          <div class="nav-sub-item" tabindex="0" role="button"><div class="nav-sub-divider"></div><span class="nav-sub-label">Inspections</span></div>
+        </div></div>
+      </div>
+
+      <!-- Maintenance -->
+      <div>
+        <div class="nav-item" tabindex="0" role="button" aria-label="Maintenance" aria-expanded="false" aria-controls="maint-sub" onclick="toggleSubNav('maint-sub',this,'maint-chev')">
+          <div class="nav-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M10.5 3.5a2.5 2.5 0 0 0-3.5 3.5L2.5 11.5" stroke="#666975" stroke-width="1.3" stroke-linecap="round"/><circle cx="10.5" cy="3.5" r="1" fill="#666975"/></svg></div>
+          <span class="nav-label">Maintenance</span>
+          <span class="nav-chevron" id="maint-chev" aria-hidden="true">›</span>
         </div>
+        <div class="collapsible" id="maint-sub"><div class="nav-sub">
+          <div class="nav-sub-item" tabindex="0" role="button"><div class="nav-sub-divider"></div><span class="nav-sub-label">Work Orders</span></div>
+          <div class="nav-sub-item" tabindex="0" role="button"><div class="nav-sub-divider"></div><span class="nav-sub-label">Equipment</span></div>
+        </div></div>
+      </div>
+
+      <!-- Spare Parts Control Center -->
+      <div>
+        <div class="nav-item" tabindex="0" role="button" aria-label="Spare Parts Control Center" aria-expanded="false" aria-controls="spcc-sub" onclick="toggleSubNav('spcc-sub',this,'spcc-chev')">
+          <div class="nav-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><rect x="1.5" y="5" width="11" height="7.5" rx="1" stroke="#666975" stroke-width="1.3"/><path d="M4.5 5V3.5a2.5 2.5 0 0 1 5 0V5" stroke="#666975" stroke-width="1.3"/></svg></div>
+          <span class="nav-label">Spare Parts Control Center</span>
+          <span class="nav-chevron" id="spcc-chev" aria-hidden="true">›</span>
+        </div>
+        <div class="collapsible" id="spcc-sub"><div class="nav-sub">
+          <div class="nav-sub-item" tabindex="0" role="button"><div class="nav-sub-divider"></div><span class="nav-sub-label">Inventory</span></div>
+        </div></div>
       </div>
 
       <!-- WorkSmart AI (expanded, active) -->
       <div>
         <div class="nav-item active" id="nav-worksmart" tabindex="0" role="button" aria-expanded="true" aria-controls="ws-sub" onclick="toggleSubNav('ws-sub',this,'ws-chev')">
-          <div class="nav-icon active">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-              <path d="M7 1L8.6 4.4H12.2L9.4 6.4L10.5 10L7 7.8L3.5 10L4.6 6.4L1.8 4.4H5.4L7 1Z" fill="#5252d4"/>
-            </svg>
-          </div>
+          <div class="nav-icon active"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 1L8.6 4.4H12.2L9.4 6.4L10.5 10L7 7.8L3.5 10L4.6 6.4L1.8 4.4H5.4L7 1Z" fill="#5252d4"/></svg></div>
           <span class="nav-label active">WorkSmart AI</span>
           <span class="nav-chevron rotated" id="ws-chev" aria-hidden="true">›</span>
         </div>
@@ -2299,34 +2329,8 @@
           <div class="nav-sub">
             <div class="nav-sub-item active" tabindex="0" role="button" aria-current="page" aria-label="Knowledge Repository">
               <div class="nav-sub-divider" aria-hidden="true"></div>
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <path d="M11 1H3a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" stroke="#3d5afe" stroke-width="1.3" fill="none"/>
-                <path d="M4.5 5h5M4.5 7.5h5M4.5 10h3" stroke="#3d5afe" stroke-width="1.2" stroke-linecap="round"/>
-              </svg>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M11 1H3a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" stroke="#3d5afe" stroke-width="1.3"/><path d="M4.5 5h5M4.5 7.5h5M4.5 10h3" stroke="#3d5afe" stroke-width="1.2" stroke-linecap="round"/></svg>
               <span class="nav-sub-label active">Knowledge Repository</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- RACE -->
-      <div>
-        <div class="nav-item" tabindex="0" role="button" aria-label="RACE" aria-expanded="false" aria-controls="race-sub" onclick="toggleSubNav('race-sub',this,'race-chev')">
-          <div class="nav-icon">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-              <rect x="3.5" y="1.5" width="7" height="11" rx="1.5" stroke="#666975" stroke-width="1.3" fill="none"/>
-              <path d="M6 3.5h2" stroke="#666975" stroke-width="1.3" stroke-linecap="round"/>
-              <path d="M5 7l2 2 2-2" stroke="#666975" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <span class="nav-label">RACE</span>
-          <span class="nav-chevron" id="race-chev" aria-hidden="true">›</span>
-        </div>
-        <div class="collapsible" id="race-sub">
-          <div class="nav-sub">
-            <div class="nav-sub-item" tabindex="0" role="button">
-              <div class="nav-sub-divider"></div>
-              <span class="nav-sub-label">Overview</span>
             </div>
           </div>
         </div>
@@ -2335,106 +2339,80 @@
       <!-- Forms -->
       <div>
         <div class="nav-item" tabindex="0" role="button" aria-label="Forms" aria-expanded="false" aria-controls="forms-sub" onclick="toggleSubNav('forms-sub',this,'forms-chev')">
-          <div class="nav-icon">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-              <path d="M2 2.5A.5.5 0 0 1 2.5 2h7L12 4.5V11.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V2.5Z" stroke="#666975" stroke-width="1.3" fill="none"/>
-              <path d="M9.5 2v2.5H12M4 6h6M4 8.5h6M4 11h3" stroke="#666975" stroke-width="1.2" stroke-linecap="round"/>
-            </svg>
-          </div>
+          <div class="nav-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2.5A.5.5 0 0 1 2.5 2h7L12 4.5V11.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V2.5Z" stroke="#666975" stroke-width="1.3"/><path d="M9.5 2v2.5H12M4 6h6M4 8.5h6M4 11h3" stroke="#666975" stroke-width="1.2" stroke-linecap="round"/></svg></div>
           <span class="nav-label">Forms</span>
           <span class="nav-chevron" id="forms-chev" aria-hidden="true">›</span>
         </div>
-        <div class="collapsible" id="forms-sub">
-          <div class="nav-sub">
-            <div class="nav-sub-item" tabindex="0" role="button">
-              <div class="nav-sub-divider"></div>
-              <span class="nav-sub-label">Form Builder</span>
-            </div>
-          </div>
-        </div>
+        <div class="collapsible" id="forms-sub"><div class="nav-sub">
+          <div class="nav-sub-item" tabindex="0" role="button"><div class="nav-sub-divider"></div><span class="nav-sub-label">Form Builder</span></div>
+          <div class="nav-sub-item" tabindex="0" role="button"><div class="nav-sub-divider"></div><span class="nav-sub-label">Submissions</span></div>
+        </div></div>
       </div>
 
-      <!-- Settings -->
+      <!-- Smart Trigger -->
       <div>
-        <div class="nav-item" tabindex="0" role="button" aria-label="Settings" aria-expanded="false" aria-controls="settings-sub" onclick="toggleSubNav('settings-sub',this,'settings-chev')">
-          <div class="nav-icon">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-              <circle cx="7" cy="7" r="2" stroke="#666975" stroke-width="1.3" fill="none"/>
-              <path d="M7 1.5v1M7 11.5v1M1.5 7h1M11.5 7h1M3.1 3.1l.7.7M10.2 10.2l.7.7M3.1 10.9l.7-.7M10.2 3.8l.7-.7" stroke="#666975" stroke-width="1.3" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <span class="nav-label">Settings</span>
-          <span class="nav-chevron" id="settings-chev" aria-hidden="true">›</span>
+        <div class="nav-item" tabindex="0" role="button" aria-label="Smart Trigger" aria-expanded="false" aria-controls="st-sub" onclick="toggleSubNav('st-sub',this,'st-chev')">
+          <div class="nav-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M8.5 1.5L4 7.5h5.5L5.5 12.5" stroke="#666975" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="nav-label">Smart Trigger</span>
+          <span class="nav-chevron" id="st-chev" aria-hidden="true">›</span>
         </div>
-        <div class="collapsible" id="settings-sub">
-          <div class="nav-sub">
-            <div class="nav-sub-item" tabindex="0" role="button">
-              <div class="nav-sub-divider"></div>
-              <span class="nav-sub-label">General</span>
-            </div>
-          </div>
-        </div>
+        <div class="collapsible" id="st-sub"><div class="nav-sub">
+          <div class="nav-sub-item" tabindex="0" role="button"><div class="nav-sub-divider"></div><span class="nav-sub-label">Triggers</span></div>
+          <div class="nav-sub-item" tabindex="0" role="button"><div class="nav-sub-divider"></div><span class="nav-sub-label">Alerts</span></div>
+        </div></div>
       </div>
 
-      <!-- Master Data -->
+      <!-- Master Configurations -->
       <div>
-        <div class="nav-item" tabindex="0" role="button" aria-label="Master Data" aria-expanded="false" aria-controls="md-sub" onclick="toggleSubNav('md-sub',this,'md-chev')">
-          <div class="nav-icon">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-              <ellipse cx="7" cy="3.5" rx="4" ry="1.5" stroke="#666975" stroke-width="1.3" fill="none"/>
-              <path d="M3 3.5v3c0 .83 1.79 1.5 4 1.5s4-.67 4-1.5v-3" stroke="#666975" stroke-width="1.3" fill="none"/>
-              <path d="M3 6.5v3c0 .83 1.79 1.5 4 1.5s4-.67 4-1.5v-3" stroke="#666975" stroke-width="1.3" fill="none"/>
-            </svg>
-          </div>
-          <span class="nav-label">Master Data</span>
-          <span class="nav-chevron" id="md-chev" aria-hidden="true">›</span>
+        <div class="nav-item" tabindex="0" role="button" aria-label="Master Configurations" aria-expanded="false" aria-controls="mc-sub" onclick="toggleSubNav('mc-sub',this,'mc-chev')">
+          <div class="nav-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="2" stroke="#666975" stroke-width="1.3"/><path d="M7 1.5v1M7 11.5v1M1.5 7h1M11.5 7h1M3.1 3.1l.7.7M10.2 10.2l.7.7M3.1 10.9l.7-.7M10.2 3.8l.7-.7" stroke="#666975" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+          <span class="nav-label">Master Configurations</span>
+          <span class="nav-chevron" id="mc-chev" aria-hidden="true">›</span>
         </div>
-        <div class="collapsible" id="md-sub">
-          <div class="nav-sub">
-            <div class="nav-sub-item" tabindex="0" role="button">
-              <div class="nav-sub-divider"></div>
-              <span class="nav-sub-label">Equipment</span>
-            </div>
-          </div>
-        </div>
+        <div class="collapsible" id="mc-sub"><div class="nav-sub">
+          <div class="nav-sub-item" tabindex="0" role="button"><div class="nav-sub-divider"></div><span class="nav-sub-label">General</span></div>
+          <div class="nav-sub-item" tabindex="0" role="button"><div class="nav-sub-divider"></div><span class="nav-sub-label">Notifications</span></div>
+        </div></div>
       </div>
 
-      <!-- Integration Manager -->
-      <div class="nav-item" tabindex="0" role="button" aria-label="Integration Manager" onclick="showInfoToast('Integration Manager')">
-        <div class="nav-icon">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-            <path d="M7 2a3 3 0 0 1 2.6 4.5L11.5 9" stroke="#666975" stroke-width="1.3" stroke-linecap="round"/>
-            <path d="M7 2a3 3 0 0 0-2.6 4.5L2.5 9" stroke="#666975" stroke-width="1.3" stroke-linecap="round"/>
-            <circle cx="7" cy="11" r="1.5" stroke="#666975" stroke-width="1.3" fill="none"/>
-            <circle cx="11.5" cy="9" r="1.5" stroke="#666975" stroke-width="1.3" fill="none"/>
-            <circle cx="2.5" cy="9" r="1.5" stroke="#666975" stroke-width="1.3" fill="none"/>
-          </svg>
-        </div>
-        <span class="nav-label">Integration Manager</span>
-      </div>
-
-      <!-- Workflows -->
+      <!-- RACE -->
       <div>
-        <div class="nav-item" tabindex="0" role="button" aria-label="Workflows" aria-expanded="false" aria-controls="wf-sub" onclick="toggleSubNav('wf-sub',this,'wf-chev')">
-          <div class="nav-icon">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-              <circle cx="2.5" cy="7" r="1.5" stroke="#666975" stroke-width="1.3" fill="none"/>
-              <circle cx="11.5" cy="3" r="1.5" stroke="#666975" stroke-width="1.3" fill="none"/>
-              <circle cx="11.5" cy="11" r="1.5" stroke="#666975" stroke-width="1.3" fill="none"/>
-              <path d="M4 7h4l2-3.5M8 7l2 3.5" stroke="#666975" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <span class="nav-label">Workflows</span>
-          <span class="nav-chevron" id="wf-chev" aria-hidden="true">›</span>
+        <div class="nav-item" tabindex="0" role="button" aria-label="RACE" aria-expanded="false" aria-controls="race-sub" onclick="toggleSubNav('race-sub',this,'race-chev')">
+          <div class="nav-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><rect x="3.5" y="1.5" width="7" height="11" rx="1.5" stroke="#666975" stroke-width="1.3"/><path d="M6 3.5h2" stroke="#666975" stroke-width="1.3" stroke-linecap="round"/><path d="M5 7l2 2 2-2" stroke="#666975" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="nav-label">RACE</span>
+          <span class="nav-chevron" id="race-chev" aria-hidden="true">›</span>
         </div>
-        <div class="collapsible" id="wf-sub">
-          <div class="nav-sub">
-            <div class="nav-sub-item" tabindex="0" role="button">
-              <div class="nav-sub-divider"></div>
-              <span class="nav-sub-label">My Workflows</span>
-            </div>
-          </div>
+        <div class="collapsible" id="race-sub"><div class="nav-sub">
+          <div class="nav-sub-item" tabindex="0" role="button"><div class="nav-sub-divider"></div><span class="nav-sub-label">Overview</span></div>
+        </div></div>
+      </div>
+
+      <!-- User Management -->
+      <div>
+        <div class="nav-item" tabindex="0" role="button" aria-label="User Management" aria-expanded="false" aria-controls="um-sub" onclick="toggleSubNav('um-sub',this,'um-chev')">
+          <div class="nav-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><circle cx="7" cy="5" r="2.5" stroke="#666975" stroke-width="1.3"/><path d="M2.5 12c0-2.5 2-4.5 4.5-4.5S11.5 9.5 11.5 12" stroke="#666975" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+          <span class="nav-label">User Management</span>
+          <span class="nav-chevron" id="um-chev" aria-hidden="true">›</span>
         </div>
+        <div class="collapsible" id="um-sub"><div class="nav-sub">
+          <div class="nav-sub-item" tabindex="0" role="button"><div class="nav-sub-divider"></div><span class="nav-sub-label">Active Users</span></div>
+          <div class="nav-sub-item" tabindex="0" role="button"><div class="nav-sub-divider"></div><span class="nav-sub-label">Roles &amp; Permissions</span></div>
+          <div class="nav-sub-item" tabindex="0" role="button"><div class="nav-sub-divider"></div><span class="nav-sub-label">Positions</span></div>
+          <div class="nav-sub-item" tabindex="0" role="button"><div class="nav-sub-divider"></div><span class="nav-sub-label">User Groups</span></div>
+          <div class="nav-sub-item" tabindex="0" role="button"><div class="nav-sub-divider"></div><span class="nav-sub-label">Inactive Users</span></div>
+        </div></div>
+      </div>
+
+      <!-- Integrations Manager -->
+      <div class="nav-item" tabindex="0" role="button" aria-label="Integrations Manager" onclick="showInfoToast('Integrations Manager')">
+        <div class="nav-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 2a3 3 0 0 1 2.6 4.5L11.5 9" stroke="#666975" stroke-width="1.3" stroke-linecap="round"/><path d="M7 2a3 3 0 0 0-2.6 4.5L2.5 9" stroke="#666975" stroke-width="1.3" stroke-linecap="round"/><circle cx="7" cy="11" r="1.5" stroke="#666975" stroke-width="1.3"/><circle cx="11.5" cy="9" r="1.5" stroke="#666975" stroke-width="1.3"/><circle cx="2.5" cy="9" r="1.5" stroke="#666975" stroke-width="1.3"/></svg></div>
+        <span class="nav-label">Integrations Manager</span>
+      </div>
+
+      <!-- Tenant Management -->
+      <div class="nav-item" tabindex="0" role="button" aria-label="Tenant Management" onclick="showInfoToast('Tenant Management')">
+        <div class="nav-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><rect x="2" y="5" width="10" height="7.5" rx="1" stroke="#666975" stroke-width="1.3"/><path d="M4.5 5V3.5C4.5 2.12 5.62 1 7 1s2.5 1.12 2.5 2.5V5" stroke="#666975" stroke-width="1.3"/><circle cx="7" cy="8.5" r="1" fill="#666975"/></svg></div>
+        <span class="nav-label">Tenant Management</span>
       </div>
 
     </nav>
@@ -2756,7 +2734,24 @@
               </svg>
             </button>
             <button class="btn-primary" style="padding:7px 14px;font-size:12px" onclick="showInfoToast('New Agent builder coming soon')">+ New Agent</button>
-            <button class="btn-more" aria-label="More options" onclick="showInfoToast('More options')">···</button>
+            <div class="more-menu-wrap">
+              <button class="btn-more" aria-label="More options" aria-haspopup="menu" onclick="toggleMoreMenu(event)" aria-expanded="false" id="btn-more-main">···</button>
+              <div class="more-dropdown" id="more-dropdown-main" role="menu">
+                <button class="more-dropdown-item" role="menuitem" onclick="showInfoToast('Export agents list as CSV')">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v8M7 9l-2.5-2.5M7 9l2.5-2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 10v1.5c0 .28.22.5.5.5h9a.5.5 0 0 0 .5-.5V10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                  Export Agent List
+                </button>
+                <button class="more-dropdown-item" role="menuitem" onclick="showInfoToast('Import agents from file')">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 9V1M7 1L4.5 3.5M7 1l2.5 2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 10v1.5c0 .28.22.5.5.5h9a.5.5 0 0 0 .5-.5V10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                  Import Agents
+                </button>
+                <div class="more-dropdown-sep"></div>
+                <button class="more-dropdown-item" role="menuitem" onclick="openHelpGuide()">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.4"/><path d="M5.5 5.5a1.5 1.5 0 0 1 3 0c0 1-1.5 1.5-1.5 2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="7" cy="10.5" r=".7" fill="currentColor"/></svg>
+                  Help Guide
+                </button>
+              </div>
+            </div>
           </div>
 
           <!-- Grid Content -->
