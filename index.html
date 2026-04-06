@@ -435,11 +435,355 @@
       color: var(--success-text);
     }
 
+    /* ============================================================
+       BUSINESS IMPACT KPI CARDS
+    ============================================================ */
+    .impact-section { margin-bottom: 16px; }
+    .impact-section-hdr {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .impact-section-title {
+      font-family: var(--font-inter); font-size: 13px; font-weight: 700;
+      color: var(--text-dark);
+    }
+    .impact-section-note {
+      font-family: var(--font-inter); font-size: 11px; color: var(--text-light);
+    }
+    .impact-kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+
+    .impact-kpi-card {
+      background: white;
+      border-radius: 10px;
+      padding: 0;
+      box-shadow: var(--shadow-card);
+      border: 1px solid rgba(0,0,0,0.05);
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform 0.12s, box-shadow 0.12s;
+    }
+    .impact-kpi-card:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,0.09); }
+    .impact-kpi-card:active { transform: translateY(0); }
+    .ikc-accent { height: 3px; width: 100%; }
+    .ikc-body { padding: 12px 14px; }
+    .ikc-label {
+      font-family: var(--font-inter); font-size: 10px; font-weight: 500;
+      color: var(--text-gray); margin-bottom: 5px; letter-spacing: 0.2px;
+    }
+    .ikc-value {
+      font-family: var(--font-inter); font-size: 24px; font-weight: 800;
+      color: var(--text-dark); line-height: 1; margin-bottom: 3px;
+    }
+    .ikc-trend {
+      font-family: var(--font-inter); font-size: 11px; color: var(--success-text);
+      margin-bottom: 10px;
+    }
+    .ikc-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 9px; border-top: 1px solid rgba(0,0,0,0.05);
+    }
+    .ikc-agents { display: flex; align-items: center; }
+    .ikc-pip {
+      width: 20px; height: 20px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-inter); font-size: 7px; font-weight: 700;
+      color: white; border: 1.5px solid white; flex-shrink: 0;
+    }
+    .ikc-pip + .ikc-pip { margin-left: -6px; }
+    .ikc-drill-hint {
+      font-family: var(--font-inter); font-size: 10px; color: var(--text-light);
+      display: flex; align-items: center; gap: 2px;
+    }
+
+    /* ============================================================
+       KPI DRILL-DOWN DRAWER
+    ============================================================ */
+    .kpi-drawer-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.32);
+      z-index: 900;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.2s;
+      display: flex; align-items: stretch; justify-content: flex-end;
+    }
+    .kpi-drawer-overlay.open { opacity: 1; pointer-events: all; }
+
+    .kpi-drawer {
+      width: 360px;
+      height: 100%;
+      background: white;
+      box-shadow: -6px 0 32px rgba(0,0,0,0.14);
+      display: flex; flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.24s cubic-bezier(0.4,0,0.2,1);
+    }
+    .kpi-drawer-overlay.open .kpi-drawer { transform: translateX(0); }
+
+    .kd-header {
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .kd-header-top {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .kd-breadcrumb {
+      font-family: var(--font-inter); font-size: 11px; color: var(--text-light);
+      display: flex; align-items: center; gap: 4px;
+    }
+    .kd-breadcrumb-sep { opacity: 0.5; }
+    .kd-close {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: none; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-light); font-size: 14px;
+      transition: background 0.1s, color 0.1s;
+    }
+    .kd-close:hover { background: #f0f0f3; color: var(--text-dark); }
+
+    .kd-accent-bar { height: 4px; border-radius: 2px; margin-bottom: 10px; }
+    .kd-metric-name {
+      font-family: var(--font-inter); font-size: 15px; font-weight: 700;
+      color: var(--text-dark); margin-bottom: 6px;
+    }
+    .kd-value-row { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+    .kd-value {
+      font-family: var(--font-inter); font-size: 32px; font-weight: 800;
+      color: var(--text-dark); line-height: 1;
+    }
+    .kd-trend {
+      font-family: var(--font-inter); font-size: 12px; font-weight: 500;
+      color: var(--success-text);
+    }
+    .kd-period {
+      display: block; font-family: var(--font-inter); font-size: 11px;
+      color: var(--text-light); margin-top: 4px;
+    }
+
+    .kd-body { flex: 1; overflow-y: auto; padding: 16px 20px 8px; }
+    .kd-section-title {
+      font-family: var(--font-inter); font-size: 11px; font-weight: 700;
+      color: var(--text-dark); text-transform: uppercase; letter-spacing: 0.6px;
+      margin-bottom: 12px;
+    }
+    .kd-agent-row {
+      display: flex; gap: 11px; align-items: flex-start;
+      padding: 12px; background: #fafafa;
+      border: 1px solid rgba(0,0,0,0.05);
+      border-radius: 8px; margin-bottom: 9px;
+    }
+    .kd-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-inter); font-size: 10px; font-weight: 700;
+      color: white; flex-shrink: 0;
+    }
+    .kd-agent-info { flex: 1; min-width: 0; }
+    .kd-agent-name {
+      font-family: var(--font-inter); font-size: 12px; font-weight: 600;
+      color: var(--text-dark); margin-bottom: 3px;
+    }
+    .kd-agent-insight {
+      font-family: var(--font-inter); font-size: 12px; color: var(--text-gray);
+      line-height: 1.5;
+    }
+    .kd-bar-wrap { margin-top: 8px; background: #ebebf0; border-radius: 3px; height: 3px; }
+    .kd-bar { height: 3px; border-radius: 3px; }
+
+    .kd-footer {
+      padding: 12px 20px; border-top: 1px solid var(--border); flex-shrink: 0;
+    }
+    .kd-footer-note {
+      font-family: var(--font-inter); font-size: 11px; color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    /* Thin separator between Business Impact and agent metrics */
+    .dash-separator {
+      height: 1px;
+      background: linear-gradient(to right, transparent 0%, var(--border) 15%, var(--border) 85%, transparent 100%);
+      margin: 4px 0 16px;
+    }
+
+    /* Row 2: Skill Gap + Decision Velocity side by side */
+    .dash-insights-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
     .dash-chart-row {
       display: grid;
       grid-template-columns: 3fr 2fr;
       gap: 12px;
       margin-bottom: 12px;
+    }
+
+    .skill-gap-card {}
+    .dv-card { margin-bottom: 0; }
+    .sgc-header {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      margin-bottom: 4px; gap: 12px;
+    }
+    .sgc-title {
+      font-family: var(--font-inter); font-size: 13px; font-weight: 700;
+      color: var(--text-dark); margin-bottom: 2px;
+    }
+    .sgc-sub {
+      font-family: var(--font-inter); font-size: 11px; color: var(--text-light);
+    }
+    .sgc-insight-chip {
+      display: flex; align-items: center; gap: 5px; flex-shrink: 0;
+      background: #ecefff; border-radius: 20px; padding: 5px 12px;
+      font-family: var(--font-inter); font-size: 11px; color: #3d5afe;
+      font-weight: 500; white-space: nowrap;
+    }
+    .sgc-insight-chip strong { font-weight: 700; }
+    .sgc-chart-wrap { margin: 8px 0 4px; }
+    .sgc-chart-wrap svg { display: block; }
+
+    /* SVG chart interactive states */
+    .sgc-dot { transition: r 0.15s, opacity 0.15s; cursor: default; }
+    .sgc-dot:hover { r: 6; }
+    .sgc-gap-fill { animation: gapPulse 3s ease-in-out infinite; }
+    @keyframes gapPulse { 0%,100%{opacity:0.25} 50%{opacity:0.45} }
+
+    .sgc-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 8px; border-top: 1px solid rgba(0,0,0,0.05);
+      margin-top: 4px;
+    }
+    .sgc-legend { display: flex; align-items: center; gap: 16px; }
+    .sgc-legend-item {
+      display: flex; align-items: center; gap: 6px;
+      font-family: var(--font-inter); font-size: 11px; color: var(--text-gray);
+    }
+    .sgc-legend-dash {
+      width: 22px; height: 2px; border-radius: 1px;
+      background: repeating-linear-gradient(to right,#9e9e9e 0,#9e9e9e 4px,transparent 4px,transparent 7px);
+    }
+    .sgc-legend-solid {
+      width: 22px; height: 2.5px; border-radius: 2px; background: #3d5afe;
+    }
+    .sgc-agents {
+      display: flex; align-items: center; gap: 6px;
+      font-family: var(--font-inter); font-size: 11px; color: var(--text-light);
+    }
+    .sgc-agent-tag {
+      padding: 2px 8px; border-radius: 10px;
+      font-family: var(--font-inter); font-size: 10px; font-weight: 500;
+    }
+
+    /* ============================================================
+       DECISION VELOCITY WIDGET
+    ============================================================ */
+    .dv-header {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      margin-bottom: 14px; gap: 12px;
+    }
+    .dv-title {
+      font-family: var(--font-inter); font-size: 13px; font-weight: 700;
+      color: var(--text-dark); margin-bottom: 2px;
+    }
+    .dv-sub { font-family: var(--font-inter); font-size: 11px; color: var(--text-light); }
+    .dv-insight-chip {
+      display: flex; align-items: center; gap: 5px; flex-shrink: 0;
+      background: #fff8e1; border-radius: 20px; padding: 5px 12px;
+      font-family: var(--font-inter); font-size: 11px;
+      color: #b26600; font-weight: 500; white-space: nowrap;
+    }
+    .dv-insight-chip strong { font-weight: 700; }
+
+    /* Stage header labels row */
+    .dv-stage-hdr-row {
+      display: flex; align-items: center; gap: 2px;
+      margin-left: 82px; margin-right: 70px; margin-bottom: 5px;
+    }
+    .dv-stage-hdr-item {
+      font-family: var(--font-inter); font-size: 9px; color: var(--text-light);
+      font-weight: 600; text-align: center; text-transform: uppercase;
+      letter-spacing: 0.4px; overflow: hidden;
+    }
+
+    .dv-timeline { display: flex; flex-direction: column; gap: 6px; }
+    .dv-track-row { display: flex; align-items: center; gap: 10px; }
+    .dv-row-label {
+      font-family: var(--font-inter); font-size: 11px; color: var(--text-gray);
+      font-weight: 500; width: 72px; text-align: right; flex-shrink: 0;
+    }
+    .dv-track { flex: 1; display: flex; height: 36px; gap: 2px; }
+
+    .dv-seg {
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-inter); font-size: 10px; font-weight: 600;
+      color: white; border-radius: 5px; overflow: visible;
+      white-space: nowrap; position: relative; height: 36px;
+    }
+    .dv-seg-inner {
+      padding: 0 7px; overflow: hidden; text-overflow: ellipsis;
+      white-space: nowrap; pointer-events: none;
+    }
+    /* Compression arrow badge below compressed segments */
+    .dv-compress-badge {
+      position: absolute; bottom: -17px; left: 50%; transform: translateX(-50%);
+      background: #5252d4; color: white;
+      font-family: var(--font-inter); font-size: 8px; font-weight: 700;
+      padding: 1px 5px; border-radius: 8px; white-space: nowrap; z-index: 2;
+    }
+
+    /* Saved zone (dotted) */
+    .dv-saved-zone {
+      flex: 42; height: 36px; border-radius: 5px;
+      background: repeating-linear-gradient(
+        90deg, rgba(82,82,212,0.04) 0, rgba(82,82,212,0.04) 3px,
+        transparent 3px, transparent 9px
+      );
+      border: 1.5px dashed #c8ccec;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .dv-saved-text {
+      font-family: var(--font-inter); font-size: 10px; color: #9e9e9e;
+      font-weight: 500; white-space: nowrap;
+    }
+
+    .dv-time-label {
+      font-family: var(--font-inter); font-size: 12px;
+      color: var(--text-gray); font-weight: 600; width: 60px; flex-shrink: 0;
+    }
+    .dv-time-ai { color: var(--success-text); }
+
+    /* Slide-in animation on both tracks */
+    @keyframes dvSlideIn {
+      from { clip-path: inset(0 100% 0 0 round 5px); opacity: 0.4; }
+      to   { clip-path: inset(0 0%   0 0 round 5px); opacity: 1; }
+    }
+    .dv-track { animation: dvSlideIn 0.9s cubic-bezier(0.4,0,0.2,1) both; }
+    .dv-track-row:nth-child(3) .dv-track { animation-delay: 0.18s; }
+
+    /* Agent pills row */
+    .dv-agents-row {
+      display: flex; align-items: center; gap: 8px;
+      margin-top: 22px; flex-wrap: wrap;
+      padding-top: 12px; border-top: 1px solid rgba(0,0,0,0.05);
+    }
+    .dv-agents-label {
+      font-family: var(--font-inter); font-size: 11px; color: var(--text-light);
+      flex-shrink: 0;
+    }
+    .dv-agent-pill {
+      display: flex; align-items: center; gap: 5px;
+      padding: 4px 10px; border-radius: 20px;
+      background: #fafafa; border: 1px solid rgba(0,0,0,0.06);
+    }
+    .dv-agent-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .dv-agent-pill-name {
+      font-family: var(--font-inter); font-size: 11px; font-weight: 600;
+      color: var(--text-dark);
+    }
+    .dv-agent-pill-impact {
+      font-family: var(--font-inter); font-size: 11px; color: var(--text-gray);
     }
 
     .dash-bottom-row {
@@ -3503,6 +3847,242 @@
             </div>
           </div>
 
+          <!-- Business Impact KPIs -->
+          <div class="impact-section">
+            <div class="impact-section-hdr">
+              <span class="impact-section-title">Business Impact</span>
+              <span class="impact-section-note">Click a card to see agent-level breakdown</span>
+            </div>
+            <div class="impact-kpi-grid" role="list" aria-label="Business impact metrics">
+
+              <!-- Repair Time Reduction -->
+              <div class="impact-kpi-card" role="listitem" tabindex="0"
+                   onclick="openKpiDrilldown('repair-time')"
+                   onkeydown="if(event.key==='Enter')openKpiDrilldown('repair-time')"
+                   aria-label="Repair Time Reduction — click for agent breakdown">
+                <div class="ikc-accent" style="background:#3d5afe"></div>
+                <div class="ikc-body">
+                  <div class="ikc-label">Repair Time Reduction</div>
+                  <div class="ikc-value">28%</div>
+                  <div class="ikc-trend">↓ Avg time: 4.2h → 3.0h</div>
+                  <div class="ikc-footer">
+                    <div class="ikc-agents">
+                      <div class="ikc-pip" style="background:#3d5afe">TR</div>
+                      <div class="ikc-pip" style="background:#2e7d32">AS</div>
+                      <div class="ikc-pip" style="background:#1565c0">IR</div>
+                    </div>
+                    <span class="ikc-drill-hint">3 agents ›</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- First-Time Fix Rate -->
+              <div class="impact-kpi-card" role="listitem" tabindex="0"
+                   onclick="openKpiDrilldown('first-time-fix')"
+                   onkeydown="if(event.key==='Enter')openKpiDrilldown('first-time-fix')"
+                   aria-label="First-Time Fix Rate — click for agent breakdown">
+                <div class="ikc-accent" style="background:#2e7d32"></div>
+                <div class="ikc-body">
+                  <div class="ikc-label">First-Time Fix Rate</div>
+                  <div class="ikc-value">87%</div>
+                  <div class="ikc-trend">↑ +11% vs 3 months ago</div>
+                  <div class="ikc-footer">
+                    <div class="ikc-agents">
+                      <div class="ikc-pip" style="background:#3d5afe">TR</div>
+                      <div class="ikc-pip" style="background:#2e7d32">AS</div>
+                      <div class="ikc-pip" style="background:#1565c0">IR</div>
+                    </div>
+                    <span class="ikc-drill-hint">3 agents ›</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Technician Productivity -->
+              <div class="impact-kpi-card" role="listitem" tabindex="0"
+                   onclick="openKpiDrilldown('productivity')"
+                   onkeydown="if(event.key==='Enter')openKpiDrilldown('productivity')"
+                   aria-label="Technician Productivity — click for agent breakdown">
+                <div class="ikc-accent" style="background:#f59e0b"></div>
+                <div class="ikc-body">
+                  <div class="ikc-label">Technician Productivity</div>
+                  <div class="ikc-value">+34%</div>
+                  <div class="ikc-trend">↑ Tasks per shift increased</div>
+                  <div class="ikc-footer">
+                    <div class="ikc-agents">
+                      <div class="ikc-pip" style="background:#7c3aed">WC</div>
+                      <div class="ikc-pip" style="background:#2e7d32">AS</div>
+                      <div class="ikc-pip" style="background:#3d5afe">TR</div>
+                    </div>
+                    <span class="ikc-drill-hint">3 agents ›</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Downtime Reduction -->
+              <div class="impact-kpi-card" role="listitem" tabindex="0"
+                   onclick="openKpiDrilldown('downtime')"
+                   onkeydown="if(event.key==='Enter')openKpiDrilldown('downtime')"
+                   aria-label="Downtime Reduction — click for agent breakdown">
+                <div class="ikc-accent" style="background:#c62828"></div>
+                <div class="ikc-body">
+                  <div class="ikc-label">Downtime Reduction</div>
+                  <div class="ikc-value">41%</div>
+                  <div class="ikc-trend">↓ Unplanned downtime cut</div>
+                  <div class="ikc-footer">
+                    <div class="ikc-agents">
+                      <div class="ikc-pip" style="background:#3d5afe">TR</div>
+                      <div class="ikc-pip" style="background:#f59e0b">RC</div>
+                      <div class="ikc-pip" style="background:#7c3aed">WC</div>
+                    </div>
+                    <span class="ikc-drill-hint">3 agents ›</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Row 2: Skill Gap + Decision Velocity (above separator) -->
+          <div class="dash-insights-row">
+
+            <!-- Skill Gap Reduction Chart -->
+            <div class="dash-card skill-gap-card">
+              <div class="sgc-header">
+                <div>
+                  <div class="sgc-title">Skill Gap Reduction with AI</div>
+                  <div class="sgc-sub">Task success rate by technician experience level</div>
+                </div>
+                <div class="sgc-insight-chip" aria-label="AI reduced skill gap by 35%">
+                  <svg width="10" height="10" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+                    <path d="M5.5 1v9M2 4.5l3.5 5.5 3.5-5.5" stroke="#3d5afe" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  Gap ↓<strong>35%</strong>
+                </div>
+              </div>
+              <div class="sgc-chart-wrap">
+                <svg viewBox="0 0 520 185" width="100%" aria-label="Dual-line chart: task success rate with and without AI">
+                  <line x1="72" y1="18"  x2="460" y2="18"  stroke="#f0f0f0" stroke-width="1"/>
+                  <line x1="72" y1="54"  x2="460" y2="54"  stroke="#f0f0f0" stroke-width="1"/>
+                  <line x1="72" y1="90"  x2="460" y2="90"  stroke="#f0f0f0" stroke-width="1"/>
+                  <line x1="72" y1="126" x2="460" y2="126" stroke="#f0f0f0" stroke-width="1"/>
+                  <line x1="72" y1="154" x2="460" y2="154" stroke="#e4e4e4" stroke-width="1"/>
+                  <text x="66" y="22"  text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#aaa">100%</text>
+                  <text x="66" y="58"  text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#aaa">75%</text>
+                  <text x="66" y="94"  text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#aaa">50%</text>
+                  <text x="66" y="130" text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#aaa">25%</text>
+                  <path class="sgc-gap-fill" d="M 138,112 Q 266,62 394,34 L 394,22 Q 266,55 138,71 Z" fill="#3d5afe" opacity="0.12"/>
+                  <line x1="120" y1="71" x2="120" y2="112" stroke="#3d5afe" stroke-width="1.2" stroke-dasharray="2.5,2"/>
+                  <line x1="116" y1="71"  x2="124" y2="71"  stroke="#3d5afe" stroke-width="1.2"/>
+                  <line x1="116" y1="112" x2="124" y2="112" stroke="#3d5afe" stroke-width="1.2"/>
+                  <text x="108" y="93" text-anchor="middle" font-family="Inter,sans-serif" font-size="8.5" fill="#3d5afe" font-weight="600">26pt</text>
+                  <line x1="408" y1="22" x2="408" y2="34" stroke="#9e9e9e" stroke-width="1" stroke-dasharray="2,2"/>
+                  <line x1="404" y1="22" x2="412" y2="22" stroke="#9e9e9e" stroke-width="1"/>
+                  <line x1="404" y1="34" x2="412" y2="34" stroke="#9e9e9e" stroke-width="1"/>
+                  <text x="420" y="30" text-anchor="start" font-family="Inter,sans-serif" font-size="8" fill="#9e9e9e">6pt</text>
+                  <path d="M 138,112 Q 266,62 394,34" fill="none" stroke="#c4c4c4" stroke-width="2" stroke-dasharray="5,4" stroke-linecap="round"/>
+                  <path d="M 138,71 Q 266,55 394,22" fill="none" stroke="#3d5afe" stroke-width="2.5" stroke-linecap="round"/>
+                  <circle class="sgc-dot" cx="138" cy="112" r="4" fill="white" stroke="#c4c4c4" stroke-width="2"><title>Junior — Without AI: 38%</title></circle>
+                  <circle class="sgc-dot" cx="266" cy="65"  r="4" fill="white" stroke="#c4c4c4" stroke-width="2"><title>Mid — Without AI: 68%</title></circle>
+                  <circle class="sgc-dot" cx="394" cy="34"  r="4" fill="white" stroke="#c4c4c4" stroke-width="2"><title>Expert — Without AI: 90%</title></circle>
+                  <text x="138" y="128" text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" fill="#9e9e9e" font-weight="600">38%</text>
+                  <text x="266" y="80"  text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" fill="#9e9e9e" font-weight="600">68%</text>
+                  <text x="394" y="49"  text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" fill="#9e9e9e" font-weight="600">90%</text>
+                  <circle class="sgc-dot" cx="138" cy="71" r="4.5" fill="#3d5afe"><title>Junior — With AI: 64%</title></circle>
+                  <circle class="sgc-dot" cx="266" cy="52" r="4.5" fill="#3d5afe"><title>Mid — With AI: 78%</title></circle>
+                  <circle class="sgc-dot" cx="394" cy="22" r="4.5" fill="#3d5afe"><title>Expert — With AI: 98%</title></circle>
+                  <text x="138" y="60"  text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" fill="#3d5afe" font-weight="700">64%</text>
+                  <text x="266" y="41"  text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" fill="#3d5afe" font-weight="700">78%</text>
+                  <text x="394" y="12"  text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" fill="#3d5afe" font-weight="700">98%</text>
+                  <text x="138" y="170" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#6e6e6e" font-weight="500">Junior</text>
+                  <text x="266" y="170" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#6e6e6e" font-weight="500">Mid</text>
+                  <text x="394" y="170" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#6e6e6e" font-weight="500">Expert</text>
+                  <text x="158" y="55" font-family="Inter,sans-serif" font-size="8.5" fill="#3d5afe" opacity="0.7" font-style="italic">Troubleshoot</text>
+                  <text x="276" y="38" font-family="Inter,sans-serif" font-size="8.5" fill="#2e7d32" opacity="0.8" font-style="italic">Assist</text>
+                </svg>
+              </div>
+              <div class="sgc-footer">
+                <div class="sgc-legend">
+                  <div class="sgc-legend-item"><div class="sgc-legend-dash" aria-hidden="true"></div>Without AI</div>
+                  <div class="sgc-legend-item"><div class="sgc-legend-solid" aria-hidden="true"></div>With AI</div>
+                </div>
+                <div class="sgc-agents">
+                  <span class="sgc-agent-tag" style="background:#ecefff;color:#3d5afe">Troubleshoot</span>
+                  <span class="sgc-agent-tag" style="background:#e5f7e5;color:#2e7d33">Assist</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Decision Velocity -->
+            <div class="dash-card dv-card">
+              <div class="dv-header">
+                <div>
+                  <div class="dv-title">Decision Velocity</div>
+                  <div class="dv-sub">Time from alert to action — Before AI vs. With AI</div>
+                </div>
+                <div class="dv-insight-chip" aria-label="Time to action reduced by 42%">
+                  ⚡ Time to action reduced by <strong>42%</strong>
+                </div>
+              </div>
+              <div class="dv-stage-hdr-row" aria-hidden="true">
+                <div class="dv-stage-hdr-item" style="flex:5">Alert</div>
+                <div class="dv-stage-hdr-item" style="flex:45">Diagnose</div>
+                <div class="dv-stage-hdr-item" style="flex:30">Approve</div>
+                <div class="dv-stage-hdr-item" style="flex:20">Execute</div>
+              </div>
+              <div class="dv-timeline">
+                <div class="dv-track-row">
+                  <span class="dv-row-label">Before AI</span>
+                  <div class="dv-track" role="img" aria-label="Before AI: Alert 5min, Diagnose 45min, Approve 30min, Execute 20min — ~100min">
+                    <div class="dv-seg" style="flex:5;background:#f59e0b"><span class="dv-seg-inner"></span></div>
+                    <div class="dv-seg" style="flex:45;background:#3d5afe"><span class="dv-seg-inner">Diagnose · 45 min</span></div>
+                    <div class="dv-seg" style="flex:30;background:#7c3aed"><span class="dv-seg-inner">Approve · 30 min</span></div>
+                    <div class="dv-seg" style="flex:20;background:#2e7d32"><span class="dv-seg-inner">Execute</span></div>
+                  </div>
+                  <span class="dv-time-label">~100 min</span>
+                </div>
+                <div class="dv-track-row">
+                  <span class="dv-row-label" style="color:#3d5afe;font-weight:600">With AI</span>
+                  <div class="dv-track" role="img" aria-label="With AI: Diagnose 15min, Approve 10min — ~58min total, 42% faster">
+                    <div class="dv-seg" style="flex:5;background:#f59e0b"><span class="dv-seg-inner"></span></div>
+                    <div class="dv-seg dv-seg-compressed" style="flex:15;background:#3d5afe">
+                      <span class="dv-seg-inner">Diagnose</span>
+                      <div class="dv-compress-badge">↓ 67%</div>
+                    </div>
+                    <div class="dv-seg dv-seg-compressed" style="flex:10;background:#7c3aed">
+                      <span class="dv-seg-inner">Appr.</span>
+                      <div class="dv-compress-badge">↓ 67%</div>
+                    </div>
+                    <div class="dv-seg" style="flex:28;background:#2e7d32"><span class="dv-seg-inner">Execute · 28 min</span></div>
+                    <div class="dv-saved-zone" style="flex:42"><span class="dv-saved-text">42% faster ›</span></div>
+                  </div>
+                  <span class="dv-time-label dv-time-ai">~58 min</span>
+                </div>
+              </div>
+              <div class="dv-agents-row">
+                <span class="dv-agents-label">Contributing agents:</span>
+                <div class="dv-agent-pill">
+                  <div class="dv-agent-dot" style="background:#3d5afe"></div>
+                  <span class="dv-agent-pill-name">Troubleshoot</span>
+                  <span class="dv-agent-pill-impact">→ Diagnose 3× faster</span>
+                </div>
+                <div class="dv-agent-pill">
+                  <div class="dv-agent-dot" style="background:#7c3aed"></div>
+                  <span class="dv-agent-pill-name">WO Create</span>
+                  <span class="dv-agent-pill-impact">→ Approvals auto-generated</span>
+                </div>
+                <div class="dv-agent-pill">
+                  <div class="dv-agent-dot" style="background:#2e7d32"></div>
+                  <span class="dv-agent-pill-name">Issue Report</span>
+                  <span class="dv-agent-pill-impact">→ Context speeds execution</span>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /dash-insights-row -->
+
+          <!-- Separator: Business Impact above / Agent Performance below -->
+          <div class="dash-separator" role="separator" aria-hidden="true"></div>
+
           <!-- 4 Metric Cards -->
           <div class="dash-metrics" role="list" aria-label="Performance metrics">
             <div class="dash-metric-card" role="listitem">
@@ -5758,6 +6338,135 @@ function showInfoToast(msg) { showToast(msg); }
 function showSuccessToast(msg) { showToast(msg); }
 
 /* ================================================================
+   BUSINESS IMPACT KPI DRILL-DOWN
+================================================================ */
+const KPI_IMPACT_DATA = {
+  'repair-time': {
+    label: 'Repair Time Reduction',
+    value: '28%',
+    trend: '↓ Avg repair time: 4.2h → 3.0h',
+    period: 'Last 30 days · Based on 1,240 work orders',
+    accentColor: '#3d5afe',
+    agents: [
+      {
+        initials: 'TR', color: '#3d5afe', name: 'Troubleshoot', pct: 45,
+        insight: 'Reduced diagnosis time by guiding technicians through root cause analysis step-by-step.'
+      },
+      {
+        initials: 'AS', color: '#2e7d32', name: 'Assist', pct: 35,
+        insight: 'Provided step-by-step SOPs to speed up repair execution in the field.'
+      },
+      {
+        initials: 'IR', color: '#1565c0', name: 'Issue Report', pct: 20,
+        insight: 'Captured structured failure data so similar issues resolve faster next time.'
+      }
+    ]
+  },
+  'first-time-fix': {
+    label: 'First-Time Fix Rate',
+    value: '87%',
+    trend: '↑ +11% vs 3 months ago',
+    period: 'Last 30 days · Based on 984 closed WOs',
+    accentColor: '#2e7d32',
+    agents: [
+      {
+        initials: 'TR', color: '#3d5afe', name: 'Troubleshoot', pct: 42,
+        insight: 'Improved fix accuracy by guiding technicians to the right solution before they start.'
+      },
+      {
+        initials: 'AS', color: '#2e7d32', name: 'Assist', pct: 38,
+        insight: 'Ensured the correct procedure was followed on the first attempt, reducing rework.'
+      },
+      {
+        initials: 'IR', color: '#1565c0', name: 'Issue Report', pct: 20,
+        insight: 'Surfaced historical issue patterns to help avoid repeat mistakes.'
+      }
+    ]
+  },
+  'productivity': {
+    label: 'Technician Productivity',
+    value: '+34%',
+    trend: '↑ Tasks per shift increased',
+    period: 'Last 30 days · Across 89 active technicians',
+    accentColor: '#f59e0b',
+    agents: [
+      {
+        initials: 'WC', color: '#7c3aed', name: 'WO Create', pct: 38,
+        insight: 'Reduced time spent manually creating work orders — from minutes to seconds.'
+      },
+      {
+        initials: 'AS', color: '#2e7d32', name: 'Assist', pct: 34,
+        insight: 'Reduced dependency on supervisors for guidance, keeping technicians moving.'
+      },
+      {
+        initials: 'TR', color: '#3d5afe', name: 'Troubleshoot', pct: 28,
+        insight: 'Enabled faster task completion through rapid, in-context diagnosis support.'
+      }
+    ]
+  },
+  'downtime': {
+    label: 'Downtime Reduction',
+    value: '41%',
+    trend: '↓ Unplanned downtime cut by 41%',
+    period: 'Last 30 days · Across monitored assets',
+    accentColor: '#c62828',
+    agents: [
+      {
+        initials: 'TR', color: '#3d5afe', name: 'Troubleshoot', pct: 44,
+        insight: 'Flagged early failure signals so teams could act before equipment went down.'
+      },
+      {
+        initials: 'RC', color: '#f59e0b', name: 'RCA', pct: 36,
+        insight: 'Identified root causes that eliminated recurring failures causing repeat downtime.'
+      },
+      {
+        initials: 'WC', color: '#7c3aed', name: 'WO Create', pct: 20,
+        insight: 'Automated work order creation accelerated maintenance response time.'
+      }
+    ]
+  }
+};
+
+function openKpiDrilldown(key) {
+  const d = KPI_IMPACT_DATA[key];
+  if (!d) return;
+
+  document.getElementById('kd-breadcrumb-metric').textContent = d.label;
+  document.getElementById('kd-metric-name').textContent       = d.label;
+  document.getElementById('kd-value').textContent             = d.value;
+  document.getElementById('kd-trend').textContent             = d.trend;
+  document.getElementById('kd-period').textContent            = d.period;
+  document.getElementById('kd-accent-bar').style.background   = d.accentColor;
+  document.getElementById('kd-footer-note').textContent       =
+    'Contribution estimates are based on session analysis and task completion data from the last 30 days.';
+
+  const list = document.getElementById('kd-agent-list');
+  list.innerHTML = d.agents.map(a => `
+    <div class="kd-agent-row">
+      <div class="kd-avatar" style="background:${a.color}">${a.initials}</div>
+      <div class="kd-agent-info">
+        <div class="kd-agent-name">${esc(a.name)}</div>
+        <div class="kd-agent-insight">${esc(a.insight)}</div>
+        <div class="kd-bar-wrap">
+          <div class="kd-bar" style="width:${a.pct}%;background:${a.color}"></div>
+        </div>
+      </div>
+    </div>`).join('');
+
+  document.getElementById('kpi-drawer-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeKpiDrilldown() {
+  document.getElementById('kpi-drawer-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleKpiOverlayClick(e) {
+  if (e.target === document.getElementById('kpi-drawer-overlay')) closeKpiDrilldown();
+}
+
+/* ================================================================
    MORE MENU
 ================================================================ */
 function toggleMoreMenu(e) {
@@ -5819,6 +6528,7 @@ document.addEventListener('keydown', e => {
   const dfd = document.getElementById('date-filter-dropdown');
   if (dfd) { dfd.classList.remove('open'); document.getElementById('btn-date-filter').setAttribute('aria-expanded','false'); }
   if (document.getElementById('modal-bulk-upload').classList.contains('open')) closeUploadModal();
+  if (document.getElementById('kpi-drawer-overlay').classList.contains('open')) closeKpiDrilldown();
 });
 
 /* ================================================================
@@ -6132,6 +6842,45 @@ renderAgentList('wo-assistant');
       <button class="btn-rollback-cancel" onclick="closeModal('modal-rollback')">Cancel</button>
       <button class="btn-rollback-confirm" id="btn-confirm-rollback" disabled onclick="confirmRollback()">Confirm Rollback</button>
     </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     KPI DRILL-DOWN DRAWER
+================================================================ -->
+<div id="kpi-drawer-overlay" class="kpi-drawer-overlay" role="dialog" aria-modal="true" aria-labelledby="kd-metric-name"
+     onclick="handleKpiOverlayClick(event)">
+  <div class="kpi-drawer" onclick="event.stopPropagation()">
+
+    <div class="kd-header">
+      <div class="kd-header-top">
+        <div class="kd-breadcrumb">
+          <span>Business Impact</span>
+          <span class="kd-breadcrumb-sep">›</span>
+          <span id="kd-breadcrumb-metric" style="color:var(--text-dark)">—</span>
+        </div>
+        <button class="kd-close" onclick="closeKpiDrilldown()" aria-label="Close">✕</button>
+      </div>
+      <div class="kd-accent-bar" id="kd-accent-bar"></div>
+      <div class="kd-metric-name" id="kd-metric-name"></div>
+      <div class="kd-value-row">
+        <span class="kd-value" id="kd-value"></span>
+        <span class="kd-trend" id="kd-trend"></span>
+      </div>
+      <span class="kd-period" id="kd-period"></span>
+    </div>
+
+    <div class="kd-body">
+      <div class="kd-section-title">How AI Agents contributed</div>
+      <div id="kd-agent-list"></div>
+    </div>
+
+    <div class="kd-footer">
+      <div class="kd-footer-note" id="kd-footer-note">
+        Contribution estimates are based on session analysis and task completion data from the last 30 days.
+      </div>
+    </div>
+
   </div>
 </div>
 
