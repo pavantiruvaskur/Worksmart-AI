@@ -16,7 +16,8 @@
       "Bash(python3 -c \" import json, sys lines = sys.stdin.readlines\\(\\) for line in lines[-20:]: try: d = json.loads\\(line\\) if 'figma' in str\\(d\\).lower\\(\\) or 'use_figma' in str\\(d\\).lower\\(\\): print\\(str\\(d\\)[:300]\\) print\\('---'\\) except: pass \")",
       "Bash(python3 -c \" import json, sys lines = sys.stdin.readlines\\(\\) for line in lines[-5:]: try: d = json.loads\\(line.strip\\(\\)\\) print\\(json.dumps\\(d, indent=2\\)[:500]\\) print\\('==='\\) except: pass \")",
       "Bash(curl -s http://127.0.0.1:3845/mcp)",
-      "Bash(curl -sv http://127.0.0.1:3845/sse)"
+      "Bash(curl -sv http://127.0.0.1:3845/sse)",
+      "Bash(node --input-type=module)"
     ]
   }
 }

@@ -2039,26 +2039,33 @@
   .btn-upload-icon:hover { background:#f7f8ff; border-color:#3d5afe; color:#3d5afe; }
 
   /* ================================================================
-     UPLOAD TYPE SELECTION MODAL
+     UPLOAD: CURRENT AGENT BANNER (auto-selected from Agent Details)
   ================================================================ */
-  .upload-type-cards {
-    display:flex; gap:12px;
+  .upload-current-agent-banner {
+    border:1.5px solid #3d5afe; border-radius:10px;
+    background:#f0f2ff; padding:12px 14px;
+    display:flex; flex-direction:column; gap:8px;
   }
-  .upload-type-card {
-    flex:1; display:flex; flex-direction:column; align-items:flex-start;
-    gap:8px; padding:16px; border:1.5px solid #e2e4e9; border-radius:10px;
-    background:white; cursor:pointer; text-align:left;
-    transition:border-color .15s, box-shadow .15s;
+  .ucab-label {
+    font-size:11px; font-weight:600; color:#3d5afe;
+    text-transform:uppercase; letter-spacing:.4px;
   }
-  .upload-type-card:hover { border-color:#3d5afe; box-shadow:0 2px 8px rgba(61,90,254,.12); }
-  .utc-icon {
-    width:40px; height:40px; border-radius:8px; background:#ecefff;
-    display:flex; align-items:center; justify-content:center;
-    color:#3d5afe;
+  .ucab-row {
+    display:flex; align-items:center; gap:10px;
   }
-  .utc-label { font-size:14px; font-weight:600; color:#1b1b3c; }
-  .utc-sub { font-size:12px; color:#8f93a3; line-height:1.4; }
-  .utc-arrow { font-size:16px; color:#3d5afe; align-self:flex-end; margin-top:auto; }
+  .ucab-avatar {
+    width:32px; height:32px; border-radius:7px;
+    font-size:11px; font-weight:700; color:white;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .ucab-info { flex:1; min-width:0; }
+  .ucab-name { font-size:13px; font-weight:600; color:#1b1b3c; }
+  .ucab-type { font-size:11px; color:#525560; }
+  .ucab-check {
+    width:20px; height:20px; border-radius:5px;
+    background:#3d5afe; display:flex; align-items:center; justify-content:center;
+    font-size:11px; color:white; flex-shrink:0;
+  }
 
   /* ================================================================
      BULK UPLOAD MULTI-STEP MODAL
@@ -2231,6 +2238,994 @@
   .edl-name { flex:1; color:#1b1b3c; font-weight:500; }
   .edl-reason { color:#c62828; }
 
+
+    /* ============================================================
+       DEPLOY MODAL — STEPPER
+    ============================================================ */
+    .deploy-stepper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 24px 20px;
+      gap: 0;
+    }
+    .dstep {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      flex: 1;
+      position: relative;
+      cursor: default;
+    }
+    .dstep-circle {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 2px solid #d0d0d0;
+      background: white;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-inter);
+      font-weight: 600;
+      font-size: 12px;
+      color: #9e9e9e;
+      transition: all 0.2s;
+      z-index: 1;
+    }
+    .dstep.active .dstep-circle  { border-color: var(--link); background: var(--link); color: white; }
+    .dstep.done  .dstep-circle   { border-color: #2e7d33; background: #2e7d33; color: white; }
+    .dstep-label {
+      font-family: var(--font-inter);
+      font-size: 10px;
+      color: #9e9e9e;
+      white-space: nowrap;
+    }
+    .dstep.active .dstep-label { color: var(--link); font-weight: 600; }
+    .dstep.done  .dstep-label  { color: #2e7d33; }
+    .dstep-line {
+      flex: 1;
+      height: 2px;
+      background: #e0e0e0;
+      margin-bottom: 17px;
+      transition: background 0.2s;
+    }
+    .dstep-line.done { background: #2e7d33; }
+
+    /* Deploy modal layout */
+    .deploy-modal {
+      background: white;
+      border-radius: 12px;
+      box-shadow: var(--shadow-modal);
+      width: 500px;
+      max-width: 96vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: modalIn 0.18s ease;
+    }
+    .deploy-modal-header {
+      padding: 20px 24px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .deploy-modal-title {
+      font-family: var(--font-inter);
+      font-weight: 700;
+      font-size: 17px;
+      color: var(--text-dark);
+    }
+    .deploy-modal-body {
+      padding: 20px 24px 24px;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .deploy-modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .deploy-step { display: none; }
+    .deploy-step.active { display: block; }
+
+    /* Environment cards */
+    .env-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 16px;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .env-card:hover:not(.selected) { border-color: #c5caff; background: #fafbff; }
+    .env-card.selected { border-color: var(--link); background: #f5f7ff; }
+    .env-radio {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      border: 2px solid #d0d0d0;
+      flex-shrink: 0;
+      margin-top: 2px;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.15s;
+    }
+    .env-card.selected .env-radio { border-color: var(--link); }
+    .env-radio-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--link);
+      display: none;
+    }
+    .env-card.selected .env-radio-dot { display: block; }
+    .env-card-info { flex: 1; }
+    .env-card-name {
+      font-family: var(--font-inter);
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--text-dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 3px;
+    }
+    .env-risk {
+      font-family: var(--font-inter);
+      font-weight: 500;
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 10px;
+    }
+    .risk-none    { background: #f0f0f0; color: #6e6e6e; }
+    .risk-low     { background: #e8f5e9; color: #2e7d32; }
+    .risk-high    { background: #fff3e0; color: #b26600; }
+    .env-card-desc { font-family: var(--font-inter); font-size: 12px; color: var(--text-gray); line-height: 1.5; }
+    .env-warning {
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      background: #fff8e1;
+      border: 1px solid #ffcc02;
+      border-radius: 7px;
+      padding: 10px 13px;
+      margin-top: 8px;
+      font-family: var(--font-inter);
+      font-size: 11px;
+      color: #7a5800;
+      line-height: 1.5;
+    }
+
+    /* Config summary table */
+    .cfg-table {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+    .cfg-table-row {
+      display: flex;
+      align-items: center;
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      transition: background 0.1s;
+    }
+    .cfg-table-row:last-child { border-bottom: none; }
+    .cfg-table-row:hover { background: #fafafe; }
+    .cfg-table-key {
+      width: 130px;
+      flex-shrink: 0;
+      font-family: var(--font-inter);
+      font-size: 12px;
+      color: var(--text-gray);
+    }
+    .cfg-table-val {
+      flex: 1;
+      font-family: var(--font-inter);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-dark);
+    }
+    .val-success { color: #2e7d32; }
+    .cfg-validation {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #e8f5e9;
+      border: 1px solid #a5d6a7;
+      border-radius: 7px;
+      padding: 10px 14px;
+      font-family: var(--font-inter);
+      font-size: 12px;
+      color: #1b5e20;
+      font-weight: 500;
+    }
+
+    /* Deploy settings */
+    .deploy-field-label {
+      font-family: var(--font-inter);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-medium);
+      margin-bottom: 6px;
+    }
+    .deploy-field-optional {
+      font-weight: 400;
+      color: var(--text-light);
+      font-size: 11px;
+    }
+    .deploy-input {
+      width: 100%;
+      height: 36px;
+      border: 1.5px solid var(--border);
+      border-radius: 7px;
+      padding: 0 12px;
+      font-family: var(--font-inter);
+      font-size: 13px;
+      color: var(--text-dark);
+      background: white;
+      outline: none;
+      transition: border-color 0.15s;
+      margin-bottom: 14px;
+    }
+    .deploy-input:focus { border-color: var(--link); }
+    .deploy-textarea {
+      width: 100%;
+      height: 80px;
+      border: 1.5px solid var(--border);
+      border-radius: 7px;
+      padding: 10px 12px;
+      font-family: var(--font-inter);
+      font-size: 13px;
+      color: var(--text-dark);
+      background: white;
+      outline: none;
+      resize: none;
+      transition: border-color 0.15s;
+      margin-bottom: 14px;
+    }
+    .deploy-textarea:focus { border-color: var(--link); }
+
+    .deploy-runtime-title {
+      font-family: var(--font-inter);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-gray);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+    .deploy-toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .deploy-toggle-row:last-child { border-bottom: none; }
+    .deploy-toggle-info { flex: 1; }
+    .deploy-toggle-label {
+      font-family: var(--font-inter);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-dark);
+      margin-bottom: 2px;
+    }
+    .deploy-toggle-sub {
+      font-family: var(--font-inter);
+      font-size: 11px;
+      color: var(--text-gray);
+    }
+
+    /* Confirm step */
+    .confirm-section-title {
+      font-family: var(--font-inter);
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--text-gray);
+      margin-bottom: 8px;
+    }
+    .confirm-prod-warning {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      background: #fff3e0;
+      border: 1px solid #ffa726;
+      border-radius: 7px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+    }
+    .confirm-prod-warning-icon { font-size: 15px; flex-shrink: 0; }
+    .confirm-prod-warning-text {
+      font-family: var(--font-inter);
+      font-size: 12px;
+      color: #7a4500;
+      line-height: 1.5;
+    }
+    .confirm-prod-warning-text strong { display: block; font-weight: 700; margin-bottom: 2px; }
+    .btn-deploy-cta {
+      width: 100%;
+      background: var(--link);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-family: var(--font-inter);
+      font-weight: 700;
+      font-size: 14px;
+      transition: background 0.15s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .btn-deploy-cta:hover { background: #3040df; }
+    .btn-deploy-cta:active { transform: scale(0.98); }
+
+    /* ============================================================
+       DEPLOYING / SUCCESS / FAILURE MODALS
+    ============================================================ */
+    .state-modal {
+      background: white;
+      border-radius: 12px;
+      box-shadow: var(--shadow-modal);
+      width: 440px;
+      max-width: 96vw;
+      padding: 32px 28px 28px;
+      text-align: center;
+      animation: modalIn 0.18s ease;
+    }
+    .deploying-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .deploying-title {
+      font-family: var(--font-inter);
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text-dark);
+    }
+    .deploying-agent-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f7f8ff;
+      border-radius: 8px;
+      padding: 11px 14px;
+      margin-bottom: 16px;
+    }
+    .deploying-agent-name {
+      font-family: var(--font-inter);
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-dark);
+    }
+    .deploying-agent-meta {
+      font-family: var(--font-inter);
+      font-size: 11px;
+      color: var(--text-gray);
+      margin-top: 2px;
+    }
+    .deploying-spinner {
+      width: 24px; height: 24px;
+      border: 3px solid #e0e3ff;
+      border-top-color: var(--link);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      flex-shrink: 0;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .deploying-progress-wrap {
+      margin-bottom: 10px;
+    }
+    .deploying-progress-bar-bg {
+      width: 100%;
+      height: 6px;
+      background: #e8eaff;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 6px;
+    }
+    .deploying-progress-bar-fill {
+      height: 100%;
+      background: var(--link);
+      border-radius: 3px;
+      transition: width 0.4s ease;
+    }
+    .deploying-status-text {
+      font-family: var(--font-inter);
+      font-size: 12px;
+      color: var(--text-gray);
+      text-align: left;
+    }
+    .deploying-navigate-note {
+      font-family: var(--font-inter);
+      font-size: 11px;
+      color: var(--text-light);
+      text-align: center;
+      margin-top: 14px;
+    }
+    .btn-cancel-deploy {
+      font-family: var(--font-inter);
+      font-size: 12px;
+      color: var(--error);
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .btn-cancel-deploy:hover { text-decoration: underline; }
+
+    /* Success state */
+    .success-icon-wrap {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: #e8f5e9;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .success-checkmark {
+      font-size: 28px;
+      color: #2e7d32;
+    }
+    .state-modal-title {
+      font-family: var(--font-inter);
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--text-dark);
+      margin-bottom: 5px;
+    }
+    .state-modal-sub {
+      font-family: var(--font-inter);
+      font-size: 13px;
+      color: var(--text-gray);
+      margin-bottom: 18px;
+    }
+    .state-detail-row {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .state-detail-cell {
+      flex: 1;
+      padding: 10px 14px;
+      border-right: 1px solid var(--border);
+      text-align: left;
+    }
+    .state-detail-cell:last-child { border-right: none; }
+    .state-detail-label {
+      font-family: var(--font-inter);
+      font-size: 10px;
+      color: var(--text-light);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    .state-detail-val {
+      font-family: var(--font-inter);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+    .state-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+    .btn-view-deployment {
+      background: var(--link);
+      color: white;
+      padding: 9px 20px;
+      border-radius: 7px;
+      font-family: var(--font-inter);
+      font-weight: 600;
+      font-size: 13px;
+      transition: background 0.15s;
+    }
+    .btn-view-deployment:hover { background: #3040df; }
+    .btn-done-modal {
+      background: white;
+      color: var(--text-medium);
+      padding: 9px 20px;
+      border-radius: 7px;
+      border: 1px solid var(--border);
+      font-family: var(--font-inter);
+      font-weight: 500;
+      font-size: 13px;
+      transition: background 0.15s;
+    }
+    .btn-done-modal:hover { background: #f5f5f8; }
+
+    /* Failure state */
+    .failure-icon-wrap {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: #ffebee;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .failure-x { font-size: 28px; color: var(--error); }
+    .state-modal-title.failure { color: var(--error); }
+    .failure-error-box {
+      background: #fff5f5;
+      border: 1px solid #ffcdd2;
+      border-radius: 7px;
+      padding: 11px 14px;
+      margin-bottom: 14px;
+      text-align: left;
+    }
+    .failure-error-main {
+      font-family: var(--font-inter);
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--error);
+      margin-bottom: 3px;
+    }
+    .failure-error-code {
+      font-family: var(--font-inter);
+      font-size: 11px;
+      color: var(--text-gray);
+    }
+    .failure-steps {
+      text-align: left;
+      margin-bottom: 18px;
+    }
+    .failure-step-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 0;
+      font-family: var(--font-inter);
+      font-size: 12px;
+      color: var(--text-medium);
+    }
+    .fstep-done  { color: #2e7d32; }
+    .fstep-fail  { color: var(--error); }
+    .fstep-icon  { font-size: 13px; flex-shrink: 0; width: 16px; }
+
+    /* ============================================================
+       DEPLOYMENTS TAB PANE
+    ============================================================ */
+    .deployments-pane { display: flex; flex-direction: column; gap: 16px; }
+    .deployments-list-view { display: block; }
+    .deployments-detail-view { display: none; }
+    .deployments-detail-view.active { display: block; }
+    .deployments-list-view.hidden { display: none; }
+
+    .deployments-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .deployments-title {
+      font-family: var(--font-inter);
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--text-dark);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .dep-count-chip {
+      background: var(--primary-50);
+      color: var(--primary);
+      font-family: var(--font-inter);
+      font-weight: 500;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+    .btn-new-deployment {
+      background: var(--link);
+      color: white;
+      padding: 7px 14px;
+      border-radius: 7px;
+      font-family: var(--font-inter);
+      font-weight: 600;
+      font-size: 12px;
+      transition: background 0.15s;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .btn-new-deployment:hover { background: #3040df; }
+
+    /* Deployments table */
+    .dep-table-wrap {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+    .dep-table { width: 100%; border-collapse: collapse; }
+    .dep-table th {
+      background: #f7f8fa;
+      font-family: var(--font-inter);
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-gray);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      white-space: nowrap;
+    }
+    .dep-table td {
+      padding: 11px 14px;
+      font-family: var(--font-inter);
+      font-size: 12px;
+      color: var(--text-dark);
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+      vertical-align: middle;
+    }
+    .dep-table tr:last-child td { border-bottom: none; }
+    .dep-table tr:hover td { background: #fafafe; }
+    .dep-version-link {
+      font-weight: 600;
+      color: var(--link);
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+    .dep-version-link:hover { text-decoration: underline; }
+    .dep-env-badge {
+      font-family: var(--font-inter);
+      font-weight: 500;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      white-space: nowrap;
+    }
+    .dep-env-prod    { background: #e8eaff; color: #3d5afe; }
+    .dep-env-staging { background: #fff3e0; color: #b26600; }
+    .dep-env-draft   { background: #f0f0f0; color: #6e6e6e; }
+    .dep-status-chip {
+      display: flex; align-items: center; gap: 5px;
+      font-family: var(--font-inter);
+      font-size: 11px;
+      font-weight: 500;
+    }
+    .dep-status-dot { width: 7px; height: 7px; border-radius: 50%; }
+    .dep-active   { color: #2e7d32; }
+    .dep-active .dep-status-dot   { background: #2e7d32; }
+    .dep-failed   { color: var(--error); }
+    .dep-failed .dep-status-dot   { background: var(--error); }
+    .dep-archived { color: var(--text-gray); }
+    .dep-archived .dep-status-dot { background: #9e9e9e; }
+    .dep-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+    }
+    .dep-action-btn {
+      font-family: var(--font-inter);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--link);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: color 0.15s;
+    }
+    .dep-action-btn:hover { text-decoration: underline; }
+    .dep-action-btn.rollback { color: #b26600; }
+    .dep-action-btn.delete   { color: var(--error); }
+    .dep-table-footer {
+      padding: 10px 14px;
+      font-family: var(--font-inter);
+      font-size: 11px;
+      color: var(--text-light);
+      border-top: 1px solid rgba(0,0,0,0.05);
+      background: #f7f8fa;
+    }
+
+    /* Deployment Detail (within tab pane) */
+    .dep-detail-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .dep-detail-bc-link {
+      font-family: var(--font-inter);
+      font-size: 12px;
+      color: var(--link);
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .dep-detail-bc-link:hover { text-decoration: underline; }
+    .dep-detail-bc-sep { font-size: 12px; color: var(--text-light); }
+    .dep-detail-bc-cur { font-family: var(--font-inter); font-size: 12px; color: var(--text-gray); }
+
+    .dep-detail-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .dep-detail-version {
+      font-family: var(--font-inter);
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--text-dark);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .dep-detail-meta {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 16px;
+    }
+    .dep-detail-meta-item {
+      font-family: var(--font-inter);
+      font-size: 12px;
+      color: var(--text-gray);
+    }
+    .dep-detail-meta-item strong {
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+    .dep-detail-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-dep-action {
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-family: var(--font-inter);
+      font-weight: 500;
+      font-size: 12px;
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--text-medium);
+      transition: background 0.12s;
+    }
+    .btn-dep-action:hover { background: #f5f5f8; }
+    .btn-dep-action.danger {
+      color: var(--error);
+      border-color: #ffcdd2;
+    }
+    .btn-dep-action.danger:hover { background: #fff5f5; }
+
+    /* Dep metrics row */
+    .dep-metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .dep-metric-card {
+      background: white;
+      border-radius: 8px;
+      padding: 12px 14px;
+      box-shadow: var(--shadow-card);
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+    .dep-metric-label {
+      font-family: var(--font-inter);
+      font-size: 11px;
+      color: var(--text-gray);
+      margin-bottom: 4px;
+    }
+    .dep-metric-value {
+      font-family: var(--font-inter);
+      font-weight: 700;
+      font-size: 22px;
+      color: var(--text-dark);
+      line-height: 1.1;
+    }
+    .dep-metric-value.success { color: #2e7d32; }
+    .dep-metric-value.danger  { color: var(--error); }
+    .dep-metric-sub {
+      font-family: var(--font-inter);
+      font-size: 10px;
+      color: var(--text-light);
+      margin-top: 2px;
+    }
+
+    /* Config snapshot card */
+    .dep-snapshot-card {
+      background: white;
+      border-radius: 10px;
+      padding: 16px 20px;
+      box-shadow: var(--shadow-card);
+      margin-bottom: 14px;
+    }
+    .dep-snapshot-title {
+      font-family: var(--font-inter);
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--text-dark);
+      margin-bottom: 12px;
+    }
+    .dep-snapshot-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 24px;
+    }
+    .dep-snapshot-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+    }
+    .dep-snapshot-key { font-family: var(--font-inter); font-size: 11px; color: var(--text-gray); }
+    .dep-snapshot-val { font-family: var(--font-inter); font-size: 11px; font-weight: 500; color: var(--text-dark); }
+
+    /* Deployment log */
+    .dep-log-card {
+      background: white;
+      border-radius: 10px;
+      padding: 16px 20px;
+      box-shadow: var(--shadow-card);
+    }
+    .dep-log-title {
+      font-family: var(--font-inter);
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--text-dark);
+      margin-bottom: 12px;
+    }
+    .dep-log-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+    }
+    .dep-log-row:last-child { border-bottom: none; }
+    .dep-log-icon { font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+    .dep-log-time {
+      font-family: 'Roboto', monospace;
+      font-size: 11px;
+      color: var(--text-light);
+      white-space: nowrap;
+      flex-shrink: 0;
+      min-width: 55px;
+    }
+    .dep-log-msg { font-family: var(--font-inter); font-size: 12px; color: var(--text-medium); flex: 1; }
+    .dep-log-link {
+      font-family: var(--font-inter);
+      font-size: 12px;
+      color: var(--link);
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+    .dep-log-link:hover { text-decoration: underline; }
+
+    /* ============================================================
+       ROLLBACK MODAL
+    ============================================================ */
+    .rollback-modal {
+      background: white;
+      border-radius: 12px;
+      box-shadow: var(--shadow-modal);
+      width: 480px;
+      max-width: 96vw;
+      animation: modalIn 0.18s ease;
+    }
+    .rollback-modal-header {
+      padding: 20px 24px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+    }
+    .rollback-modal-title {
+      font-family: var(--font-inter);
+      font-weight: 700;
+      font-size: 17px;
+      color: var(--text-dark);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .rollback-body { padding: 20px 24px; }
+    .rollback-target-box {
+      background: #fff8e1;
+      border: 1px solid #ffcc02;
+      border-radius: 7px;
+      padding: 11px 14px;
+      margin-bottom: 14px;
+      font-family: var(--font-inter);
+      font-size: 12px;
+      color: #7a5800;
+    }
+    .rollback-target-box strong { font-weight: 700; }
+    .rollback-impact-title {
+      font-family: var(--font-inter);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+    .rollback-impact-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-bottom: 16px;
+    }
+    .rollback-impact-list li {
+      font-family: var(--font-inter);
+      font-size: 12px;
+      color: var(--text-medium);
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+    }
+    .rollback-impact-list li::before {
+      content: '•';
+      color: #b26600;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .rollback-confirm-label {
+      font-family: var(--font-inter);
+      font-size: 11px;
+      color: var(--text-gray);
+      margin-bottom: 6px;
+    }
+    .rollback-input {
+      width: 100%;
+      height: 36px;
+      border: 1.5px solid var(--border);
+      border-radius: 7px;
+      padding: 0 12px;
+      font-family: var(--font-inter);
+      font-size: 13px;
+      color: var(--text-dark);
+      background: white;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .rollback-input:focus { border-color: var(--link); }
+    .rollback-modal-footer {
+      padding: 14px 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .btn-rollback-cancel {
+      padding: 8px 18px;
+      border-radius: 7px;
+      border: 1px solid var(--border);
+      background: white;
+      font-family: var(--font-inter);
+      font-weight: 500;
+      font-size: 13px;
+      color: var(--text-medium);
+      transition: background 0.12s;
+    }
+    .btn-rollback-cancel:hover { background: #f5f5f8; }
+    .btn-rollback-confirm {
+      padding: 8px 18px;
+      border-radius: 7px;
+      border: none;
+      background: var(--error);
+      font-family: var(--font-inter);
+      font-weight: 600;
+      font-size: 13px;
+      color: white;
+      transition: background 0.15s;
+    }
+    .btn-rollback-confirm:hover { background: #a51515; }
+    .btn-rollback-confirm:disabled { opacity: 0.4; cursor: not-allowed; }
   </style>
 </head>
 <body>
@@ -2757,7 +3752,7 @@
               </svg>
               <input type="text" placeholder="Search agents..." aria-label="Search agents">
             </div>
-            <button class="btn-upload-icon" aria-label="Upload documents" title="Upload Documents" onclick="openUploadTypeModal()">
+            <button class="btn-upload-icon" aria-label="Upload documents" title="Upload Documents" onclick="openUploadModal()">
               <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
                 <path d="M7.5 2v8M7.5 2L5 4.5M7.5 2L10 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M2 11v1.2C2 12.65 2.35 13 2.8 13h9.4c.45 0 .8-.35.8-.8V11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -2811,7 +3806,7 @@
                   <button class="btn-card-action" onclick="openAgentDetail('wo-assistant');event.stopPropagation()">Configure</button>
                   <button class="btn-card-action" onclick="showInfoToast('Chat coming soon');event.stopPropagation()">Chat</button>
                   <button class="btn-card-action" onclick="openAgentDetail('wo-assistant');switchDetailTabById('documents');event.stopPropagation()">Documents</button>
-                  <button class="btn-card-deploy" onclick="showInfoToast('Deploying...');event.stopPropagation()">Deploy</button>
+                  <button class="btn-card-deploy" onclick="openDeployModal();event.stopPropagation()">Deploy</button>
                 </div>
               </div>
 
@@ -2837,7 +3832,7 @@
                   <button class="btn-card-action" onclick="openAgentDetail('safety');event.stopPropagation()">Configure</button>
                   <button class="btn-card-action" onclick="showInfoToast('Chat coming soon');event.stopPropagation()">Chat</button>
                   <button class="btn-card-action" onclick="openAgentDetail('safety');switchDetailTabById('documents');event.stopPropagation()">Documents</button>
-                  <button class="btn-card-deploy" onclick="showInfoToast('Deploying...');event.stopPropagation()">Deploy</button>
+                  <button class="btn-card-deploy" onclick="openDeployModal();event.stopPropagation()">Deploy</button>
                 </div>
               </div>
 
@@ -2863,7 +3858,7 @@
                   <button class="btn-card-action" onclick="openAgentDetail('parts');event.stopPropagation()">Configure</button>
                   <button class="btn-card-action" onclick="showInfoToast('Chat coming soon');event.stopPropagation()">Chat</button>
                   <button class="btn-card-action" onclick="openAgentDetail('parts');switchDetailTabById('documents');event.stopPropagation()">Documents</button>
-                  <button class="btn-card-deploy" onclick="showInfoToast('Deploying...');event.stopPropagation()">Deploy</button>
+                  <button class="btn-card-deploy" onclick="openDeployModal();event.stopPropagation()">Deploy</button>
                 </div>
               </div>
 
@@ -2915,7 +3910,7 @@
                   <button class="btn-card-action" onclick="openAgentDetail('eq-health');event.stopPropagation()">Configure</button>
                   <button class="btn-card-action" onclick="showInfoToast('Chat coming soon');event.stopPropagation()">Chat</button>
                   <button class="btn-card-action" onclick="openAgentDetail('eq-health');switchDetailTabById('documents');event.stopPropagation()">Documents</button>
-                  <button class="btn-card-deploy" onclick="showInfoToast('Deploying...');event.stopPropagation()">Deploy</button>
+                  <button class="btn-card-deploy" onclick="openDeployModal();event.stopPropagation()">Deploy</button>
                 </div>
               </div>
 
@@ -2967,7 +3962,7 @@
                   <button class="btn-card-action" onclick="openAgentDetail('calibration');event.stopPropagation()">Configure</button>
                   <button class="btn-card-action" onclick="showInfoToast('Chat coming soon');event.stopPropagation()">Chat</button>
                   <button class="btn-card-action" onclick="openAgentDetail('calibration');switchDetailTabById('documents');event.stopPropagation()">Documents</button>
-                  <button class="btn-card-deploy" onclick="showInfoToast('Deploying...');event.stopPropagation()">Deploy</button>
+                  <button class="btn-card-deploy" onclick="openDeployModal();event.stopPropagation()">Deploy</button>
                 </div>
               </div>
 
@@ -3040,13 +4035,13 @@
                 <div class="agent-header-actions" role="group" aria-label="Agent actions">
                   <button class="btn-ghost" aria-label="Edit agent" onclick="showInfoToast('Edit agent coming soon')">Edit</button>
                   <button class="btn-ghost" aria-label="Test chat" onclick="showInfoToast('Test Chat coming soon')">Test Chat</button>
-                  <button class="btn-upload-icon" aria-label="Upload documents" title="Upload Documents" onclick="openUploadTypeModal()">
+                  <button class="btn-upload-icon" aria-label="Upload documents" title="Upload Documents" onclick="openUploadModal(currentAgentKey)">
                     <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
                       <path d="M7.5 2v8M7.5 2L5 4.5M7.5 2L10 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                       <path d="M2 11v1.2C2 12.65 2.35 13 2.8 13h9.4c.45 0 .8-.35.8-.8V11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                     </svg>
                   </button>
-                  <button class="btn-deploy" aria-label="Deploy agent" onclick="showInfoToast('Deploying agent...')">▶ Deploy</button>
+                  <button class="btn-deploy" aria-label="Deploy agent" onclick="openDeployModal()">▶ Deploy</button>
                 </div>
               </div>
 
@@ -3070,6 +4065,9 @@
                 <div class="detail-tab" role="tab" tabindex="0" aria-selected="false"
                      id="dtab-analytics"
                      onclick="switchDetailTab(this,'analytics')" onkeydown="keyActivate(event,this)">Analytics</div>
+                <div class="detail-tab" role="tab" tabindex="0" aria-selected="false"
+                     id="dtab-deployments"
+                     onclick="switchDetailTab(this,'deployments')" onkeydown="keyActivate(event,this)">Deployments</div>
               </div>
 
               <!-- Scrollable Content -->
@@ -3384,6 +4382,186 @@
                     </div>
                   </div>
                 </div><!-- /analytics -->
+
+                <!-- DEPLOYMENTS TAB -->
+                <div id="pane-deployments" class="tab-pane" aria-label="Deployments">
+                  <div class="deployments-pane">
+
+                    <!-- List View -->
+                    <div id="dep-list-view" class="deployments-list-view">
+                      <div class="deployments-header">
+                        <div class="deployments-title">
+                          Deployments
+                          <span class="dep-count-chip" id="dep-count-chip">3</span>
+                        </div>
+                        <button class="btn-new-deployment" onclick="openDeployModal()">+ New Deployment</button>
+                      </div>
+                      <div class="dep-table-wrap">
+                        <table class="dep-table" id="dep-table">
+                          <thead>
+                            <tr>
+                              <th>Version</th>
+                              <th>Environment</th>
+                              <th>Status</th>
+                              <th>Deployed By</th>
+                              <th>Date</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody id="dep-table-body">
+                            <tr>
+                              <td><span class="dep-version-link" onclick="openDeploymentDetail('v1.4-production')">v1.4-production</span></td>
+                              <td><span class="dep-env-badge dep-env-prod">Production</span></td>
+                              <td><div class="dep-status-chip dep-active"><div class="dep-status-dot"></div>Active</div></td>
+                              <td>John Smith</td>
+                              <td>Apr 5, 2026</td>
+                              <td>
+                                <div class="dep-actions">
+                                  <button class="dep-action-btn" onclick="openDeploymentDetail('v1.4-production')">View</button>
+                                  <button class="dep-action-btn" onclick="showInfoToast('Edit deployment coming soon')">Edit</button>
+                                  <button class="dep-action-btn rollback" onclick="openRollbackModal('v1.3-staging','Staging')">Rollback</button>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td><span class="dep-version-link" onclick="openDeploymentDetail('v1.3-staging')">v1.3-staging</span></td>
+                              <td><span class="dep-env-badge dep-env-staging">Staging</span></td>
+                              <td><div class="dep-status-chip dep-active"><div class="dep-status-dot"></div>Active</div></td>
+                              <td>John Smith</td>
+                              <td>Apr 3, 2026</td>
+                              <td>
+                                <div class="dep-actions">
+                                  <button class="dep-action-btn" onclick="openDeploymentDetail('v1.3-staging')">View</button>
+                                  <button class="dep-action-btn" onclick="showInfoToast('Edit deployment coming soon')">Edit</button>
+                                  <button class="dep-action-btn rollback" onclick="openRollbackModal('v1.2-production','Production')">Rollback</button>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td><span class="dep-version-link" onclick="openDeploymentDetail('v1.2-production')">v1.2-production</span></td>
+                              <td><span class="dep-env-badge dep-env-prod">Production</span></td>
+                              <td><div class="dep-status-chip dep-archived"><div class="dep-status-dot"></div>Archived</div></td>
+                              <td>Sarah Kim</td>
+                              <td>Mar 20, 2026</td>
+                              <td>
+                                <div class="dep-actions">
+                                  <button class="dep-action-btn" onclick="openDeploymentDetail('v1.2-production')">View</button>
+                                  <button class="dep-action-btn rollback" onclick="openRollbackModal('v1.2-production','Production')">Rollback</button>
+                                  <button class="dep-action-btn delete" onclick="confirmDeleteDeployment(this)">Delete</button>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="dep-table-footer">Showing 3 of 3 deployments</div>
+                      </div>
+                    </div><!-- /dep-list-view -->
+
+                    <!-- Detail View (within tab pane) -->
+                    <div id="dep-detail-view" class="deployments-detail-view">
+                      <!-- breadcrumb -->
+                      <div class="dep-detail-breadcrumb">
+                        <button class="dep-detail-bc-link" onclick="closeDeploymentDetail()">← Deployments</button>
+                        <span class="dep-detail-bc-sep">/</span>
+                        <span class="dep-detail-bc-cur" id="dep-detail-bc-ver">v1.4-production</span>
+                      </div>
+
+                      <div class="dep-detail-heading">
+                        <div class="dep-detail-version">
+                          <span id="dep-detail-version-name">v1.4-production</span>
+                          <span class="dep-env-badge dep-env-prod" id="dep-detail-env-badge">Production</span>
+                          <div class="dep-status-chip dep-active" id="dep-detail-status-chip"><div class="dep-status-dot"></div><span id="dep-detail-status-text">Active</span></div>
+                        </div>
+                        <div class="dep-detail-actions">
+                          <button class="btn-dep-action" onclick="openRollbackModal('v1.3-staging','Staging')">Rollback</button>
+                          <button class="btn-dep-action" onclick="showInfoToast('Edit deployment coming soon')">Edit</button>
+                          <button class="btn-dep-action danger" onclick="confirmDeleteDeployment(this)">Archive</button>
+                        </div>
+                      </div>
+
+                      <div class="dep-detail-meta">
+                        <div class="dep-detail-meta-item">Deployed by <strong id="dep-detail-by">John Smith</strong></div>
+                        <div class="dep-detail-meta-item">Date <strong id="dep-detail-date">Apr 5, 2026 · 16:45 UTC</strong></div>
+                        <div class="dep-detail-meta-item">Agent <strong id="dep-detail-agent">Troubleshoot</strong></div>
+                        <div class="dep-detail-meta-item">Model <strong id="dep-detail-model">Claude Sonnet 4.6</strong></div>
+                      </div>
+
+                      <!-- Metrics -->
+                      <div class="dep-metrics-grid">
+                        <div class="dep-metric-card">
+                          <div class="dep-metric-label">Success Rate</div>
+                          <div class="dep-metric-value success" id="dep-m-success">94.2%</div>
+                          <div class="dep-metric-sub">+2.1% vs prev</div>
+                        </div>
+                        <div class="dep-metric-card">
+                          <div class="dep-metric-label">Avg Latency</div>
+                          <div class="dep-metric-value" id="dep-m-latency">2.3s</div>
+                          <div class="dep-metric-sub">Last 24h</div>
+                        </div>
+                        <div class="dep-metric-card">
+                          <div class="dep-metric-label">Total Calls</div>
+                          <div class="dep-metric-value" id="dep-m-calls">1,247</div>
+                          <div class="dep-metric-sub">All time</div>
+                        </div>
+                        <div class="dep-metric-card">
+                          <div class="dep-metric-label">Error Rate</div>
+                          <div class="dep-metric-value danger" id="dep-m-errors">0.8%</div>
+                          <div class="dep-metric-sub">Last 24h</div>
+                        </div>
+                      </div>
+
+                      <!-- Config Snapshot -->
+                      <div class="dep-snapshot-card">
+                        <div class="dep-snapshot-title">Configuration Snapshot</div>
+                        <div class="dep-snapshot-grid">
+                          <div class="dep-snapshot-row"><span class="dep-snapshot-key">Agent</span><span class="dep-snapshot-val" id="dep-snap-agent">Troubleshoot</span></div>
+                          <div class="dep-snapshot-row"><span class="dep-snapshot-key">Temperature</span><span class="dep-snapshot-val">0.3</span></div>
+                          <div class="dep-snapshot-row"><span class="dep-snapshot-key">Model</span><span class="dep-snapshot-val">Claude Sonnet 4.6</span></div>
+                          <div class="dep-snapshot-row"><span class="dep-snapshot-key">Max Tokens</span><span class="dep-snapshot-val">4,096</span></div>
+                          <div class="dep-snapshot-row"><span class="dep-snapshot-key">Tools</span><span class="dep-snapshot-val">3 connected</span></div>
+                          <div class="dep-snapshot-row"><span class="dep-snapshot-key">Logging</span><span class="dep-snapshot-val val-success">Enabled</span></div>
+                          <div class="dep-snapshot-row"><span class="dep-snapshot-key">Documents</span><span class="dep-snapshot-val">4 linked</span></div>
+                          <div class="dep-snapshot-row"><span class="dep-snapshot-key">Monitoring</span><span class="dep-snapshot-val val-success">Enabled</span></div>
+                        </div>
+                      </div>
+
+                      <!-- Deployment Log -->
+                      <div class="dep-log-card">
+                        <div class="dep-log-title">Deployment Log</div>
+                        <div class="dep-log-row">
+                          <span class="dep-log-icon">✅</span>
+                          <span class="dep-log-time">16:42</span>
+                          <span class="dep-log-msg">Deployment initialized — environment: Production</span>
+                        </div>
+                        <div class="dep-log-row">
+                          <span class="dep-log-icon">✅</span>
+                          <span class="dep-log-time">16:43</span>
+                          <span class="dep-log-msg">Tools validated (3/3): SAP PM, IoT Hub, Maintenance DB</span>
+                        </div>
+                        <div class="dep-log-row">
+                          <span class="dep-log-icon">✅</span>
+                          <span class="dep-log-time">16:44</span>
+                          <span class="dep-log-msg">Documents indexed (4/4) — embedding complete</span>
+                        </div>
+                        <div class="dep-log-row">
+                          <span class="dep-log-icon">✅</span>
+                          <span class="dep-log-time">16:44</span>
+                          <span class="dep-log-msg">Health check passed — all endpoints responding</span>
+                        </div>
+                        <div class="dep-log-row">
+                          <span class="dep-log-icon">🔵</span>
+                          <span class="dep-log-time">16:45</span>
+                          <span class="dep-log-msg">Agent is live on Production (v1.4-production)</span>
+                        </div>
+                        <div style="margin-top:10px">
+                          <button class="dep-log-link" onclick="showInfoToast('Full logs coming soon')">View full logs →</button>
+                        </div>
+                      </div>
+
+                    </div><!-- /dep-detail-view -->
+
+                  </div><!-- /deployments-pane -->
+                </div><!-- /deployments -->
 
               </div><!-- /detail-content -->
             </section>
@@ -3757,50 +4935,11 @@
 </div><!-- /app -->
 
 
-<!-- ================================================================
-     MODAL: UPLOAD TYPE SELECTION
-================================================================ -->
-<div id="modal-upload-type" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="upload-type-title">
-  <div class="modal" style="width:480px" role="document">
-    <div class="modal-header">
-      <h2 class="modal-title" id="upload-type-title">Upload Documents</h2>
-      <button class="modal-close" onclick="closeModal('modal-upload-type')" aria-label="Close">✕</button>
-    </div>
-    <div class="modal-body">
-      <p style="font-size:13px;color:#525560;margin-bottom:16px;">Choose how you want to upload documents to your agents.</p>
-      <div class="upload-type-cards">
-        <button class="upload-type-card" onclick="openBulkUpload()">
-          <div class="utc-icon">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-              <rect x="3" y="5" width="14" height="11" rx="2" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M7 5V4a1 1 0 011-1h4a1 1 0 011 1v1" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M10 9v4M10 9l-2 2M10 9l2 2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="utc-label">Bulk Upload</div>
-          <div class="utc-sub">Upload multiple files and assign them to one or more agents at once.</div>
-          <div class="utc-arrow">→</div>
-        </button>
-        <button class="upload-type-card" onclick="openSingleUpload()">
-          <div class="utc-icon">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-              <path d="M11 3H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V9l-5-6z" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M11 3v6h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              <path d="M10 12v3M10 12l-1.5 1.5M10 12l1.5 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="utc-label">Single Document</div>
-          <div class="utc-sub">Upload one document and link it directly to a specific agent.</div>
-          <div class="utc-arrow">→</div>
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- modal-upload-type removed: unified flow replaces Single + Bulk pickers -->
 
 
 <!-- ================================================================
-     MODAL: BULK UPLOAD (6-step flow)
+     MODAL: UPLOAD DOCUMENTS (unified flow)
 ================================================================ -->
 <div id="modal-bulk-upload" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="bulk-upload-title">
   <div class="modal modal-bulk" role="document">
@@ -3808,14 +4947,14 @@
     <!-- Header -->
     <div class="modal-header" style="flex-direction:column;align-items:stretch;gap:14px">
       <div style="display:flex;justify-content:space-between;align-items:center">
-        <h2 class="modal-title" id="bulk-upload-title">Bulk Upload</h2>
-        <button class="modal-close" onclick="closeBulkUpload()" aria-label="Close">✕</button>
+        <h2 class="modal-title" id="bulk-upload-title">Upload Documents</h2>
+        <button class="modal-close" onclick="closeUploadModal()" aria-label="Close">✕</button>
       </div>
-      <!-- Step indicator -->
+      <!-- 3-step indicator: Files → Agents → Done -->
       <div class="bulk-steps-bar" style="padding:0">
         <div class="bsb-step active" id="bsb-1">
           <div class="bsb-circle">1</div>
-          <div class="bsb-label">Upload</div>
+          <div class="bsb-label">Files</div>
         </div>
         <div class="bsb-line" id="bsbl-1"></div>
         <div class="bsb-step" id="bsb-2">
@@ -3825,16 +4964,6 @@
         <div class="bsb-line" id="bsbl-2"></div>
         <div class="bsb-step" id="bsb-3">
           <div class="bsb-circle">3</div>
-          <div class="bsb-label">Confirm</div>
-        </div>
-        <div class="bsb-line" id="bsbl-3"></div>
-        <div class="bsb-step" id="bsb-4">
-          <div class="bsb-circle">4</div>
-          <div class="bsb-label">Processing</div>
-        </div>
-        <div class="bsb-line" id="bsbl-4"></div>
-        <div class="bsb-step" id="bsb-5">
-          <div class="bsb-circle">5</div>
           <div class="bsb-label">Done</div>
         </div>
       </div>
@@ -3855,7 +4984,12 @@
 
     <!-- Step 2: Agent Selection -->
     <div id="bulk-step-2" class="bulk-step" aria-label="Step 2: Select agents">
-      <p class="step-desc">Select which agents should receive the uploaded documents as knowledge base entries.</p>
+      <!-- Auto-selected agent banner (shown only when opened from Agent Details) -->
+      <div id="upload-current-agent-banner" class="upload-current-agent-banner" style="display:none" aria-live="polite">
+        <div class="ucab-label">Auto-selected from current agent</div>
+        <div class="ucab-row" id="ucab-row"><!-- populated by JS --></div>
+      </div>
+      <p class="step-desc">Choose which agents should receive these documents. You can add or remove agents below.</p>
       <div class="select-actions">
         <button class="btn-select-all" onclick="bulkSelectAll(true)">Select all</button>
         <span style="color:#e2e4e9;font-size:12px">|</span>
@@ -3914,97 +5048,18 @@
 
     <!-- Footer -->
     <div class="modal-footer">
-      <button class="btn-secondary" id="bulk-btn-back" onclick="bulkBack()" style="display:none">← Back</button>
-      <button class="btn-secondary" id="bulk-btn-cancel" onclick="closeBulkUpload()">Cancel</button>
-      <button class="btn-primary"   id="bulk-btn-next"  onclick="bulkNext()" disabled>Next →</button>
-      <button class="btn-primary"   id="bulk-btn-start" onclick="bulkStartProcessing()" style="display:none">Start Upload</button>
-      <button class="btn-primary"   id="bulk-btn-done"  onclick="closeBulkUpload()" style="display:none">Done</button>
-      <button class="btn-secondary" id="bulk-btn-retry" onclick="bulkRetry()" style="display:none">Retry Failed</button>
+      <button class="btn-secondary" id="bulk-btn-back"   onclick="bulkBack()" style="display:none">← Back</button>
+      <button class="btn-secondary" id="bulk-btn-cancel" onclick="closeUploadModal()">Cancel</button>
+      <button class="btn-primary"   id="bulk-btn-next"   onclick="bulkNext()" disabled>Next →</button>
+      <button class="btn-primary"   id="bulk-btn-start"  onclick="bulkStartProcessing()" style="display:none">Upload</button>
+      <button class="btn-primary"   id="bulk-btn-done"   onclick="closeUploadModal()" style="display:none">Done</button>
+      <button class="btn-secondary" id="bulk-btn-retry"  onclick="bulkRetry()" style="display:none">Retry Failed</button>
     </div>
   </div>
 </div>
 
 
-<!-- ================================================================
-     MODAL: SINGLE DOCUMENT UPLOAD
-================================================================ -->
-<div id="modal-upload" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="upload-modal-title">
-  <div class="modal" role="document">
-    <div class="modal-header">
-      <h2 class="modal-title" id="upload-modal-title">Single Document Upload</h2>
-      <button class="modal-close" onclick="closeModal('modal-upload')" aria-label="Close">✕</button>
-    </div>
-    <div class="modal-body">
-      <div id="drop-zone" class="modal-drop-zone"
-           ondragover="handleDragOver(event)"
-           ondragleave="handleDragLeave(event)"
-           ondrop="handleDrop(event)"
-           onclick="triggerFileInput()"
-           role="button" tabindex="0" aria-label="Click or drop file to upload">
-        <div class="drop-icon" aria-hidden="true">☁️</div>
-        <div class="drop-title">Drop a file here</div>
-        <div class="drop-sub">PDF, DOCX, XLSX, TXT supported · Max 50 MB</div>
-        <button class="btn-browse" onclick="triggerFileInput(); event.stopPropagation()">Browse File</button>
-      </div>
-      <div id="selected-files-section" class="selected-files-section">
-        <div class="sel-count" id="sel-count" aria-live="polite" role="status">0 files selected</div>
-        <div class="file-list" id="modal-file-list" role="list" aria-label="Selected files"></div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-secondary" onclick="closeModal('modal-upload')">Cancel</button>
-      <button class="btn-primary" id="btn-upload-start" onclick="startUpload()" disabled>Upload</button>
-    </div>
-  </div>
-</div>
-
-
-<!-- ================================================================
-     MODAL: SINGLE UPLOAD PROGRESS
-================================================================ -->
-<div id="modal-progress" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="progress-modal-title">
-  <div class="modal" style="width:480px" role="document">
-    <div class="modal-header">
-      <h2 class="modal-title" id="progress-modal-title">Uploading Document</h2>
-      <button class="modal-close" id="progress-close-x" style="display:none" onclick="finishUpload()" aria-label="Close">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="progress-file-card">
-        <div class="pfc-header">
-          <div class="pfc-icon fti-pdf" id="pfc-icon" aria-hidden="true">PDF</div>
-          <div class="pfc-name" id="pfc-name">file.pdf</div>
-          <div class="pfc-pct" id="pfc-pct" role="status" aria-live="polite">0%</div>
-        </div>
-        <div class="progress-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Upload progress" id="progress-track">
-          <div class="progress-fill" id="progress-fill" style="width:0%"></div>
-        </div>
-        <div class="pfc-status" id="pfc-status">Preparing upload...</div>
-      </div>
-      <div class="progress-steps" role="list" aria-label="Upload steps">
-        <div class="p-step" role="listitem">
-          <div class="p-step-icon psi-done" aria-hidden="true">✓</div>
-          <span class="p-step-label psl-done">File validated</span>
-        </div>
-        <div class="p-step" role="listitem" id="step-upload">
-          <div class="p-step-icon psi-active" id="step-upload-icon" aria-hidden="true"><span class="spinner"></span></div>
-          <span class="p-step-label psl-active" id="step-upload-label">Uploading to knowledge base...</span>
-        </div>
-        <div class="p-step" role="listitem" id="step-index">
-          <div class="p-step-icon psi-pending" id="step-index-icon" aria-hidden="true">○</div>
-          <span class="p-step-label psl-pending" id="step-index-label">Indexing &amp; embedding</span>
-        </div>
-        <div class="p-step" role="listitem" id="step-ready">
-          <div class="p-step-icon psi-pending" id="step-ready-icon" aria-hidden="true">○</div>
-          <span class="p-step-label psl-pending" id="step-ready-label">Ready for agent queries</span>
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-secondary" id="btn-cancel-progress" onclick="cancelUpload()">Cancel Upload</button>
-      <button class="btn-primary"   id="btn-done-progress"  onclick="finishUpload()" style="display:none">Done</button>
-    </div>
-  </div>
-</div>
+<!-- modal-upload and modal-progress removed: unified upload flow in modal-bulk-upload -->
 
 
 <!-- ================================================================
@@ -4330,75 +5385,6 @@ function updateDocCount() {
   if (el) el.textContent = `Uploaded Documents (${n})`;
 }
 
-/* ================================================================
-   FILE INPUT
-================================================================ */
-const fileInput = document.getElementById('file-input');
-let selectedFiles = [];
-
-function triggerFileInput() { fileInput.click(); }
-
-fileInput.addEventListener('change', e => {
-  addFiles(Array.from(e.target.files));
-  fileInput.value = '';
-});
-
-function handleDragOver(e) {
-  e.preventDefault();
-  document.getElementById('drop-zone').classList.add('drag-active');
-}
-function handleDragLeave() {
-  document.getElementById('drop-zone').classList.remove('drag-active');
-}
-function handleDrop(e) {
-  e.preventDefault();
-  document.getElementById('drop-zone').classList.remove('drag-active');
-  addFiles(Array.from(e.dataTransfer.files));
-}
-
-function addFiles(files) {
-  const allowed = ['pdf','docx','xlsx','txt'];
-  files.forEach(f => {
-    const ext = f.name.split('.').pop().toLowerCase();
-    if (allowed.includes(ext) && !selectedFiles.some(x => x.name === f.name)) {
-      selectedFiles.push(f);
-    }
-  });
-  renderFileList();
-}
-
-function renderFileList() {
-  const section = document.getElementById('selected-files-section');
-  const list    = document.getElementById('modal-file-list');
-  const btn     = document.getElementById('btn-upload-start');
-  const count   = document.getElementById('sel-count');
-
-  if (selectedFiles.length === 0) {
-    section.style.display = 'none';
-    btn.disabled = true;
-    return;
-  }
-  section.style.display = 'block';
-  btn.disabled = false;
-  count.textContent = selectedFiles.length + ' file' + (selectedFiles.length > 1 ? 's' : '') + ' selected';
-  list.innerHTML = selectedFiles.map((f, i) => {
-    const ext = f.name.split('.').pop().toLowerCase();
-    const sz  = f.size > 1048576 ? (f.size/1048576).toFixed(1)+' MB' : Math.round(f.size/1024)+' KB';
-    return `
-      <div class="file-item" role="listitem">
-        <div class="file-type-icon fti-${esc(ext)}" aria-hidden="true">${esc(ext.toUpperCase())}</div>
-        <span class="file-name">${esc(f.name)}</span>
-        <span class="file-size">${sz}</span>
-        <button class="btn-file-rm" onclick="removeFile(${i})" aria-label="Remove ${esc(f.name)}">✕</button>
-      </div>`;
-  }).join('');
-}
-
-function removeFile(i) {
-  selectedFiles.splice(i, 1);
-  renderFileList();
-}
-
 function esc(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
@@ -4408,6 +5394,7 @@ function esc(s) {
 ================================================================ */
 function openModal(id) {
   const overlay = document.getElementById(id);
+  if (!overlay) return;
   overlay.classList.add('open');
   requestAnimationFrame(() => {
     const first = overlay.querySelector('button:not([disabled]), [tabindex="0"]');
@@ -4416,24 +5403,8 @@ function openModal(id) {
 }
 
 function closeModal(id) {
-  document.getElementById(id).classList.remove('open');
-  if (id === 'modal-upload') {
-    selectedFiles = [];
-    renderFileList();
-  }
-}
-
-function openUploadModal() {
-  openModal('modal-upload');
-}
-
-function openUploadTypeModal() {
-  openModal('modal-upload-type');
-}
-
-function openSingleUpload() {
-  closeModal('modal-upload-type');
-  openModal('modal-upload');
+  const el = document.getElementById(id);
+  if (el) el.classList.remove('open');
 }
 
 /* ================================================================
@@ -4453,10 +5424,18 @@ const BULK_AGENTS = [
   { key:'shift-report', initials:'SH', color:'#0d9488', name:'Shift Report',   type:'Shift handover generator',         status:'Active' },
 ];
 
-function openBulkUpload() {
-  closeModal('modal-upload-type');
+/* ----------------------------------------------------------------
+   UNIFIED UPLOAD ENTRY POINT
+   agentKey: optional — when called from Agent Details, auto-selects
+   that agent and shows it prominently in the Agents step.
+---------------------------------------------------------------- */
+let uploadPreselectedAgent = null;
+
+function openUploadModal(agentKey) {
+  uploadPreselectedAgent = agentKey || null;
   bulkFiles = [];
   bulkSelectedAgents = new Set();
+  if (uploadPreselectedAgent) bulkSelectedAgents.add(uploadPreselectedAgent);
   bulkStep = 1;
   bulkRenderFiles();
   bulkRenderAgents();
@@ -4464,33 +5443,46 @@ function openBulkUpload() {
   openModal('modal-bulk-upload');
 }
 
-function closeBulkUpload() {
+// Keep legacy aliases so any remaining inline references still work
+function openUploadTypeModal() { openUploadModal(); }
+function openBulkUpload()      { openUploadModal(); }
+function openSingleUpload()    { openUploadModal(); }
+
+function closeUploadModal() {
   bulkTimers.forEach(t => clearInterval(t));
   bulkTimers = [];
+  uploadPreselectedAgent = null;
   closeModal('modal-bulk-upload');
 }
+function closeBulkUpload() { closeUploadModal(); }
 
 function bulkSetStep(n) {
   bulkStep = n;
-  // Show/hide steps
+
+  // Show/hide step content panels (steps 1-6)
   for (let i = 1; i <= 6; i++) {
     const el = document.getElementById('bulk-step-' + i);
     if (el) el.classList.toggle('active', i === n);
   }
-  // Update step indicators (1-5 in the bar)
-  for (let i = 1; i <= 5; i++) {
-    const circle = document.getElementById('bsb-' + i);
-    if (!circle) continue;
-    circle.classList.remove('active', 'done');
-    if (i < n && n <= 5)       circle.classList.add('done');
-    else if (i === n && n <= 5) circle.classList.add('active');
-    // step 6 (error) maps visually to step 5 indicator
-    if (n === 6) { if (i < 5) circle.classList.add('done'); }
+
+  // Map internal steps → 3 visual bar dots
+  // dot 1 = step 1 (Files)
+  // dot 2 = steps 2-3 (Agents + Confirm)
+  // dot 3 = steps 4-5 (Processing + Done) / step 6 error also lands here
+  const barMap = { 1:1, 2:2, 3:2, 4:3, 5:3, 6:3 };
+  const activeDot = barMap[n] || 1;
+  for (let i = 1; i <= 3; i++) {
+    const dot = document.getElementById('bsb-' + i);
+    if (!dot) continue;
+    dot.classList.remove('active', 'done');
+    if (i < activeDot)      dot.classList.add('done');
+    else if (i === activeDot) dot.classList.add('active');
   }
-  for (let i = 1; i <= 4; i++) {
+  for (let i = 1; i <= 2; i++) {
     const line = document.getElementById('bsbl-' + i);
-    if (line) line.classList.toggle('done', i < Math.min(n, 5));
+    if (line) line.classList.toggle('done', i < activeDot);
   }
+
   // Footer buttons
   const back   = document.getElementById('bulk-btn-back');
   const cancel = document.getElementById('bulk-btn-cancel');
@@ -4504,15 +5496,10 @@ function bulkSetStep(n) {
   start.style.display  = (n === 3) ? '' : 'none';
   done.style.display   = (n === 5) ? '' : 'none';
   retry.style.display  = (n === 6) ? '' : 'none';
-  // Next button state
-  if (n === 1) next.disabled = bulkFiles.length === 0;
-  if (n === 2) next.disabled = bulkSelectedAgents.size === 0;
-  if (n === 3) {
-    next.style.display = 'none';
-    start.disabled = false;
-  }
-  if (n === 1) next.textContent = 'Next →';
-  if (n === 2) next.textContent = 'Next →';
+
+  if (n === 1) { next.disabled = bulkFiles.length === 0; next.textContent = 'Next →'; }
+  if (n === 2) { next.disabled = bulkSelectedAgents.size === 0; next.textContent = 'Review →'; }
+  if (n === 3) { next.style.display = 'none'; start.disabled = false; }
 }
 
 function bulkBack() {
@@ -4586,9 +5573,38 @@ function bulkRenderFiles() {
 
 // Step 2 — agent selection
 function bulkRenderAgents() {
+  // Auto-selected agent banner
+  const banner   = document.getElementById('upload-current-agent-banner');
+  const bannerRow = document.getElementById('ucab-row');
+  if (banner) {
+    if (uploadPreselectedAgent) {
+      const a = BULK_AGENTS.find(x => x.key === uploadPreselectedAgent);
+      if (a) {
+        bannerRow.innerHTML = `
+          <div class="ucab-avatar" style="background:${a.color}">${a.initials}</div>
+          <div class="ucab-info">
+            <div class="ucab-name">${esc(a.name)}</div>
+            <div class="ucab-type">${esc(a.type)}</div>
+          </div>
+          <div class="ucab-check">✓</div>`;
+        banner.style.display = '';
+      }
+    } else {
+      banner.style.display = 'none';
+    }
+  }
+
+  // Agent list — preselected agent sorted to top
   const list = document.getElementById('agent-select-list');
   if (!list) return;
-  list.innerHTML = BULK_AGENTS.map(a => `
+  const sorted = uploadPreselectedAgent
+    ? [
+        ...BULK_AGENTS.filter(a => a.key === uploadPreselectedAgent),
+        ...BULK_AGENTS.filter(a => a.key !== uploadPreselectedAgent),
+      ]
+    : BULK_AGENTS;
+
+  list.innerHTML = sorted.map(a => `
     <div class="agent-select-item ${bulkSelectedAgents.has(a.key) ? 'selected' : ''}"
          onclick="bulkToggleAgent('${a.key}')" role="checkbox"
          aria-checked="${bulkSelectedAgents.has(a.key)}" tabindex="0"
@@ -4709,103 +5725,7 @@ function bulkRetry() {
 /* ================================================================
    UPLOAD FLOW
 ================================================================ */
-let uploadTimer = null;
-let uploadPct   = 0;
-let uploadedFileInfo = null;
-
-function startUpload() {
-  if (!selectedFiles.length) return;
-  const f   = selectedFiles[0];
-  const ext = f.name.split('.').pop().toLowerCase();
-  const sz  = f.size > 1048576 ? (f.size/1048576).toFixed(1)+' MB' : Math.round(f.size/1024)+' KB';
-  uploadedFileInfo = { name: f.name, ext, sz };
-  selectedFiles = [];
-
-  document.getElementById('pfc-name').textContent      = uploadedFileInfo.name;
-  document.getElementById('pfc-icon').textContent      = ext.toUpperCase();
-  document.getElementById('pfc-icon').className        = `pfc-icon fti-${ext}`;
-  document.getElementById('pfc-pct').textContent       = '0%';
-  document.getElementById('pfc-status').textContent    = 'Preparing upload...';
-  document.getElementById('progress-fill').style.width = '0%';
-  document.getElementById('progress-track').setAttribute('aria-valuenow', '0');
-  document.getElementById('progress-close-x').style.display  = 'none';
-  document.getElementById('btn-cancel-progress').style.display = '';
-  document.getElementById('btn-done-progress').style.display  = 'none';
-  resetSteps();
-  uploadPct = 0;
-
-  closeModal('modal-upload');
-  openModal('modal-progress');
-
-  uploadTimer = setInterval(() => {
-    uploadPct += Math.random() * 9 + 4;
-    if (uploadPct >= 100) {
-      uploadPct = 100;
-      clearInterval(uploadTimer);
-      completeUpload();
-    }
-    const pctInt = Math.round(uploadPct);
-    document.getElementById('progress-fill').style.width = pctInt + '%';
-    document.getElementById('pfc-pct').textContent = pctInt + '%';
-    document.getElementById('progress-track').setAttribute('aria-valuenow', pctInt);
-
-    if (uploadPct >= 50 && uploadPct < 85)  document.getElementById('pfc-status').textContent = 'Uploading to knowledge base...';
-    if (uploadPct >= 85 && uploadPct < 100) {
-      document.getElementById('pfc-status').textContent = 'Indexing & embedding...';
-      setStep('step-upload', 'done', '✓', 'done', 'Uploaded to knowledge base');
-      setStep('step-index',  'active', '<span class="spinner"></span>', 'active', 'Indexing &amp; embedding...');
-    }
-  }, 160);
-}
-
-function resetSteps() {
-  setStep('step-upload', 'active', '<span class="spinner"></span>', 'active', 'Uploading to knowledge base...');
-  setStep('step-index',  'pending', '○', 'pending', 'Indexing &amp; embedding');
-  setStep('step-ready',  'pending', '○', 'pending', 'Ready for agent queries');
-}
-
-function setStep(id, iconState, iconHTML, labelState, labelHTML) {
-  const step  = document.getElementById(id);
-  const icon  = step.querySelector('.p-step-icon');
-  const label = step.querySelector('.p-step-label');
-  icon.className  = 'p-step-icon psi-' + iconState;
-  icon.innerHTML  = iconHTML;
-  label.className = 'p-step-label psl-' + labelState;
-  label.innerHTML = labelHTML;
-}
-
-function completeUpload() {
-  document.getElementById('pfc-status').textContent = '✓ Upload complete!';
-  setStep('step-upload', 'done', '✓', 'done', 'Uploaded to knowledge base');
-  setStep('step-index',  'done', '✓', 'done', 'Indexed &amp; embedded');
-  setStep('step-ready',  'done', '✓', 'done', 'Ready for agent queries');
-  document.getElementById('progress-close-x').style.display   = 'flex';
-  document.getElementById('btn-cancel-progress').style.display = 'none';
-  document.getElementById('btn-done-progress').style.display   = '';
-}
-
-function cancelUpload() {
-  clearInterval(uploadTimer);
-  uploadedFileInfo = null;
-  closeModal('modal-progress');
-}
-
-function finishUpload() {
-  closeModal('modal-progress');
-  if (uploadedFileInfo) {
-    addDocToList(uploadedFileInfo);
-    uploadedFileInfo = null;
-  }
-  // Make sure we're in detail view
-  if (document.getElementById('agents-detail-view').classList.contains('active')) {
-    switchDetailTabById('documents');
-  } else {
-    // Navigate to My Agents > first agent > Documents
-    openAgentDetail('wo-assistant');
-    setTimeout(() => switchDetailTabById('documents'), 50);
-  }
-  setTimeout(() => showToast('File uploaded and indexed successfully'), 300);
-}
+// startUpload / cancelUpload / finishUpload removed — handled by bulk processing flow
 
 function addDocToList(info) {
   const list  = document.getElementById('doc-list');
@@ -4907,24 +5827,14 @@ document.addEventListener('keydown', e => {
   document.getElementById('btn-more-main').setAttribute('aria-expanded','false');
   const dfd = document.getElementById('date-filter-dropdown');
   if (dfd) { dfd.classList.remove('open'); document.getElementById('btn-date-filter').setAttribute('aria-expanded','false'); }
-  if (document.getElementById('modal-upload-type').classList.contains('open'))  closeModal('modal-upload-type');
-  if (document.getElementById('modal-bulk-upload').classList.contains('open'))  closeBulkUpload();
-  if (document.getElementById('modal-upload').classList.contains('open'))        closeModal('modal-upload');
-  if (document.getElementById('modal-progress').classList.contains('open') &&
-      document.getElementById('btn-done-progress').style.display !== 'none') finishUpload();
+  if (document.getElementById('modal-bulk-upload').classList.contains('open')) closeUploadModal();
 });
 
 /* ================================================================
    CLOSE MODALS ON OVERLAY CLICK
 ================================================================ */
-document.getElementById('modal-upload-type').addEventListener('click', function(e) {
-  if (e.target === this) closeModal('modal-upload-type');
-});
 document.getElementById('modal-bulk-upload').addEventListener('click', function(e) {
-  if (e.target === this) closeBulkUpload();
-});
-document.getElementById('modal-upload').addEventListener('click', function(e) {
-  if (e.target === this) closeModal('modal-upload');
+  if (e.target === this) closeUploadModal();
 });
 
 /* ================================================================
@@ -4940,6 +5850,573 @@ document.querySelectorAll('.nav-item, .nav-sub-item, .settings-nav-item').forEac
    INIT: render agent list on load
 ================================================================ */
 renderAgentList('wo-assistant');
+</script>
+
+<!-- ============================================================
+     DEPLOY AGENT MODAL (4-step wizard)
+============================================================ -->
+<div id="modal-deploy" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="deploy-modal-title">
+  <div class="deploy-modal">
+    <div class="deploy-modal-header">
+      <span class="deploy-modal-title" id="deploy-modal-title">Deploy Agent</span>
+      <button class="modal-close-btn" onclick="closeModal('modal-deploy')" aria-label="Close">✕</button>
+    </div>
+
+    <!-- Stepper -->
+    <div class="deploy-stepper" style="padding:18px 24px 8px">
+      <div class="dstep active" id="dstep-1">
+        <div class="dstep-circle" id="ds-circle-1">1</div>
+        <div class="dstep-label">Environment</div>
+      </div>
+      <div class="dstep-line" id="ds-line-1"></div>
+      <div class="dstep" id="dstep-2">
+        <div class="dstep-circle" id="ds-circle-2">2</div>
+        <div class="dstep-label">Config</div>
+      </div>
+      <div class="dstep-line" id="ds-line-2"></div>
+      <div class="dstep" id="dstep-3">
+        <div class="dstep-circle" id="ds-circle-3">3</div>
+        <div class="dstep-label">Settings</div>
+      </div>
+      <div class="dstep-line" id="ds-line-3"></div>
+      <div class="dstep" id="dstep-4">
+        <div class="dstep-circle" id="ds-circle-4">4</div>
+        <div class="dstep-label">Confirm</div>
+      </div>
+    </div>
+
+    <div class="deploy-modal-body">
+
+      <!-- STEP 1: Environment -->
+      <div id="deploy-step-1" class="deploy-step active">
+        <div style="font-family:var(--font-inter);font-weight:700;font-size:14px;color:var(--text-dark);margin-bottom:4px">Select Target Environment</div>
+        <div style="font-family:var(--font-inter);font-size:12px;color:var(--text-gray);margin-bottom:14px">Choose where to deploy the agent.</div>
+
+        <div class="env-card" data-env="draft" onclick="selectEnvCard('draft')">
+          <div class="env-radio"><div class="env-radio-dot"></div></div>
+          <div class="env-card-info">
+            <div class="env-card-name">Draft <span class="env-risk risk-none">Not Deployed</span></div>
+            <div class="env-card-desc">Preview only — agent not accessible to users. No impact.</div>
+          </div>
+        </div>
+
+        <div class="env-card" data-env="staging" onclick="selectEnvCard('staging')">
+          <div class="env-radio"><div class="env-radio-dot"></div></div>
+          <div class="env-card-info">
+            <div class="env-card-name">Staging / Test <span class="env-risk risk-low">Low Risk</span></div>
+            <div class="env-card-desc">Limited test environment. Safe for validation and QA testing.</div>
+          </div>
+        </div>
+
+        <div class="env-card selected" data-env="production" onclick="selectEnvCard('production')">
+          <div class="env-radio"><div class="env-radio-dot"></div></div>
+          <div class="env-card-info">
+            <div class="env-card-name">Production <span class="env-risk risk-high">⚠ High Impact</span></div>
+            <div class="env-card-desc">Live environment — affects all active users immediately.</div>
+            <div class="env-warning" id="deploy-prod-warn">
+              ⚠ Deploying to <strong>Production</strong> will affect all live users.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2: Configuration Summary -->
+      <div id="deploy-step-2" class="deploy-step">
+        <div style="font-family:var(--font-inter);font-weight:700;font-size:14px;color:var(--text-dark);margin-bottom:4px">Configuration Summary</div>
+        <div style="font-family:var(--font-inter);font-size:12px;color:var(--text-gray);margin-bottom:14px">Review agent configuration before proceeding.</div>
+
+        <div class="cfg-table">
+          <div class="cfg-table-row"><span class="cfg-table-key">Agent</span><span class="cfg-table-val" id="cfg2-agent">Troubleshoot</span></div>
+          <div class="cfg-table-row"><span class="cfg-table-key">Version</span><span class="cfg-table-val">v1.3 → v1.4</span></div>
+          <div class="cfg-table-row"><span class="cfg-table-key">Model</span><span class="cfg-table-val">Claude Sonnet 4.6</span></div>
+          <div class="cfg-table-row"><span class="cfg-table-key">Temperature</span><span class="cfg-table-val">0.3 (focused)</span></div>
+          <div class="cfg-table-row"><span class="cfg-table-key">Max Tokens</span><span class="cfg-table-val">4,096</span></div>
+          <div class="cfg-table-row"><span class="cfg-table-key">Connected Tools</span><span class="cfg-table-val">SAP PM · IoT Hub · Maint. DB</span></div>
+          <div class="cfg-table-row"><span class="cfg-table-key">Documents</span><span class="cfg-table-val">4 files linked</span></div>
+          <div class="cfg-table-row"><span class="cfg-table-key">Memory</span><span class="cfg-table-val">Conversation history (last 20)</span></div>
+        </div>
+
+        <div class="cfg-validation">
+          <span style="font-size:15px">✅</span>
+          All validations passed — agent is ready to deploy
+        </div>
+      </div>
+
+      <!-- STEP 3: Deployment Settings -->
+      <div id="deploy-step-3" class="deploy-step">
+        <div style="font-family:var(--font-inter);font-weight:700;font-size:14px;color:var(--text-dark);margin-bottom:4px">Deployment Settings</div>
+        <div style="font-family:var(--font-inter);font-size:12px;color:var(--text-gray);margin-bottom:14px">Configure version metadata and runtime options.</div>
+
+        <div class="deploy-field-label">Version Tag</div>
+        <input class="deploy-input" type="text" id="deploy-version-tag" value="v1.4-production" placeholder="e.g. v1.4-production">
+
+        <div class="deploy-field-label">Deployment Notes <span class="deploy-field-optional">(optional)</span></div>
+        <textarea class="deploy-textarea" id="deploy-notes" placeholder="What changed in this deployment?"></textarea>
+
+        <div class="deploy-runtime-title">Runtime Options</div>
+        <div class="deploy-toggle-row">
+          <div class="deploy-toggle-info">
+            <div class="deploy-toggle-label">Enable Logging</div>
+            <div class="deploy-toggle-sub">Capture all queries and responses for audit</div>
+          </div>
+          <label class="toggle-switch" title="Enable Logging">
+            <input type="checkbox" checked id="toggle-logging" onchange="deployToggleLogging=this.checked">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="deploy-toggle-row">
+          <div class="deploy-toggle-info">
+            <div class="deploy-toggle-label">Enable Monitoring</div>
+            <div class="deploy-toggle-sub">Track performance metrics in real-time</div>
+          </div>
+          <label class="toggle-switch" title="Enable Monitoring">
+            <input type="checkbox" checked id="toggle-monitoring" onchange="deployToggleMonitoring=this.checked">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="deploy-toggle-row">
+          <div class="deploy-toggle-info">
+            <div class="deploy-toggle-label">Auto-retry on Failure</div>
+            <div class="deploy-toggle-sub">Automatically retry once on first failure</div>
+          </div>
+          <label class="toggle-switch" title="Auto-retry">
+            <input type="checkbox" id="toggle-retry" onchange="deployToggleRetry=this.checked">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- STEP 4: Confirm -->
+      <div id="deploy-step-4" class="deploy-step">
+        <div style="font-family:var(--font-inter);font-weight:700;font-size:14px;color:var(--text-dark);margin-bottom:4px">Confirm Deployment</div>
+        <div style="font-family:var(--font-inter);font-size:12px;color:var(--text-gray);margin-bottom:14px">Review and confirm to deploy the agent.</div>
+
+        <div class="cfg-table" style="margin-bottom:14px">
+          <div class="cfg-table-row"><span class="cfg-table-key">Environment</span><span class="cfg-table-val" id="confirm-env" style="color:var(--link);font-weight:700">Production</span></div>
+          <div class="cfg-table-row"><span class="cfg-table-key">Version</span><span class="cfg-table-val" id="confirm-version">v1.4-production</span></div>
+          <div class="cfg-table-row"><span class="cfg-table-key">Agent</span><span class="cfg-table-val" id="confirm-agent">Troubleshoot</span></div>
+          <div class="cfg-table-row"><span class="cfg-table-key">Model</span><span class="cfg-table-val">Claude Sonnet 4.6</span></div>
+          <div class="cfg-table-row"><span class="cfg-table-key">Logging</span><span class="cfg-table-val val-success" id="confirm-logging">Enabled</span></div>
+          <div class="cfg-table-row"><span class="cfg-table-key">Monitoring</span><span class="cfg-table-val val-success" id="confirm-monitoring">Enabled</span></div>
+        </div>
+
+        <div class="confirm-prod-warning" id="confirm-prod-warning">
+          <span class="confirm-prod-warning-icon">⚠️</span>
+          <div class="confirm-prod-warning-text">
+            <strong>Production deployment — irreversible once active</strong>
+            This will replace the current live deployment and affect all active users.
+          </div>
+        </div>
+
+        <button class="btn-deploy-cta" onclick="startDeployment()">🚀 Deploy Agent</button>
+        <div style="text-align:center">
+          <button class="btn-preview" onclick="closeModal('modal-deploy')">Cancel</button>
+        </div>
+      </div>
+
+    </div><!-- /body -->
+
+    <div class="deploy-modal-footer">
+      <button class="btn-back" id="deploy-btn-back" onclick="deployGoStep(deployStep-1)" style="display:none">← Back</button>
+      <div style="flex:1"></div>
+      <button class="btn-ghost" onclick="closeModal('modal-deploy')">Cancel</button>
+      <button class="btn-primary" id="deploy-btn-next" onclick="deployGoStep(deployStep+1)" style="margin-left:8px">Next Step →</button>
+      <button class="btn-primary" id="deploy-btn-confirm" onclick="startDeployment()" style="display:none;margin-left:8px">🚀 Deploy Agent</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     DEPLOYING STATE MODAL (non-blocking)
+============================================================ -->
+<div id="modal-deploying" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="deploying-title" style="background:rgba(0,0,0,0.35)">
+  <div style="background:white;border-radius:12px;box-shadow:var(--shadow-modal);width:400px;max-width:96vw;padding:24px;animation:modalIn .18s ease">
+    <div class="deploying-header">
+      <span class="deploying-title" id="deploying-title">Deploying to Production…</span>
+      <div class="deploying-spinner" aria-label="Loading"></div>
+    </div>
+    <div class="deploying-agent-row">
+      <div>
+        <div class="deploying-agent-name" id="deploying-agent-name">Troubleshoot</div>
+        <div class="deploying-agent-meta" id="deploying-agent-meta">v1.4-production · Production</div>
+      </div>
+    </div>
+    <div class="deploying-progress-wrap">
+      <div class="deploying-progress-bar-bg">
+        <div class="deploying-progress-bar-fill" id="deploying-bar-fill" style="width:0%"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span class="deploying-status-text" id="deploying-status-msg">Initializing deployment...</span>
+        <span style="font-family:var(--font-inter);font-size:11px;color:var(--text-gray)" id="deploying-pct">0%</span>
+      </div>
+    </div>
+    <div class="deploying-navigate-note">This may take a minute. You can navigate away safely.</div>
+    <div style="text-align:center">
+      <button class="btn-cancel-deploy" onclick="cancelDeployment()">Cancel Deployment</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     DEPLOY SUCCESS MODAL
+============================================================ -->
+<div id="modal-deploy-success" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="success-title">
+  <div class="state-modal">
+    <div class="success-icon-wrap" aria-hidden="true">
+      <span class="success-checkmark">✓</span>
+    </div>
+    <div class="state-modal-title" id="success-title">Deployment Successful!</div>
+    <div class="state-modal-sub" id="success-sub">Agent is now live on Production</div>
+    <div class="state-detail-row">
+      <div class="state-detail-cell">
+        <div class="state-detail-label">Environment</div>
+        <div class="state-detail-val" id="success-env">Production</div>
+      </div>
+      <div class="state-detail-cell">
+        <div class="state-detail-label">Version</div>
+        <div class="state-detail-val" id="success-version">v1.4-production</div>
+      </div>
+      <div class="state-detail-cell">
+        <div class="state-detail-label">Deployed</div>
+        <div class="state-detail-val">Just now</div>
+      </div>
+    </div>
+    <div class="state-actions">
+      <button class="btn-view-deployment" onclick="viewDeploymentFromSuccess()">View Deployment</button>
+      <button class="btn-done-modal" onclick="closeModal('modal-deploy-success')">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     DEPLOY FAILURE MODAL
+============================================================ -->
+<div id="modal-deploy-failure" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="failure-title">
+  <div class="state-modal">
+    <div class="failure-icon-wrap" aria-hidden="true">
+      <span class="failure-x">✕</span>
+    </div>
+    <div class="state-modal-title failure" id="failure-title">Deployment Failed</div>
+    <div class="failure-error-box">
+      <div class="failure-error-main">API connection timeout during tool validation</div>
+      <div class="failure-error-code">Error code: DEPLOY_ERR_504 · Apr 5, 2026 16:44 UTC</div>
+    </div>
+    <div class="failure-steps">
+      <div class="failure-step-row fstep-done"><span class="fstep-icon">✓</span>Tools manifest loaded (3 tools)</div>
+      <div class="failure-step-row fstep-done"><span class="fstep-icon">✓</span>Documents validated (4 files)</div>
+      <div class="failure-step-row fstep-fail"><span class="fstep-icon">✕</span>SAP PM API timeout — deployment aborted</div>
+    </div>
+    <div class="state-actions">
+      <button class="btn-done-modal" onclick="showInfoToast('Logs coming soon');closeModal('modal-deploy-failure')">View Logs</button>
+      <button class="btn-view-deployment" onclick="retryDeployment()">Retry Deployment</button>
+      <button class="btn-done-modal" onclick="closeModal('modal-deploy-failure')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     ROLLBACK CONFIRMATION MODAL
+============================================================ -->
+<div id="modal-rollback" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="rollback-title">
+  <div class="rollback-modal">
+    <div class="rollback-modal-header">
+      <span class="rollback-modal-title" id="rollback-title">⚠️ Rollback Deployment</span>
+      <button class="modal-close-btn" onclick="closeModal('modal-rollback')" aria-label="Close">✕</button>
+    </div>
+    <div class="rollback-body">
+      <div class="rollback-target-box">
+        Rolling back to <strong id="rollback-target-version">v1.3-staging</strong> · <span id="rollback-target-env">Staging</span>
+      </div>
+      <div class="rollback-impact-title">Impact of this rollback:</div>
+      <ul class="rollback-impact-list">
+        <li>Current active deployment will be immediately deactivated</li>
+        <li>Active user conversations may be interrupted</li>
+        <li>Production metrics will reset to rollback version baseline</li>
+        <li>Full rollback typically takes 1–2 minutes</li>
+      </ul>
+      <div class="rollback-confirm-label">Type "ROLLBACK" to confirm this action</div>
+      <input type="text" class="rollback-input" id="rollback-input-field" placeholder='Type "ROLLBACK" to confirm' autocomplete="off">
+    </div>
+    <div class="rollback-modal-footer">
+      <button class="btn-rollback-cancel" onclick="closeModal('modal-rollback')">Cancel</button>
+      <button class="btn-rollback-confirm" id="btn-confirm-rollback" disabled onclick="confirmRollback()">Confirm Rollback</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ================================================================
+   DEPLOY MODAL — STATE
+================================================================ */
+let deployStep = 1;
+let deployEnv  = 'production';
+let deployToggleLogging    = true;
+let deployToggleMonitoring = true;
+let deployToggleRetry      = false;
+let deployProgressTimer    = null;
+let deployProgress         = 0;
+
+function openDeployModal() {
+  deployStep = 1;
+  deployEnv  = 'production';
+  deployToggleLogging    = true;
+  deployToggleMonitoring = true;
+  deployToggleRetry      = false;
+  // Reset version tag to agent-specific default
+  const versionInput = document.getElementById('deploy-version-tag');
+  if (versionInput) versionInput.value = 'v1.4-production';
+  const notesInput = document.getElementById('deploy-notes');
+  if (notesInput) notesInput.value = '';
+  updateDeployStepUI();
+  selectEnvCard('production');
+  openModal('modal-deploy');
+}
+
+function deployGoStep(n) {
+  deployStep = n;
+  updateDeployStepUI();
+}
+
+function updateDeployStepUI() {
+  // Step panels
+  for (let i = 1; i <= 4; i++) {
+    const el = document.getElementById('deploy-step-' + i);
+    if (el) el.classList.toggle('active', i === deployStep);
+  }
+  // Stepper circles + lines
+  for (let i = 1; i <= 4; i++) {
+    const circle = document.getElementById('ds-circle-' + i);
+    if (!circle) continue;
+    circle.parentElement.classList.remove('active','done');
+    if (i < deployStep)      circle.parentElement.classList.add('done');
+    else if (i === deployStep) circle.parentElement.classList.add('active');
+    if (i < 4) {
+      const line = document.getElementById('ds-line-' + i);
+      if (line) line.classList.toggle('done', i < deployStep);
+    }
+  }
+  // Step 1-3 circles show numbers; done shows checkmark
+  for (let i = 1; i <= 4; i++) {
+    const c = document.getElementById('ds-circle-' + i);
+    if (!c) continue;
+    if (i < deployStep) c.innerHTML = '✓';
+    else c.innerHTML = String(i);
+  }
+  // Footer buttons
+  const backBtn   = document.getElementById('deploy-btn-back');
+  const nextBtn   = document.getElementById('deploy-btn-next');
+  const confirmBtn= document.getElementById('deploy-btn-confirm');
+  if (backBtn)    backBtn.style.display    = deployStep > 1 ? '' : 'none';
+  if (nextBtn)    nextBtn.style.display    = deployStep < 4 ? '' : 'none';
+  if (confirmBtn) confirmBtn.style.display = deployStep === 4 ? '' : 'none';
+  // Update confirm step summary
+  if (deployStep === 4) updateConfirmSummary();
+}
+
+function selectEnvCard(env) {
+  deployEnv = env;
+  document.querySelectorAll('.env-card').forEach(c => {
+    c.classList.toggle('selected', c.dataset.env === env);
+  });
+  const warn = document.getElementById('deploy-prod-warn');
+  if (warn) warn.style.display = env === 'production' ? '' : 'none';
+}
+
+function updateConfirmSummary() {
+  const agentName = document.getElementById('detail-name') ? document.getElementById('detail-name').textContent : 'Troubleshoot';
+  const version   = (document.getElementById('deploy-version-tag') || {}).value || 'v1.4-production';
+  const envLabel  = deployEnv === 'production' ? 'Production' : deployEnv === 'staging' ? 'Staging / Test' : 'Draft';
+  document.getElementById('confirm-env').textContent     = envLabel;
+  document.getElementById('confirm-version').textContent = version;
+  document.getElementById('confirm-agent').textContent   = agentName;
+  document.getElementById('confirm-logging').textContent    = deployToggleLogging    ? 'Enabled' : 'Disabled';
+  document.getElementById('confirm-monitoring').textContent = deployToggleMonitoring ? 'Enabled' : 'Disabled';
+  // Show/hide prod warning on confirm step
+  const prodWarnConfirm = document.getElementById('confirm-prod-warning');
+  if (prodWarnConfirm) prodWarnConfirm.style.display = deployEnv === 'production' ? '' : 'none';
+}
+
+function startDeployment() {
+  closeModal('modal-deploy');
+  // Start deploying state
+  deployProgress = 0;
+  updateDeployingProgress(0, 'Initializing deployment...');
+  openModal('modal-deploying');
+  deployProgressTimer = setInterval(() => {
+    deployProgress += Math.random() * 18 + 5;
+    if (deployProgress >= 100) {
+      deployProgress = 100;
+      clearInterval(deployProgressTimer);
+      updateDeployingProgress(100, 'Finalizing...');
+      setTimeout(() => {
+        closeModal('modal-deploying');
+        // 90% chance success, 10% failure for demo
+        const succeed = Math.random() > 0.15;
+        if (succeed) openDeploySuccess();
+        else openDeployFailure();
+      }, 600);
+      return;
+    }
+    const steps = ['Validating tools and documents...','Indexing documents...','Running health checks...','Activating agent endpoint...'];
+    const idx = Math.floor((deployProgress / 100) * steps.length);
+    updateDeployingProgress(Math.round(deployProgress), steps[Math.min(idx, steps.length-1)]);
+  }, 700);
+}
+
+function updateDeployingProgress(pct, msg) {
+  const bar = document.getElementById('deploying-bar-fill');
+  const pctEl = document.getElementById('deploying-pct');
+  const msgEl = document.getElementById('deploying-status-msg');
+  if (bar)   bar.style.width = pct + '%';
+  if (pctEl) pctEl.textContent = pct + '%';
+  if (msgEl) msgEl.textContent = msg;
+}
+
+function cancelDeployment() {
+  clearInterval(deployProgressTimer);
+  closeModal('modal-deploying');
+}
+
+function openDeploySuccess() {
+  const version = (document.getElementById('deploy-version-tag') || {}).value || 'v1.4-production';
+  const envLabel = deployEnv === 'production' ? 'Production' : deployEnv === 'staging' ? 'Staging' : 'Draft';
+  document.getElementById('success-env').textContent     = envLabel;
+  document.getElementById('success-version').textContent = version;
+  openModal('modal-deploy-success');
+}
+
+function openDeployFailure() {
+  openModal('modal-deploy-failure');
+}
+
+function viewDeploymentFromSuccess() {
+  closeModal('modal-deploy-success');
+  switchDetailTabById('deployments');
+}
+
+function retryDeployment() {
+  closeModal('modal-deploy-failure');
+  openDeployModal();
+}
+
+/* ================================================================
+   DEPLOYMENT DETAIL (tab pane)
+================================================================ */
+const DEP_DATA = {
+  'v1.4-production': {
+    version: 'v1.4-production', env: 'Production', envClass: 'dep-env-prod',
+    statusClass: 'dep-active', statusText: 'Active',
+    by: 'John Smith', date: 'Apr 5, 2026 · 16:45 UTC',
+    successRate: '94.2%', latency: '2.3s', calls: '1,247', errorRate: '0.8%'
+  },
+  'v1.3-staging': {
+    version: 'v1.3-staging', env: 'Staging', envClass: 'dep-env-staging',
+    statusClass: 'dep-active', statusText: 'Active',
+    by: 'John Smith', date: 'Apr 3, 2026 · 11:20 UTC',
+    successRate: '91.5%', latency: '2.7s', calls: '382', errorRate: '2.1%'
+  },
+  'v1.2-production': {
+    version: 'v1.2-production', env: 'Production', envClass: 'dep-env-prod',
+    statusClass: 'dep-archived', statusText: 'Archived',
+    by: 'Sarah Kim', date: 'Mar 20, 2026 · 09:05 UTC',
+    successRate: '88.0%', latency: '3.1s', calls: '4,830', errorRate: '4.3%'
+  }
+};
+
+function openDeploymentDetail(versionId) {
+  const d = DEP_DATA[versionId];
+  if (!d) return;
+  // Update breadcrumb + heading
+  document.getElementById('dep-detail-bc-ver').textContent    = d.version;
+  document.getElementById('dep-detail-version-name').textContent = d.version;
+  const envBadge = document.getElementById('dep-detail-env-badge');
+  envBadge.textContent  = d.env;
+  envBadge.className    = 'dep-env-badge ' + d.envClass;
+  const statusChip = document.getElementById('dep-detail-status-chip');
+  statusChip.className  = 'dep-status-chip ' + d.statusClass;
+  document.getElementById('dep-detail-status-text').textContent = d.statusText;
+  // Meta
+  document.getElementById('dep-detail-by').textContent   = d.by;
+  document.getElementById('dep-detail-date').textContent = d.date;
+  // Metrics
+  document.getElementById('dep-m-success').textContent = d.successRate;
+  document.getElementById('dep-m-latency').textContent = d.latency;
+  document.getElementById('dep-m-calls').textContent   = d.calls;
+  document.getElementById('dep-m-errors').textContent  = d.errorRate;
+  // Show detail, hide list
+  document.getElementById('dep-list-view').classList.add('hidden');
+  document.getElementById('dep-detail-view').classList.add('active');
+}
+
+function closeDeploymentDetail() {
+  document.getElementById('dep-list-view').classList.remove('hidden');
+  document.getElementById('dep-detail-view').classList.remove('active');
+}
+
+function confirmDeleteDeployment(btn) {
+  const row = btn.closest('tr');
+  if (!row) return;
+  if (!confirm('Delete this deployment? This cannot be undone.')) return;
+  row.style.transition = 'opacity .2s';
+  row.style.opacity = '0';
+  setTimeout(() => {
+    row.remove();
+    const count = document.querySelectorAll('#dep-table-body tr').length;
+    const chip = document.getElementById('dep-count-chip');
+    if (chip) chip.textContent = count;
+    const footer = document.querySelector('.dep-table-footer');
+    if (footer) footer.textContent = `Showing ${count} of ${count} deployments`;
+  }, 200);
+}
+
+/* ================================================================
+   ROLLBACK MODAL
+================================================================ */
+function openRollbackModal(targetVersion, targetEnv) {
+  document.getElementById('rollback-target-version').textContent = targetVersion;
+  document.getElementById('rollback-target-env').textContent     = targetEnv;
+  document.getElementById('rollback-input-field').value = '';
+  document.getElementById('btn-confirm-rollback').disabled = true;
+  openModal('modal-rollback');
+}
+
+document.addEventListener('input', function(e) {
+  if (e.target && e.target.id === 'rollback-input-field') {
+    document.getElementById('btn-confirm-rollback').disabled = e.target.value.trim() !== 'ROLLBACK';
+  }
+});
+
+function confirmRollback() {
+  closeModal('modal-rollback');
+  showInfoToast('Rollback initiated — reverting to previous version');
+}
+
+/* ================================================================
+   ESCAPE key — also closes deploy modals
+================================================================ */
+(function() {
+  const orig = document.onkeydown;
+  document.addEventListener('keydown', function(e) {
+    if (e.key !== 'Escape') return;
+    ['modal-deploy','modal-deploying','modal-deploy-success','modal-deploy-failure','modal-rollback'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el && el.classList.contains('open')) {
+        if (id === 'modal-deploying') cancelDeployment();
+        else closeModal(id);
+      }
+    });
+  });
+})();
+// Overlay click to close deploy modals
+['modal-deploy','modal-deploy-success','modal-deploy-failure','modal-rollback'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('click', function(e) { if (e.target === this) closeModal(id); });
+});
+const deployingOverlay = document.getElementById('modal-deploying');
+if (deployingOverlay) deployingOverlay.addEventListener('click', function(e) {
+  if (e.target === this) { /* non-blocking — don't close on overlay click */ }
+});
+
 </script>
 </body>
 </html>
