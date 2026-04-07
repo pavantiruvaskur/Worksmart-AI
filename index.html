@@ -1722,6 +1722,244 @@
     .btn-remove:hover { background: #fee; }
 
     /* ============================================================
+       DOCUMENTS TABLE
+    ============================================================ */
+    .doc-table-wrap {
+      background: white;
+      border: 1px solid #e0e0e5;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .doc-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-inter);
+    }
+    .doc-table thead tr {
+      background: #f7f7fa;
+      border-bottom: 1.5px solid #e0e0e5;
+    }
+    .doc-table th {
+      text-align: left;
+      padding: 10px 14px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-gray);
+      text-transform: uppercase;
+      letter-spacing: .45px;
+      white-space: nowrap;
+      user-select: none;
+    }
+    .doc-table tbody tr {
+      border-bottom: 1px solid #f0f0f2;
+      transition: background .12s;
+    }
+    .doc-table tbody tr:last-child { border-bottom: none; }
+    .doc-table tbody tr:hover { background: #fafafe; }
+    .doc-table tbody tr.doc-row-failed:hover { background: #fff8f8; }
+    .doc-table td {
+      padding: 11px 14px;
+      font-size: 12px;
+      color: var(--text-dark);
+      vertical-align: middle;
+    }
+    .doc-name-cell {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+    .doc-name-link {
+      font-family: var(--font-inter);
+      font-weight: 500;
+      font-size: 12px;
+      color: var(--link);
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      text-align: left;
+      text-decoration: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 220px;
+      display: block;
+    }
+    .doc-name-link:hover { text-decoration: underline; }
+    .doc-meta-cell { font-size: 11px; color: var(--text-gray); white-space: nowrap; }
+    .doc-status-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-family: var(--font-inter); font-size: 11px; font-weight: 600;
+      padding: 3px 10px; border-radius: 10px; white-space: nowrap;
+    }
+    .doc-status-ready   { background: #e8f5e9; color: #2e7d33; }
+    .doc-status-failed  { background: #fdecea; color: #c61919; }
+    .doc-status-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .doc-status-ready  .doc-status-dot { background: #2e7d33; }
+    .doc-status-failed .doc-status-dot { background: #c61919; }
+    .doc-action-cell { display: flex; align-items: center; gap: 6px; justify-content: flex-end; }
+    .btn-doc-retry {
+      font-family: var(--font-inter); font-size: 11px; font-weight: 600;
+      color: var(--link); background: none; border: 1px solid var(--link);
+      padding: 3px 10px; border-radius: 5px; cursor: pointer; transition: background .12s;
+    }
+    .btn-doc-retry:hover { background: #ecefff; }
+    .doc-table-empty {
+      text-align: center; padding: 36px 0;
+      color: var(--text-gray); font-family: var(--font-inter); font-size: 13px;
+    }
+
+    /* Doc Viewer Modal */
+    .doc-viewer-modal {
+      background: white; border-radius: 14px;
+      width: 100%; max-width: 600px;
+      box-shadow: var(--shadow-modal);
+      display: flex; flex-direction: column; overflow: hidden;
+    }
+    .doc-viewer-preview {
+      background: #f7f7fa; border-top: 1px solid var(--border);
+      min-height: 260px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 10px; padding: 32px 24px;
+    }
+    .doc-viewer-file-icon {
+      width: 64px; height: 80px; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-inter); font-size: 13px; font-weight: 700;
+      color: white; flex-shrink: 0;
+    }
+    .doc-viewer-name {
+      font-family: var(--font-inter); font-weight: 600;
+      font-size: 14px; color: var(--text-dark); text-align: center;
+      word-break: break-all; max-width: 440px;
+    }
+    .doc-viewer-info-row {
+      display: flex; align-items: center; gap: 16px;
+      font-family: var(--font-inter); font-size: 12px; color: var(--text-gray);
+    }
+    .doc-viewer-info-sep { color: #d0d0d5; }
+
+    /* ============================================================
+       OVERVIEW TIME-FILTER BAR
+    ============================================================ */
+    .ov-filter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px 10px;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      flex-shrink: 0;
+    }
+    .ov-filter-bar-title {
+      font-family: var(--font-inter);
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--text-dark);
+    }
+    .ov-filter-bar-period {
+      font-family: var(--font-inter);
+      font-size: 11px;
+      color: var(--text-gray);
+      margin-top: 1px;
+    }
+
+    /* ============================================================
+       SKILLS PANE
+    ============================================================ */
+    .skills-pane { padding: 20px; }
+    .skills-pane-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; margin-bottom: 18px;
+    }
+    .skills-pane-title {
+      font-family: var(--font-inter); font-weight: 700;
+      font-size: 15px; color: var(--text-dark);
+    }
+    .skills-pane-sub {
+      font-family: var(--font-inter); font-size: 12px;
+      color: var(--text-gray); margin-top: 3px;
+    }
+    .btn-add-skill { font-size: 12px; padding: 7px 14px; white-space: nowrap; flex-shrink: 0; }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+      gap: 14px;
+    }
+    .skill-card {
+      background: white; border: 1px solid var(--border);
+      border-radius: 10px; padding: 15px;
+      display: flex; flex-direction: column; gap: 9px;
+      transition: box-shadow .15s, border-color .15s;
+    }
+    .skill-card:hover { box-shadow: 0 4px 14px rgba(0,0,0,0.09); border-color: #d5d7e0; }
+    .skill-card-top { display: flex; align-items: center; justify-content: space-between; }
+    .skill-cat-badge {
+      font-family: var(--font-inter); font-size: 10px;
+      font-weight: 600; padding: 2px 8px; border-radius: 8px;
+      text-transform: uppercase; letter-spacing: .3px;
+    }
+    .skill-cat-diagnostic   { background: #e8eeff; color: #3d5afe; }
+    .skill-cat-integration  { background: #e8f5e9; color: #2e7d33; }
+    .skill-cat-analysis     { background: #fff3e0; color: #b26600; }
+    .skill-cat-automation   { background: #f3e8ff; color: #7c3aed; }
+    .skill-cat-reporting    { background: #e0f7fa; color: #0277bd; }
+    .skill-cat-safety       { background: #fce4ec; color: #c62828; }
+    .skill-cat-default      { background: #f0f0f0; color: #6e6e6e; }
+
+    .skill-level-pill {
+      font-family: var(--font-inter); font-size: 10px;
+      font-weight: 600; padding: 2px 8px; border-radius: 8px;
+    }
+    .skill-level-expert       { background: var(--success-bg); color: var(--success-text); }
+    .skill-level-intermediate { background: #ecefff; color: #3d5afe; }
+    .skill-level-beginner     { background: var(--warning-bg); color: var(--warning-text); }
+
+    .skill-card-name {
+      font-family: var(--font-inter); font-weight: 600;
+      font-size: 13px; color: var(--text-dark); line-height: 1.3;
+    }
+    .skill-card-desc {
+      font-family: var(--font-inter); font-size: 12px;
+      color: var(--text-gray); line-height: 1.55; flex: 1;
+    }
+    .skill-card-footer {
+      display: flex; align-items: center; justify-content: flex-end;
+      padding-top: 9px; border-top: 1px solid var(--border);
+      margin-top: 2px;
+    }
+    .btn-skill-remove {
+      font-family: var(--font-inter); font-size: 11px;
+      color: #b0b0b0; background: none; border: none;
+      cursor: pointer; padding: 2px 6px; border-radius: 4px;
+      transition: color .12s, background .12s;
+    }
+    .btn-skill-remove:hover { color: var(--error); background: #fff0f0; }
+
+    /* Add Skill Modal */
+    .add-skill-modal {
+      background: white; border-radius: 14px;
+      width: 100%; max-width: 440px;
+      box-shadow: var(--shadow-modal); overflow: hidden;
+    }
+    .skill-field-label {
+      font-family: var(--font-inter); font-size: 12px;
+      font-weight: 600; color: var(--text-dark); margin-bottom: 5px;
+    }
+    .skill-field-group { margin-bottom: 14px; }
+    .skill-input, .skill-select, .skill-textarea {
+      width: 100%; font-family: var(--font-inter); font-size: 13px;
+      color: var(--text-dark); border: 1px solid var(--border);
+      border-radius: 8px; padding: 9px 11px; background: white;
+      transition: border-color .15s;
+    }
+    .skill-input:focus, .skill-select:focus, .skill-textarea:focus {
+      outline: none; border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(82,82,212,.1);
+    }
+    .skill-textarea { resize: vertical; min-height: 72px; line-height: 1.5; }
+    .skill-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    /* ============================================================
        TEMPLATES PANE (C)
     ============================================================ */
     .templates-content { padding: 20px 24px 28px; flex: 1; }
@@ -3996,7 +4234,7 @@
                   <text x="138" y="170" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#6e6e6e" font-weight="500">Junior</text>
                   <text x="266" y="170" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#6e6e6e" font-weight="500">Mid</text>
                   <text x="394" y="170" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#6e6e6e" font-weight="500">Expert</text>
-                  <text x="158" y="55" font-family="Inter,sans-serif" font-size="8.5" fill="#3d5afe" opacity="0.7" font-style="italic">Troubleshoot</text>
+                  <text x="158" y="55" font-family="Inter,sans-serif" font-size="8.5" fill="#3d5afe" opacity="0.7" font-style="italic">Troubleshooting</text>
                   <text x="276" y="38" font-family="Inter,sans-serif" font-size="8.5" fill="#2e7d32" opacity="0.8" font-style="italic">Assist</text>
                 </svg>
               </div>
@@ -4006,7 +4244,7 @@
                   <div class="sgc-legend-item"><div class="sgc-legend-solid" aria-hidden="true"></div>With AI</div>
                 </div>
                 <div class="sgc-agents">
-                  <span class="sgc-agent-tag" style="background:#ecefff;color:#3d5afe">Troubleshoot</span>
+                  <span class="sgc-agent-tag" style="background:#ecefff;color:#3d5afe">Troubleshooting</span>
                   <span class="sgc-agent-tag" style="background:#e5f7e5;color:#2e7d33">Assist</span>
                 </div>
               </div>
@@ -4062,17 +4300,17 @@
                 <span class="dv-agents-label">Contributing agents:</span>
                 <div class="dv-agent-pill">
                   <div class="dv-agent-dot" style="background:#3d5afe"></div>
-                  <span class="dv-agent-pill-name">Troubleshoot</span>
+                  <span class="dv-agent-pill-name">Troubleshooting</span>
                   <span class="dv-agent-pill-impact">→ Diagnose 3× faster</span>
                 </div>
                 <div class="dv-agent-pill">
                   <div class="dv-agent-dot" style="background:#7c3aed"></div>
-                  <span class="dv-agent-pill-name">WO Create</span>
+                  <span class="dv-agent-pill-name">Plan</span>
                   <span class="dv-agent-pill-impact">→ Approvals auto-generated</span>
                 </div>
                 <div class="dv-agent-pill">
                   <div class="dv-agent-dot" style="background:#2e7d32"></div>
-                  <span class="dv-agent-pill-name">Issue Report</span>
+                  <span class="dv-agent-pill-name">Detect</span>
                   <span class="dv-agent-pill-impact">→ Context speeds execution</span>
                 </div>
               </div>
@@ -4126,10 +4364,10 @@
               <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;">
                 <span class="dash-card-title" style="margin-bottom:0">Sessions over Time — Last 7 Days</span>
               </div>
-              <div class="chart-legend" role="img" aria-label="Legend: Troubleshoot, Assist, RCA">
-                <div class="chart-legend-item"><div class="legend-dot" style="background:#3d5afe"></div>Troubleshoot</div>
+              <div class="chart-legend" role="img" aria-label="Legend: Troubleshooting, Assist, 5 Whys (RCA)">
+                <div class="chart-legend-item"><div class="legend-dot" style="background:#3d5afe"></div>Troubleshooting</div>
                 <div class="chart-legend-item"><div class="legend-dot" style="background:#2e7d32"></div>Assist</div>
-                <div class="chart-legend-item"><div class="legend-dot" style="background:#f59e0b"></div>RCA</div>
+                <div class="chart-legend-item"><div class="legend-dot" style="background:#f59e0b"></div>5 Whys (RCA)</div>
               </div>
               <div class="grouped-bar-chart" role="img" aria-label="Grouped bar chart showing sessions per agent for Monday through Sunday">
                 <!-- Mon -->
@@ -4212,7 +4450,7 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td><div class="td-agent"><div class="td-dot" style="background:#3d5afe"></div>Troubleshoot</div></td>
+                    <td><div class="td-agent"><div class="td-dot" style="background:#3d5afe"></div>Troubleshooting</div></td>
                     <td>2,103</td>
                     <td class="td-success">93.1%</td>
                     <td>2.8s</td>
@@ -4224,7 +4462,7 @@
                     <td>1.9s</td>
                   </tr>
                   <tr>
-                    <td><div class="td-agent"><div class="td-dot" style="background:#f59e0b"></div>RCA</div></td>
+                    <td><div class="td-agent"><div class="td-dot" style="background:#f59e0b"></div>5 Whys (RCA)</div></td>
                     <td>871</td>
                     <td class="td-success">93.7%</td>
                     <td>3.1s</td>
@@ -4243,7 +4481,7 @@
                 <div class="activity-row" role="listitem">
                   <div class="activity-dot-wrap"><div class="activity-dot" style="background:#3d5afe"></div></div>
                   <div class="activity-info">
-                    <div class="activity-agent">Troubleshoot</div>
+                    <div class="activity-agent">Troubleshooting</div>
                     <div class="activity-msg">Diagnosed P0 pump failure on Unit 3</div>
                   </div>
                   <span class="activity-time">2m ago</span>
@@ -4259,7 +4497,7 @@
                 <div class="activity-row" role="listitem">
                   <div class="activity-dot-wrap"><div class="activity-dot" style="background:#f59e0b"></div></div>
                   <div class="activity-info">
-                    <div class="activity-agent">RCA</div>
+                    <div class="activity-agent">5 Whys (RCA)</div>
                     <div class="activity-msg">Root cause report for Conveyor E generated</div>
                   </div>
                   <span class="activity-time">34m ago</span>
@@ -4267,7 +4505,7 @@
                 <div class="activity-row" role="listitem">
                   <div class="activity-dot-wrap"><div class="activity-dot" style="background:#c61919"></div></div>
                   <div class="activity-info">
-                    <div class="activity-agent">Troubleshoot</div>
+                    <div class="activity-agent">Troubleshooting</div>
                     <div class="activity-msg">Session timeout — sensor data unavailable</div>
                   </div>
                   <span class="activity-time">1h ago</span>
@@ -4282,7 +4520,7 @@
                 <div class="health-row" role="listitem">
                   <div class="health-avatar" style="background:linear-gradient(135deg,#7c3aed,#5252d4)">TS</div>
                   <div class="health-info">
-                    <div class="health-name">Troubleshoot</div>
+                    <div class="health-name">Troubleshooting</div>
                     <div class="health-sub">Last run: 2m ago · Uptime: 99.2%</div>
                   </div>
                   <span class="badge-operational">Operational</span>
@@ -4296,9 +4534,9 @@
                   <span class="badge-operational">Operational</span>
                 </div>
                 <div class="health-row" role="listitem">
-                  <div class="health-avatar" style="background:linear-gradient(135deg,#d97706,#f59e0b)">RC</div>
+                  <div class="health-avatar" style="background:linear-gradient(135deg,#d97706,#f59e0b)">5W</div>
                   <div class="health-info">
-                    <div class="health-name">RCA</div>
+                    <div class="health-name">5 Whys (RCA)</div>
                     <div class="health-sub">Last run: 34m ago · Uptime: 98.5%</div>
                   </div>
                   <span class="badge-operational">Operational</span>
@@ -4365,14 +4603,14 @@
             <div class="agents-section-title">8 AI Agents</div>
             <div class="agent-cards-grid" id="agent-cards-grid" role="list" aria-label="AI Agents">
 
-              <!-- Agent 1: Troubleshoot -->
-              <div class="agent-card" role="listitem" tabindex="0" data-status="deployed" onclick="openAgentDetail('wo-assistant')" onkeydown="keyActivate(event,this)" aria-label="Troubleshoot agent">
+              <!-- Agent 1: Troubleshooting -->
+              <div class="agent-card" role="listitem" tabindex="0" data-status="deployed" onclick="openAgentDetail('wo-assistant')" onkeydown="keyActivate(event,this)" aria-label="Troubleshooting agent">
                 <div class="agent-card-top">
-                  <div class="agent-card-avatar" style="background:#3d5afe">TR</div>
+                  <div class="agent-card-avatar" style="background:#3d5afe">TS</div>
                   <span class="badge-status badge-deployed">Deployed</span>
                 </div>
                 <div>
-                  <div class="agent-card-name">Troubleshoot</div>
+                  <div class="agent-card-name">Troubleshooting</div>
                   <div class="agent-card-desc">Diagnoses equipment failures, process anomalies, and operational issues using SAP PM and IoT sensor data.</div>
                 </div>
                 <div class="agent-card-tags">
@@ -4415,14 +4653,14 @@
                 </div>
               </div>
 
-              <!-- Agent 3: RCA -->
-              <div class="agent-card" role="listitem" tabindex="0" data-status="deployed" onclick="openAgentDetail('parts')" onkeydown="keyActivate(event,this)" aria-label="RCA agent">
+              <!-- Agent 3: 5 Whys (RCA) -->
+              <div class="agent-card" role="listitem" tabindex="0" data-status="deployed" onclick="openAgentDetail('parts')" onkeydown="keyActivate(event,this)" aria-label="5 Whys RCA agent">
                 <div class="agent-card-top">
-                  <div class="agent-card-avatar" style="background:#f59e0b">RC</div>
+                  <div class="agent-card-avatar" style="background:#f59e0b">5W</div>
                   <span class="badge-status badge-deployed">Deployed</span>
                 </div>
                 <div>
-                  <div class="agent-card-name">RCA</div>
+                  <div class="agent-card-name">5 Whys (RCA)</div>
                   <div class="agent-card-desc">Performs root cause analysis on equipment failures and cross-references historical work orders and sensor trends.</div>
                 </div>
                 <div class="agent-card-tags">
@@ -4440,19 +4678,19 @@
                 </div>
               </div>
 
-              <!-- Agent 4: WO Create (Available) -->
-              <div class="agent-card" role="listitem" tabindex="0" data-status="available" onclick="openAgentDetail('scheduler')" onkeydown="keyActivate(event,this)" aria-label="WO Create agent">
+              <!-- Agent 4: Plan (Available) -->
+              <div class="agent-card" role="listitem" tabindex="0" data-status="available" onclick="openAgentDetail('scheduler')" onkeydown="keyActivate(event,this)" aria-label="Plan agent">
                 <div class="agent-card-top">
-                  <div class="agent-card-avatar" style="background:#7c3aed">WC</div>
+                  <div class="agent-card-avatar" style="background:#7c3aed">PL</div>
                   <span class="badge-status badge-available">Available</span>
                 </div>
                 <div>
-                  <div class="agent-card-name">WO Create</div>
-                  <div class="agent-card-desc">Automatically creates work orders from equipment alerts, inspection findings, and operator-reported issues.</div>
+                  <div class="agent-card-name">Plan</div>
+                  <div class="agent-card-desc">Plans and schedules work orders by evaluating equipment criticality, technician availability, and resource constraints.</div>
                 </div>
                 <div class="agent-card-tags">
                   <span class="agent-card-tag">SAP PM</span>
-                  <span class="agent-card-tag">Alerts</span>
+                  <span class="agent-card-tag">Scheduling</span>
                 </div>
                 <div class="agent-card-stats">
                   <span class="agent-stat" style="color:var(--text-light)">Not deployed</span>
@@ -4466,15 +4704,15 @@
                 </div>
               </div>
 
-              <!-- Agent 5: Issue Report -->
-              <div class="agent-card" role="listitem" tabindex="0" data-status="deployed" onclick="openAgentDetail('eq-health')" onkeydown="keyActivate(event,this)" aria-label="Issue Report agent">
+              <!-- Agent 5: Detect -->
+              <div class="agent-card" role="listitem" tabindex="0" data-status="deployed" onclick="openAgentDetail('eq-health')" onkeydown="keyActivate(event,this)" aria-label="Detect agent">
                 <div class="agent-card-top">
-                  <div class="agent-card-avatar" style="background:#1565c0">IR</div>
+                  <div class="agent-card-avatar" style="background:#1565c0">DT</div>
                   <span class="badge-status badge-deployed">Deployed</span>
                 </div>
                 <div>
-                  <div class="agent-card-name">Issue Report</div>
-                  <div class="agent-card-desc">Generates structured issue reports from operational data, incidents, and anomalies detected across the plant.</div>
+                  <div class="agent-card-name">Detect</div>
+                  <div class="agent-card-desc">Continuously monitors data streams to detect anomalies, equipment deviations, and early failure signals.</div>
                 </div>
                 <div class="agent-card-tags">
                   <span class="agent-card-tag">IoT Hub</span>
@@ -4491,19 +4729,19 @@
                 </div>
               </div>
 
-              <!-- Agent 6: Shift Report Generator (Coming Soon) -->
-              <div class="agent-card" role="listitem" tabindex="0" data-status="coming-soon" onclick="openAgentDetail('shift-report')" onkeydown="keyActivate(event,this)" aria-label="Shift Report Generator agent">
+              <!-- Agent 6: Forms (Coming Soon) -->
+              <div class="agent-card" role="listitem" tabindex="0" data-status="coming-soon" onclick="openAgentDetail('shift-report')" onkeydown="keyActivate(event,this)" aria-label="Forms agent">
                 <div class="agent-card-top">
-                  <div class="agent-card-avatar" style="background:#7c3aed">SR</div>
+                  <div class="agent-card-avatar" style="background:#7c3aed">FM</div>
                   <span class="badge-status badge-coming-soon">Coming Soon</span>
                 </div>
                 <div>
-                  <div class="agent-card-name">Shift Report Generator</div>
-                  <div class="agent-card-desc">Auto-generates end-of-shift reports by aggregating completed WOs, incidents, and KPI data.</div>
+                  <div class="agent-card-name">Forms</div>
+                  <div class="agent-card-desc">Generates, pre-fills, and routes digital forms for maintenance, inspection, and compliance workflows.</div>
                 </div>
                 <div class="agent-card-tags">
-                  <span class="agent-card-tag">Reports</span>
-                  <span class="agent-card-tag">SAP</span>
+                  <span class="agent-card-tag">SAP PM</span>
+                  <span class="agent-card-tag">SAP EHS</span>
                 </div>
                 <div class="agent-card-stats">
                   <span class="agent-stat" style="color:var(--text-light)">Not available</span>
@@ -4514,22 +4752,22 @@
                 </div>
               </div>
 
-              <!-- Agent 7: Calibration Tracker -->
-              <div class="agent-card" role="listitem" tabindex="0" data-status="available" onclick="openAgentDetail('calibration')" onkeydown="keyActivate(event,this)" aria-label="Calibration Tracker agent">
+              <!-- Agent 7: Recommendation -->
+              <div class="agent-card" role="listitem" tabindex="0" data-status="available" onclick="openAgentDetail('calibration')" onkeydown="keyActivate(event,this)" aria-label="Recommendation agent">
                 <div class="agent-card-top">
-                  <div class="agent-card-avatar" style="background:#0891b2">CT</div>
+                  <div class="agent-card-avatar" style="background:#0891b2">RE</div>
                   <span class="badge-status badge-available">Available</span>
                 </div>
                 <div>
-                  <div class="agent-card-name">Calibration Tracker</div>
-                  <div class="agent-card-desc">Monitors calibration schedules and triggers alerts when instruments approach due dates.</div>
+                  <div class="agent-card-name">Recommendation</div>
+                  <div class="agent-card-desc">Delivers context-aware maintenance, repair, and inspection recommendations based on equipment history and sensor trends.</div>
                 </div>
                 <div class="agent-card-tags">
                   <span class="agent-card-tag">SAP PM</span>
-                  <span class="agent-card-tag">QM</span>
+                  <span class="agent-card-tag">Analytics</span>
                 </div>
                 <div class="agent-card-stats">
-                  <span class="agent-stat"><span class="agent-stat-val">22</span> runs today</span>
+                  <span class="agent-stat"><span class="agent-stat-val">672</span> sessions</span>
                   <span class="agent-stat"><span class="agent-stat-success">91%</span> success</span>
                 </div>
                 <div class="agent-card-actions">
@@ -4540,19 +4778,118 @@
                 </div>
               </div>
 
-              <!-- Agent 8: Energy Monitor (Coming Soon) -->
-              <div class="agent-card" role="listitem" tabindex="0" data-status="coming-soon" onclick="openAgentDetail('energy')" onkeydown="keyActivate(event,this)" aria-label="Energy Monitor agent">
+              <!-- Agent 8: DWI (Coming Soon) -->
+              <div class="agent-card" role="listitem" tabindex="0" data-status="coming-soon" onclick="openAgentDetail('energy')" onkeydown="keyActivate(event,this)" aria-label="DWI agent">
                 <div class="agent-card-top">
-                  <div class="agent-card-avatar" style="background:#d97706">EM</div>
+                  <div class="agent-card-avatar" style="background:#d97706">DW</div>
                   <span class="badge-status badge-coming-soon">Coming Soon</span>
                 </div>
                 <div>
-                  <div class="agent-card-name">Energy Monitor</div>
-                  <div class="agent-card-desc">Analyzes energy consumption patterns and flags deviations from expected baselines.</div>
+                  <div class="agent-card-name">DWI</div>
+                  <div class="agent-card-desc">Creates and delivers step-by-step digital work instructions, adapting in real time to equipment state and technician feedback.</div>
                 </div>
                 <div class="agent-card-tags">
+                  <span class="agent-card-tag">SAP PM</span>
                   <span class="agent-card-tag">IoT Hub</span>
-                  <span class="agent-card-tag">EHS</span>
+                </div>
+                <div class="agent-card-stats">
+                  <span class="agent-stat" style="color:var(--text-light)">Not available</span>
+                  <span class="agent-stat" style="color:var(--text-light)">—</span>
+                </div>
+                <div class="agent-card-actions">
+                  <button class="btn-card-contact-sales" onclick="showInfoToast('Our team will reach out shortly');event.stopPropagation()">Contact Sales</button>
+                </div>
+              </div>
+
+              <!-- Agent 9: Autofill -->
+              <div class="agent-card" role="listitem" tabindex="0" data-status="deployed" onclick="openAgentDetail('autofill')" onkeydown="keyActivate(event,this)" aria-label="Autofill agent">
+                <div class="agent-card-top">
+                  <div class="agent-card-avatar" style="background:#059669">AF</div>
+                  <span class="badge-status badge-deployed">Deployed</span>
+                </div>
+                <div>
+                  <div class="agent-card-name">Autofill</div>
+                  <div class="agent-card-desc">Automatically populates work orders, inspection forms, and SAP PM records from equipment history and IoT data.</div>
+                </div>
+                <div class="agent-card-tags">
+                  <span class="agent-card-tag">SAP PM</span>
+                  <span class="agent-card-tag">IoT Sensors</span>
+                </div>
+                <div class="agent-card-stats">
+                  <span class="agent-stat"><span class="agent-stat-val">1,204</span> sessions</span>
+                  <span class="agent-stat"><span class="agent-stat-success">96.3%</span> success</span>
+                </div>
+                <div class="agent-card-actions">
+                  <button class="btn-card-action" onclick="openAgentDetail('autofill');event.stopPropagation()">Configure</button>
+                  <button class="btn-card-action" onclick="showInfoToast('Chat coming soon');event.stopPropagation()">Chat</button>
+                  <button class="btn-card-action" onclick="openAgentDetail('autofill');switchDetailTabById('documents');event.stopPropagation()">Documents</button>
+                </div>
+              </div>
+
+              <!-- Agent 10: Permits Autofill (Available) -->
+              <div class="agent-card" role="listitem" tabindex="0" data-status="available" onclick="openAgentDetail('permits-autofill')" onkeydown="keyActivate(event,this)" aria-label="Permits Autofill agent">
+                <div class="agent-card-top">
+                  <div class="agent-card-avatar" style="background:#0f766e">PA</div>
+                  <span class="badge-status badge-available">Available</span>
+                </div>
+                <div>
+                  <div class="agent-card-name">Permits Autofill</div>
+                  <div class="agent-card-desc">Automatically populates work permit fields using equipment history, job details, and risk assessment templates.</div>
+                </div>
+                <div class="agent-card-tags">
+                  <span class="agent-card-tag">SAP EHS</span>
+                  <span class="agent-card-tag">Safety</span>
+                </div>
+                <div class="agent-card-stats">
+                  <span class="agent-stat" style="color:var(--text-light)">Not deployed</span>
+                  <span class="agent-stat" style="color:var(--text-light)">—</span>
+                </div>
+                <div class="agent-card-actions">
+                  <button class="btn-card-action" onclick="openAgentDetail('permits-autofill');event.stopPropagation()">Configure</button>
+                  <button class="btn-card-action" onclick="showInfoToast('Chat coming soon');event.stopPropagation()">Chat</button>
+                  <button class="btn-card-action" onclick="openAgentDetail('permits-autofill');switchDetailTabById('documents');event.stopPropagation()">Documents</button>
+                  <button class="btn-card-deploy" onclick="showInfoToast('Deploy agent first');event.stopPropagation()">Deploy</button>
+                </div>
+              </div>
+
+              <!-- Agent 11: PPE -->
+              <div class="agent-card" role="listitem" tabindex="0" data-status="deployed" onclick="openAgentDetail('ppe')" onkeydown="keyActivate(event,this)" aria-label="PPE agent">
+                <div class="agent-card-top">
+                  <div class="agent-card-avatar" style="background:#9333ea">PP</div>
+                  <span class="badge-status badge-deployed">Deployed</span>
+                </div>
+                <div>
+                  <div class="agent-card-name">PPE</div>
+                  <div class="agent-card-desc">Verifies PPE requirements per job type, checks technician certifications, and alerts on missing or expired protective equipment.</div>
+                </div>
+                <div class="agent-card-tags">
+                  <span class="agent-card-tag">SAP EHS</span>
+                  <span class="agent-card-tag">Compliance</span>
+                </div>
+                <div class="agent-card-stats">
+                  <span class="agent-stat"><span class="agent-stat-val">892</span> sessions</span>
+                  <span class="agent-stat"><span class="agent-stat-success">98.1%</span> success</span>
+                </div>
+                <div class="agent-card-actions">
+                  <button class="btn-card-action" onclick="openAgentDetail('ppe');event.stopPropagation()">Configure</button>
+                  <button class="btn-card-action" onclick="showInfoToast('Chat coming soon');event.stopPropagation()">Chat</button>
+                  <button class="btn-card-action" onclick="openAgentDetail('ppe');switchDetailTabById('documents');event.stopPropagation()">Documents</button>
+                </div>
+              </div>
+
+              <!-- Agent 12: Permits Authoring (Coming Soon) -->
+              <div class="agent-card" role="listitem" tabindex="0" data-status="coming-soon" onclick="openAgentDetail('permits-authoring')" onkeydown="keyActivate(event,this)" aria-label="Permits Authoring agent">
+                <div class="agent-card-top">
+                  <div class="agent-card-avatar" style="background:#dc2626">PT</div>
+                  <span class="badge-status badge-coming-soon">Coming Soon</span>
+                </div>
+                <div>
+                  <div class="agent-card-name">Permits Authoring</div>
+                  <div class="agent-card-desc">Guides permit writers through hot work, confined space, and LOTO permit creation with regulatory compliance checks.</div>
+                </div>
+                <div class="agent-card-tags">
+                  <span class="agent-card-tag">SAP EHS</span>
+                  <span class="agent-card-tag">Safety</span>
                 </div>
                 <div class="agent-card-stats">
                   <span class="agent-stat" style="color:var(--text-light)">Not available</span>
@@ -4577,7 +4914,7 @@
                 <button class="btn-back" onclick="backToGrid()" aria-label="Back to all agents">
                   ← All Agents
                 </button>
-                <span class="count-chip" aria-label="8 agents">8</span>
+                <span class="count-chip" aria-label="12 agents">12</span>
               </div>
               <div class="list-search" role="search" aria-label="Search agents">
                 <span class="list-search-icon" aria-hidden="true">⌕</span>
@@ -4628,6 +4965,9 @@
                      id="dtab-tools"
                      onclick="switchDetailTab(this,'tools')" onkeydown="keyActivate(event,this)">Tools</div>
                 <div class="detail-tab" role="tab" tabindex="0" aria-selected="false"
+                     id="dtab-skills"
+                     onclick="switchDetailTab(this,'skills')" onkeydown="keyActivate(event,this)">Skills</div>
+                <div class="detail-tab" role="tab" tabindex="0" aria-selected="false"
                      id="dtab-documents"
                      onclick="switchDetailTab(this,'documents')" onkeydown="keyActivate(event,this)">Documents</div>
                 <div class="detail-tab" role="tab" tabindex="0" aria-selected="false"
@@ -4646,21 +4986,52 @@
 
                 <!-- OVERVIEW -->
                 <div id="pane-overview" class="tab-pane active" aria-label="Overview">
+
+                  <!-- Timeline Filter Bar -->
+                  <div class="ov-filter-bar">
+                    <div>
+                      <div class="ov-filter-bar-title">Performance Overview</div>
+                      <div class="ov-filter-bar-period" id="ov-filter-period-label">Showing data for: Last 30 days</div>
+                    </div>
+                    <div class="filter-btn-wrap">
+                      <button class="filter-btn" aria-haspopup="listbox" aria-expanded="false"
+                              id="btn-ov-filter" onclick="toggleOvFilter(event)">
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" style="color:#6e6e6e">
+                          <rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.2"/>
+                          <path d="M1 4h10M4 1v10M8 1v10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="ov-filter-label">Last 30 days</span>
+                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+                          <path d="M2 3.5l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </button>
+                      <div class="date-filter-dropdown" id="ov-filter-dropdown" role="listbox" aria-label="Select time range">
+                        <button class="dfd-item" role="option" onclick="selectOvFilter('Last 7 days', this)">Last 7 days</button>
+                        <button class="dfd-item active" role="option" aria-selected="true" onclick="selectOvFilter('Last 30 days', this)">Last 30 days</button>
+                        <button class="dfd-item" role="option" onclick="selectOvFilter('Last 3 months', this)">Last 3 months</button>
+                        <button class="dfd-item" role="option" onclick="selectOvFilter('Last 6 months', this)">Last 6 months</button>
+                        <button class="dfd-item" role="option" onclick="selectOvFilter('Last 12 months', this)">Last 12 months</button>
+                        <div style="height:1px;background:#f0f0f2;margin:4px 0"></div>
+                        <button class="dfd-item" role="option" onclick="selectOvFilter('All time', this)">All time</button>
+                      </div>
+                    </div>
+                  </div>
+
                   <div class="metrics-row" role="list" aria-label="Agent metrics">
                     <div class="metric-card" role="listitem">
                       <div class="metric-top"><span class="metric-label">Total Sessions</span><div class="metric-dot dot-green2" aria-hidden="true"></div></div>
                       <div class="metric-value" id="ov-sessions">2,103</div>
-                      <div class="metric-sub">All time</div>
+                      <div class="metric-sub" id="ov-sessions-sub">Last 30 days</div>
                     </div>
                     <div class="metric-card" role="listitem">
                       <div class="metric-top"><span class="metric-label">Success Rate</span><div class="metric-dot dot-green2" aria-hidden="true"></div></div>
                       <div class="metric-value" id="ov-success">93.1%</div>
-                      <div class="metric-sub">Last 30 days</div>
+                      <div class="metric-sub" id="ov-success-sub">Last 30 days</div>
                     </div>
                     <div class="metric-card" role="listitem">
                       <div class="metric-top"><span class="metric-label">Avg Response</span><div class="metric-dot dot-blue2" aria-hidden="true"></div></div>
                       <div class="metric-value" id="ov-response">2.8s</div>
-                      <div class="metric-sub">Last 30 days</div>
+                      <div class="metric-sub" id="ov-response-sub">Last 30 days</div>
                     </div>
                     <div class="metric-card" role="listitem">
                       <div class="metric-top"><span class="metric-label">User Rating</span><div class="metric-dot dot-amber2" aria-hidden="true"></div></div>
@@ -4802,9 +5173,26 @@
                   </button>
                 </div><!-- /tools -->
 
+                <!-- SKILLS -->
+                <div id="pane-skills" class="tab-pane" aria-label="Skills">
+                  <div class="skills-pane">
+                    <div class="skills-pane-header">
+                      <div>
+                        <div class="skills-pane-title">Agent Skills</div>
+                        <div class="skills-pane-sub" id="skills-count-label">0 skills configured</div>
+                      </div>
+                      <button class="btn-primary btn-add-skill" onclick="openAddSkillModal()">+ Add Skill</button>
+                    </div>
+                    <div class="skills-grid" id="skills-grid" role="list" aria-label="Agent skills">
+                      <!-- Rendered by JS -->
+                    </div>
+                  </div>
+                </div><!-- /skills -->
+
                 <!-- DOCUMENTS -->
                 <div id="pane-documents" class="tab-pane" aria-label="Documents">
                   <div class="docs-panel">
+                    <!-- Upload Zone -->
                     <div class="upload-zone" role="button" tabindex="0"
                          onclick="openUploadModal()" onkeydown="keyActivate(event,this)"
                          aria-label="Drop files here or click to upload documents">
@@ -4813,35 +5201,28 @@
                       <div class="upload-zone-sub">PDF, DOCX, XLSX, TXT supported · Max 50 MB per file</div>
                       <button class="btn-upload-zone" tabindex="-1">Upload Document</button>
                     </div>
+                    <!-- Table Header -->
                     <div class="docs-list-header">
-                      <span class="docs-list-title" id="docs-count-label">Uploaded Documents (3)</span>
+                      <span class="docs-list-title" id="docs-count-label">Documents (3)</span>
                       <button class="btn-feed" onclick="showInfoToast('Feed to Multiple Agents coming soon')">Feed to Multiple Agents</button>
                     </div>
-                    <div class="doc-list" id="doc-list" role="list" aria-label="Uploaded documents">
-                      <div class="doc-row" role="listitem">
-                        <div class="doc-type-badge">PDF</div>
-                        <div class="doc-info">
-                          <div class="doc-name">SAP_PM_Work_Orders_2024.pdf</div>
-                          <div class="doc-meta">2.4 MB · Uploaded Mar 28, 2026</div>
-                        </div>
-                        <button class="btn-remove" onclick="removeDoc(this)" aria-label="Remove SAP_PM_Work_Orders_2024.pdf">Remove</button>
-                      </div>
-                      <div class="doc-row" role="listitem">
-                        <div class="doc-type-badge">DOCX</div>
-                        <div class="doc-info">
-                          <div class="doc-name">Equipment_Failure_Handbook.docx</div>
-                          <div class="doc-meta">1.1 MB · Uploaded Mar 15, 2026</div>
-                        </div>
-                        <button class="btn-remove" onclick="removeDoc(this)" aria-label="Remove Equipment_Failure_Handbook.docx">Remove</button>
-                      </div>
-                      <div class="doc-row" role="listitem">
-                        <div class="doc-type-badge">XLSX</div>
-                        <div class="doc-info">
-                          <div class="doc-name">Sensor_Thresholds_Config.xlsx</div>
-                          <div class="doc-meta">380 KB · Uploaded Mar 10, 2026</div>
-                        </div>
-                        <button class="btn-remove" onclick="removeDoc(this)" aria-label="Remove Sensor_Thresholds_Config.xlsx">Remove</button>
-                      </div>
+                    <!-- Documents Table -->
+                    <div class="doc-table-wrap">
+                      <table class="doc-table" id="doc-table" role="grid" aria-label="Uploaded documents">
+                        <thead>
+                          <tr>
+                            <th style="width:38%">File Name</th>
+                            <th style="width:8%">Type</th>
+                            <th style="width:10%">Size</th>
+                            <th style="width:16%">Uploaded</th>
+                            <th style="width:18%">Status</th>
+                            <th style="width:10%"></th>
+                          </tr>
+                        </thead>
+                        <tbody id="doc-tbody">
+                          <!-- Rendered by JS -->
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 </div><!-- /documents -->
@@ -5053,7 +5434,7 @@
                       <div class="dep-detail-meta">
                         <div class="dep-detail-meta-item">Deployed by <strong id="dep-detail-by">John Smith</strong></div>
                         <div class="dep-detail-meta-item">Date <strong id="dep-detail-date">Apr 5, 2026 · 16:45 UTC</strong></div>
-                        <div class="dep-detail-meta-item">Agent <strong id="dep-detail-agent">Troubleshoot</strong></div>
+                        <div class="dep-detail-meta-item">Agent <strong id="dep-detail-agent">Troubleshooting</strong></div>
                         <div class="dep-detail-meta-item">Model <strong id="dep-detail-model">Claude Sonnet 4.6</strong></div>
                       </div>
 
@@ -5085,7 +5466,7 @@
                       <div class="dep-snapshot-card">
                         <div class="dep-snapshot-title">Configuration Snapshot</div>
                         <div class="dep-snapshot-grid">
-                          <div class="dep-snapshot-row"><span class="dep-snapshot-key">Agent</span><span class="dep-snapshot-val" id="dep-snap-agent">Troubleshoot</span></div>
+                          <div class="dep-snapshot-row"><span class="dep-snapshot-key">Agent</span><span class="dep-snapshot-val" id="dep-snap-agent">Troubleshooting</span></div>
                           <div class="dep-snapshot-row"><span class="dep-snapshot-key">Temperature</span><span class="dep-snapshot-val">0.3</span></div>
                           <div class="dep-snapshot-row"><span class="dep-snapshot-key">Model</span><span class="dep-snapshot-val">Claude Sonnet 4.6</span></div>
                           <div class="dep-snapshot-row"><span class="dep-snapshot-key">Max Tokens</span><span class="dep-snapshot-val">4,096</span></div>
@@ -5254,7 +5635,7 @@
                 <div class="template-icon" style="background:#f5f5f5">📊</div>
                 <span class="template-category-badge" style="background:#f5f5f5;color:#525560">Reporting</span>
               </div>
-              <div class="template-name">Shift Report Generator</div>
+              <div class="template-name">Forms</div>
               <div class="template-desc">Auto-generates end-of-shift reports by aggregating completed work orders, incidents, and KPI data from SAP.</div>
               <div class="template-tags">
                 <span class="template-tag">Reports</span>
@@ -5654,14 +6035,21 @@
 ================================================================ */
 const AGENTS_DATA = {
   'wo-assistant': {
-    initials: 'TR', color: '#3d5afe',
-    name: 'Troubleshoot', status: 'Deployed',
+    initials: 'TS', color: '#3d5afe',
+    name: 'Troubleshooting', status: 'Deployed',
     sub: 'Equipment & process diagnostics · Created Feb 2, 2026',
     sessions: '2,103', success: '93.1%', response: '2.8s', rating: '4.6 ★',
     ratingCount: '312 ratings',
     desc: 'Diagnoses equipment failures, process anomalies, and operational issues. Integrates with SAP PM, IoT sensor data, and maintenance history to suggest corrective actions and escalation paths.',
     tags: ['SAP PM', 'IoT Sensors', 'Maintenance DB'],
-    anSessions: '218', anTurns: '6.2', anEscalation: '2.1%', anUptime: '99.2%'
+    anSessions: '218', anTurns: '6.2', anEscalation: '2.1%', anUptime: '99.2%',
+    skills: [
+      { name: 'Fault Diagnosis', cat: 'Diagnostic', level: 'Expert', desc: 'Identifies root causes of equipment malfunctions using sensor data, work order history, and failure patterns.' },
+      { name: 'Vibration Analysis', cat: 'Analysis', level: 'Expert', desc: 'Interprets vibration signatures to detect bearing wear, shaft imbalance, and mechanical misalignment.' },
+      { name: 'Thermal Anomaly Detection', cat: 'Diagnostic', level: 'Intermediate', desc: 'Flags overheating in motors, transformers, and heat exchangers by correlating IoT temperature streams.' },
+      { name: 'SAP PM Work Order Lookup', cat: 'Integration', level: 'Expert', desc: 'Queries and retrieves work order details, equipment history, and maintenance records from SAP PM.' },
+      { name: 'Corrective Action Suggestion', cat: 'Automation', level: 'Expert', desc: 'Recommends repair procedures and escalation paths based on the failure type, severity, and available technicians.' }
+    ]
   },
   'safety': {
     initials: 'AS', color: '#2e7d32',
@@ -5671,67 +6059,166 @@ const AGENTS_DATA = {
     ratingCount: '198 ratings',
     desc: 'Answers work order queries, retrieves SOPs, and guides technicians through step-by-step procedures. Integrates with SAP PM and the document knowledge base.',
     tags: ['SAP PM', 'SOP Library'],
-    anSessions: '38', anTurns: '4.1', anEscalation: '0.8%', anUptime: '99.8%'
+    anSessions: '38', anTurns: '4.1', anEscalation: '0.8%', anUptime: '99.8%',
+    skills: [
+      { name: 'SOP Retrieval', cat: 'Integration', level: 'Expert', desc: 'Fetches the most relevant standard operating procedures from the document knowledge base for any task or equipment.' },
+      { name: 'Step-by-step Guidance', cat: 'Automation', level: 'Expert', desc: 'Walks technicians through complex maintenance and repair workflows with contextual tips and checkpoints.' },
+      { name: 'Work Order Query', cat: 'Integration', level: 'Intermediate', desc: 'Answers natural-language questions about open, pending, and completed work orders from SAP PM.' },
+      { name: 'Technician Skill Matching', cat: 'Automation', level: 'Intermediate', desc: 'Matches task requirements to available technicians based on skill profiles, certifications, and current workload.' },
+      { name: 'Safety Checklist Verification', cat: 'Safety', level: 'Intermediate', desc: 'Validates that mandatory safety steps are acknowledged before hazardous work orders are started or closed.' }
+    ]
   },
   'parts': {
-    initials: 'RC', color: '#f59e0b',
-    name: 'RCA', status: 'Deployed',
+    initials: '5W', color: '#f59e0b',
+    name: '5 Whys (RCA)', status: 'Deployed',
     sub: 'Root cause analysis engine · Created Feb 10, 2026',
     sessions: '871', success: '93.7%', response: '3.1s', rating: '4.5 ★',
     ratingCount: '143 ratings',
     desc: 'Performs root cause analysis on equipment failures and recurring defects. Cross-references historical work orders, sensor trends, and maintenance logs to identify systemic issues.',
     tags: ['SAP PM', 'IoT Hub', 'Analytics'],
-    anSessions: '67', anTurns: '5.8', anEscalation: '3.4%', anUptime: '99.5%'
+    anSessions: '67', anTurns: '5.8', anEscalation: '3.4%', anUptime: '99.5%',
+    skills: [
+      { name: 'Failure Mode Analysis', cat: 'Analysis', level: 'Expert', desc: 'Performs FMEA-based analysis to identify failure modes, effects, and criticality across equipment classes.' },
+      { name: 'Historical Data Correlation', cat: 'Analysis', level: 'Expert', desc: 'Cross-references past failures with current anomalies to surface systemic and recurring defect patterns.' },
+      { name: 'Pareto Analysis', cat: 'Reporting', level: 'Intermediate', desc: 'Ranks defect causes by frequency to prioritize corrective actions for maximum reliability impact.' },
+      { name: 'Equipment Lifespan Prediction', cat: 'Analysis', level: 'Intermediate', desc: 'Estimates remaining useful life using degradation trends and historical maintenance intervals.' },
+      { name: 'Defect Pattern Recognition', cat: 'Diagnostic', level: 'Expert', desc: 'Identifies recurring defect signatures across equipment fleets and production lines.' }
+    ]
   },
   'scheduler': {
-    initials: 'WC', color: '#7c3aed',
-    name: 'WO Create', status: 'Available',
-    sub: 'Work order automation · Created Mar 1, 2026',
+    initials: 'PL', color: '#7c3aed',
+    name: 'Plan', status: 'Available',
+    sub: 'Work order planning & scheduling · Created Mar 1, 2026',
     sessions: '0', success: '—', response: '—', rating: '—',
     ratingCount: 'No ratings yet',
-    desc: 'Automatically creates work orders from equipment alerts, inspection findings, and operator-reported issues. Integrates with SAP PM and the alerting pipeline.',
-    tags: ['SAP PM', 'Alerts'],
-    anSessions: '0', anTurns: '—', anEscalation: '—', anUptime: '—'
+    desc: 'Plans and schedules work orders intelligently by evaluating equipment criticality, technician availability, and resource constraints. Integrates with SAP PM and the alerting pipeline.',
+    tags: ['SAP PM', 'Scheduling'],
+    anSessions: '0', anTurns: '—', anEscalation: '—', anUptime: '—',
+    skills: [
+      { name: 'Alert-to-Work-Order Conversion', cat: 'Automation', level: 'Intermediate', desc: 'Automatically generates structured work orders from equipment alerts and inspection findings.' },
+      { name: 'Priority Scoring', cat: 'Automation', level: 'Intermediate', desc: 'Assigns priority levels to new work orders based on equipment criticality, failure impact, and SLA requirements.' },
+      { name: 'Technician Availability Check', cat: 'Integration', level: 'Beginner', desc: 'Queries current technician schedules to identify available resources for newly created work orders.' },
+      { name: 'SAP PM Work Order Submission', cat: 'Integration', level: 'Intermediate', desc: 'Creates and submits finalized work orders directly into SAP PM via the REST API.' }
+    ]
   },
   'eq-health': {
-    initials: 'IR', color: '#1565c0',
-    name: 'Issue Report', status: 'Deployed',
-    sub: 'Operational issue reporting · Created Jan 22, 2026',
+    initials: 'DT', color: '#1565c0',
+    name: 'Detect', status: 'Deployed',
+    sub: 'Anomaly detection & alerting · Created Jan 22, 2026',
     sessions: '534', success: '97.0%', response: '1.4s', rating: '4.7 ★',
     ratingCount: '98 ratings',
-    desc: 'Generates structured issue reports from operational data, incidents, and anomalies detected across the plant. Links findings to relevant work orders and equipment records.',
+    desc: 'Continuously monitors operational data streams to detect anomalies, equipment deviations, and early failure signals. Generates structured alerts linked to relevant work orders.',
     tags: ['IoT Hub', 'SAP PM'],
-    anSessions: '291', anTurns: '3.2', anEscalation: '1.5%', anUptime: '99.8%'
+    anSessions: '291', anTurns: '3.2', anEscalation: '1.5%', anUptime: '99.8%',
+    skills: [
+      { name: 'Incident Report Generation', cat: 'Reporting', level: 'Expert', desc: 'Creates structured incident reports from raw operational data, sensor alerts, and operator inputs.' },
+      { name: 'KPI Aggregation', cat: 'Reporting', level: 'Expert', desc: 'Collects and summarizes key performance indicators across equipment assets and production shifts.' },
+      { name: 'Anomaly Flagging', cat: 'Diagnostic', level: 'Intermediate', desc: 'Detects and highlights deviations from expected operational baselines across IoT sensor streams.' },
+      { name: 'Work Order Linking', cat: 'Integration', level: 'Intermediate', desc: 'Associates issue reports with relevant open or recently closed work orders for full traceability.' }
+    ]
   },
   'shift-report': {
-    initials: 'SR', color: '#7c3aed',
-    name: 'Shift Report Generator', status: 'Coming Soon',
-    sub: 'Reports & SAP integration · Created Mar 20, 2026',
+    initials: 'FM', color: '#7c3aed',
+    name: 'Forms', status: 'Coming Soon',
+    sub: 'Digital form generation & SAP integration · Created Mar 20, 2026',
     sessions: '0', success: '—', response: '—', rating: '—',
     ratingCount: 'No ratings yet',
-    desc: 'Auto-generates end-of-shift reports by aggregating completed work orders, incidents, and KPI data.',
-    tags: ['Reports', 'SAP'],
-    anSessions: '0', anTurns: '—', anEscalation: '—', anUptime: '—'
+    desc: 'Generates, pre-fills, and routes digital forms for maintenance, inspection, and compliance workflows. Pushes completed forms directly to SAP PM and EHS.',
+    tags: ['SAP PM', 'SAP EHS'],
+    anSessions: '0', anTurns: '—', anEscalation: '—', anUptime: '—',
+    skills: [
+      { name: 'Shift Summary Generation', cat: 'Reporting', level: 'Beginner', desc: 'Aggregates completed work orders, incidents, and key metrics into a structured end-of-shift report.' },
+      { name: 'Data Compilation', cat: 'Integration', level: 'Beginner', desc: 'Pulls data from SAP PM and IoT Hub to populate report templates with accurate, up-to-date information.' }
+    ]
   },
   'calibration': {
-    initials: 'CT', color: '#0891b2',
-    name: 'Calibration Tracker', status: 'Available',
-    sub: 'SAP PM + QM integration · Created Feb 28, 2026',
+    initials: 'RE', color: '#0891b2',
+    name: 'Recommendation', status: 'Available',
+    sub: 'AI-driven maintenance recommendations · Created Feb 28, 2026',
     sessions: '672', success: '91.0%', response: '1.6s', rating: '4.2 ★',
     ratingCount: '54 ratings',
-    desc: 'Monitors calibration schedules and triggers alerts when instruments approach their due dates.',
-    tags: ['SAP PM', 'QM'],
-    anSessions: '22', anTurns: '3.8', anEscalation: '5.2%', anUptime: '98.9%'
+    desc: 'Delivers context-aware maintenance, repair, and inspection recommendations based on equipment history, sensor trends, and industry best practices.',
+    tags: ['SAP PM', 'Analytics'],
+    anSessions: '22', anTurns: '3.8', anEscalation: '5.2%', anUptime: '98.9%',
+    skills: [
+      { name: 'Calibration Schedule Monitoring', cat: 'Automation', level: 'Expert', desc: 'Tracks calibration due dates across all instruments and sends proactive alerts before deadlines are missed.' },
+      { name: 'Instrument Record Management', cat: 'Integration', level: 'Intermediate', desc: 'Maintains calibration history, certificates, and measurement uncertainty records per instrument.' },
+      { name: 'Non-conformance Detection', cat: 'Diagnostic', level: 'Intermediate', desc: 'Flags instruments that failed calibration and automatically triggers corrective maintenance actions.' },
+      { name: 'SAP QM Integration', cat: 'Integration', level: 'Expert', desc: 'Reads and updates calibration data in the SAP Quality Management module via bidirectional API sync.' }
+    ]
   },
   'energy': {
-    initials: 'EM', color: '#d97706',
-    name: 'Energy Monitor', status: 'Coming Soon',
-    sub: 'IoT Hub + EHS integration · Created Apr 1, 2026',
+    initials: 'DW', color: '#d97706',
+    name: 'DWI', status: 'Coming Soon',
+    sub: 'Digital Work Instructions · Created Apr 1, 2026',
     sessions: '0', success: '—', response: '—', rating: '—',
     ratingCount: 'No ratings yet',
-    desc: 'Analyzes energy consumption patterns and flags deviations from expected baselines for investigation.',
-    tags: ['IoT Hub', 'EHS'],
-    anSessions: '0', anTurns: '—', anEscalation: '—', anUptime: '—'
+    desc: 'Creates and delivers step-by-step digital work instructions for maintenance and inspection tasks. Adapts instructions in real time based on equipment state and technician feedback.',
+    tags: ['SAP PM', 'IoT Hub'],
+    anSessions: '0', anTurns: '—', anEscalation: '—', anUptime: '—',
+    skills: [
+      { name: 'Instruction Authoring', cat: 'Automation', level: 'Beginner', desc: 'Generates structured, step-by-step work instructions from procedure templates and equipment data.' },
+      { name: 'Adaptive Step Guidance', cat: 'Automation', level: 'Beginner', desc: 'Adjusts instruction steps dynamically based on real-time equipment state and technician inputs.' }
+    ]
+  },
+  'autofill': {
+    initials: 'AF', color: '#059669',
+    name: 'Autofill', status: 'Deployed',
+    sub: 'Form & work order auto-population · Created Mar 5, 2026',
+    sessions: '1,204', success: '96.3%', response: '1.2s', rating: '4.7 ★',
+    ratingCount: '187 ratings',
+    desc: 'Automatically populates work orders, inspection forms, and SAP PM records by extracting data from equipment history, IoT readings, and operator inputs.',
+    tags: ['SAP PM', 'IoT Sensors'],
+    anSessions: '312', anTurns: '3.1', anEscalation: '1.2%', anUptime: '99.7%',
+    skills: [
+      { name: 'Field Data Extraction', cat: 'Automation', level: 'Expert', desc: 'Extracts and structures relevant field data from photos, voice notes, and sensor readings for form population.' },
+      { name: 'SAP PM Record Update', cat: 'Integration', level: 'Expert', desc: 'Pushes auto-filled data directly into SAP PM work order and equipment master records.' },
+      { name: 'Validation & Error Checking', cat: 'Diagnostic', level: 'Intermediate', desc: 'Validates populated fields against business rules and flags inconsistencies before submission.' }
+    ]
+  },
+  'permits-autofill': {
+    initials: 'PA', color: '#0f766e',
+    name: 'Permits Autofill', status: 'Available',
+    sub: 'Permit field auto-population · Created Mar 14, 2026',
+    sessions: '0', success: '—', response: '—', rating: '—',
+    ratingCount: 'No ratings yet',
+    desc: 'Automatically populates work permit fields using equipment history, job details, risk assessments, and safety templates to reduce manual entry and errors.',
+    tags: ['SAP EHS', 'Safety'],
+    anSessions: '0', anTurns: '—', anEscalation: '—', anUptime: '—',
+    skills: [
+      { name: 'Permit Field Mapping', cat: 'Automation', level: 'Intermediate', desc: 'Maps job context, equipment details, and hazard data to the correct permit fields automatically.' },
+      { name: 'Risk Assessment Lookup', cat: 'Integration', level: 'Intermediate', desc: 'Fetches applicable risk assessments and pre-fills hazard identification sections of permits.' },
+      { name: 'Safety Template Application', cat: 'Safety', level: 'Beginner', desc: 'Applies standard safety templates to permit forms based on the work type and equipment involved.' }
+    ]
+  },
+  'ppe': {
+    initials: 'PP', color: '#9333ea',
+    name: 'PPE', status: 'Deployed',
+    sub: 'PPE compliance & verification · Created Feb 18, 2026',
+    sessions: '892', success: '98.1%', response: '0.9s', rating: '4.9 ★',
+    ratingCount: '241 ratings',
+    desc: 'Verifies PPE requirements for each job type, checks technician certification records, and alerts supervisors when required protective equipment is missing or expired.',
+    tags: ['SAP EHS', 'Compliance'],
+    anSessions: '178', anTurns: '2.8', anEscalation: '0.6%', anUptime: '99.9%',
+    skills: [
+      { name: 'PPE Requirement Lookup', cat: 'Integration', level: 'Expert', desc: 'Determines required PPE for a given task by cross-referencing job type, equipment, and regulatory standards.' },
+      { name: 'Certification Verification', cat: 'Diagnostic', level: 'Expert', desc: 'Checks that assigned technicians hold valid certifications for the required PPE and task category.' },
+      { name: 'Compliance Alerting', cat: 'Safety', level: 'Expert', desc: 'Notifies supervisors and creates safety observations when PPE requirements are unmet or certifications expire.' }
+    ]
+  },
+  'permits-authoring': {
+    initials: 'PT', color: '#dc2626',
+    name: 'Permits Authoring', status: 'Coming Soon',
+    sub: 'Hazardous work permit creation · Created Apr 3, 2026',
+    sessions: '0', success: '—', response: '—', rating: '—',
+    ratingCount: 'No ratings yet',
+    desc: 'Guides permit writers through the full creation of hot work, confined space, and electrical isolation permits with built-in regulatory compliance checks and approval workflows.',
+    tags: ['SAP EHS', 'Safety'],
+    anSessions: '0', anTurns: '—', anEscalation: '—', anUptime: '—',
+    skills: [
+      { name: 'Permit Template Generation', cat: 'Automation', level: 'Beginner', desc: 'Creates tailored permit templates for hot work, confined space entry, LOTO, and chemical handling tasks.' },
+      { name: 'Regulatory Compliance Check', cat: 'Safety', level: 'Beginner', desc: 'Validates permit content against OSHA, local EHS, and site-specific regulatory requirements before submission.' }
+    ]
   }
 };
 
@@ -5886,6 +6373,22 @@ function openAgentDetail(agentKey) {
   // Update sidebar agent list
   renderAgentList(agentKey);
 
+  // Render skills and documents
+  renderSkills(agentKey);
+  renderDocTable(agentKey);
+
+  // Reset overview time filter to default
+  const defaultPeriod = 'Last 30 days';
+  const ovLbl = document.getElementById('ov-filter-label');
+  if (ovLbl) ovLbl.textContent = defaultPeriod;
+  const ovPeriodLbl = document.getElementById('ov-filter-period-label');
+  if (ovPeriodLbl) ovPeriodLbl.textContent = 'Showing data for: ' + defaultPeriod;
+  document.querySelectorAll('#ov-filter-dropdown .dfd-item').forEach(b => {
+    const active = b.textContent.trim() === defaultPeriod;
+    b.classList.toggle('active', active);
+    b.setAttribute('aria-selected', String(active));
+  });
+
   // Reset to Overview tab
   switchDetailTabById('overview');
 }
@@ -5909,6 +6412,76 @@ function renderAgentList(selectedKey) {
         <span class="agent-item-desc">${esc(d.tags.join(' · '))}</span>
       </div>
     </div>`).join('');
+}
+
+/* ================================================================
+   SKILLS — render, remove, add
+================================================================ */
+const CAT_CSS = {
+  Diagnostic: 'skill-cat-diagnostic', Integration: 'skill-cat-integration',
+  Analysis: 'skill-cat-analysis', Automation: 'skill-cat-automation',
+  Reporting: 'skill-cat-reporting', Safety: 'skill-cat-safety'
+};
+const LEVEL_CSS = {
+  Expert: 'skill-level-expert', Intermediate: 'skill-level-intermediate', Beginner: 'skill-level-beginner'
+};
+
+function renderSkills(agentKey) {
+  const data = AGENTS_DATA[agentKey];
+  if (!data) return;
+  const skills = data.skills || [];
+  const grid   = document.getElementById('skills-grid');
+  const label  = document.getElementById('skills-count-label');
+  if (label) label.textContent = `${skills.length} skill${skills.length !== 1 ? 's' : ''} configured`;
+  if (!grid) return;
+  if (skills.length === 0) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:36px 0;color:var(--text-gray);font-family:var(--font-inter);font-size:13px">
+      No skills configured yet. Click <strong>+ Add Skill</strong> to get started.
+    </div>`;
+    return;
+  }
+  grid.innerHTML = skills.map((sk, i) => `
+    <div class="skill-card" role="listitem" data-skill-index="${i}">
+      <div class="skill-card-top">
+        <span class="skill-cat-badge ${CAT_CSS[sk.cat] || 'skill-cat-default'}">${esc(sk.cat)}</span>
+        <span class="skill-level-pill ${LEVEL_CSS[sk.level] || ''}">${esc(sk.level)}</span>
+      </div>
+      <div class="skill-card-name">${esc(sk.name)}</div>
+      <div class="skill-card-desc">${esc(sk.desc)}</div>
+      <div class="skill-card-footer">
+        <button class="btn-skill-remove" onclick="removeSkill(${i})" aria-label="Remove ${esc(sk.name)}">Remove</button>
+      </div>
+    </div>`).join('');
+}
+
+function removeSkill(index) {
+  const skills = AGENTS_DATA[currentAgentKey].skills;
+  skills.splice(index, 1);
+  renderSkills(currentAgentKey);
+}
+
+function openAddSkillModal() {
+  document.getElementById('skill-name-input').value    = '';
+  document.getElementById('skill-cat-select').value   = 'Diagnostic';
+  document.getElementById('skill-level-select').value = 'Intermediate';
+  document.getElementById('skill-desc-input').value   = '';
+  openModal('modal-add-skill');
+}
+function closeAddSkillModal() { closeModal('modal-add-skill'); }
+
+function addSkill() {
+  const name  = document.getElementById('skill-name-input').value.trim();
+  const cat   = document.getElementById('skill-cat-select').value;
+  const level = document.getElementById('skill-level-select').value;
+  const desc  = document.getElementById('skill-desc-input').value.trim();
+  if (!name) {
+    document.getElementById('skill-name-input').focus();
+    return;
+  }
+  AGENTS_DATA[currentAgentKey].skills.push({ name, cat, level, desc: desc || 'No description provided.' });
+  renderSkills(currentAgentKey);
+  closeAddSkillModal();
+  showSuccessToast(`Skill "${name}" added`);
 }
 
 function backToGrid() {
@@ -5940,20 +6513,180 @@ function keyActivate(e, el) {
 }
 
 /* ================================================================
-   DOCUMENT REMOVE
+   AGENT DOCUMENTS DATA
 ================================================================ */
-function removeDoc(btn) {
-  const row = btn.closest('.doc-row');
-  row.style.transition = 'opacity .18s, transform .18s';
-  row.style.opacity = '0';
-  row.style.transform = 'translateX(6px)';
-  setTimeout(() => { row.remove(); updateDocCount(); }, 180);
+const AGENT_DOCS = {
+  'wo-assistant': [
+    { name: 'SAP_PM_Work_Orders_2024.pdf',    ext: 'pdf',  size: '2.4 MB',  uploaded: 'Mar 28, 2026', status: 'ready' },
+    { name: 'Equipment_Failure_Handbook.docx', ext: 'docx', size: '1.1 MB',  uploaded: 'Mar 15, 2026', status: 'ready' },
+    { name: 'Sensor_Thresholds_Config.xlsx',   ext: 'xlsx', size: '380 KB',  uploaded: 'Mar 10, 2026', status: 'ready' }
+  ],
+  'safety': [
+    { name: 'SOP_Electrical_Maintenance_v3.pdf', ext: 'pdf',  size: '3.8 MB', uploaded: 'Feb 12, 2026', status: 'ready' },
+    { name: 'Work_Order_Procedures_2026.docx',   ext: 'docx', size: '860 KB', uploaded: 'Jan 28, 2026', status: 'ready' }
+  ],
+  'parts': [
+    { name: 'Failure_Analysis_Report_Q1.pdf', ext: 'pdf',  size: '5.2 MB', uploaded: 'Mar 5, 2026',  status: 'ready' },
+    { name: 'Historical_Maintenance_Log.xlsx',ext: 'xlsx', size: '1.6 MB', uploaded: 'Feb 20, 2026', status: 'failed' }
+  ],
+  'scheduler': [
+    { name: 'WO_Creation_Guidelines_v2.pdf', ext: 'pdf', size: '1.2 MB', uploaded: 'Mar 18, 2026', status: 'ready' }
+  ],
+  'eq-health': [
+    { name: 'Issue_Reporting_Template.docx', ext: 'docx', size: '540 KB', uploaded: 'Feb 5, 2026',  status: 'ready' },
+    { name: 'Plant_Asset_Register_2026.xlsx',ext: 'xlsx', size: '2.1 MB', uploaded: 'Jan 15, 2026', status: 'ready' }
+  ],
+  'shift-report': [
+    { name: 'Shift_Report_Template_v1.docx', ext: 'docx', size: '290 KB', uploaded: 'Mar 22, 2026', status: 'ready' }
+  ],
+  'calibration': [
+    { name: 'Calibration_Certificates_2025.pdf', ext: 'pdf', size: '4.7 MB', uploaded: 'Mar 1, 2026',  status: 'ready' },
+    { name: 'SAP_QM_Integration_Guide.pdf',       ext: 'pdf', size: '2.3 MB', uploaded: 'Feb 14, 2026', status: 'ready' }
+  ],
+  'energy': [
+    { name: 'DWI_Procedure_Library.pdf',        ext: 'pdf',  size: '4.1 MB', uploaded: 'Apr 2, 2026',  status: 'ready'  },
+    { name: 'Equipment_Assembly_Steps.docx',   ext: 'docx', size: '1.3 MB', uploaded: 'Mar 28, 2026', status: 'ready'  }
+  ],
+  'autofill': [
+    { name: 'WO_Field_Mapping_Rules.xlsx',      ext: 'xlsx', size: '540 KB', uploaded: 'Mar 10, 2026', status: 'ready'  },
+    { name: 'SAP_PM_Field_Definitions.pdf',     ext: 'pdf',  size: '2.8 MB', uploaded: 'Feb 25, 2026', status: 'ready'  },
+    { name: 'Inspection_Form_Templates.docx',  ext: 'docx', size: '920 KB', uploaded: 'Feb 12, 2026', status: 'ready'  }
+  ],
+  'permits-autofill': [
+    { name: 'Permit_Field_Mapping_Guide.pdf',   ext: 'pdf',  size: '1.6 MB', uploaded: 'Mar 16, 2026', status: 'ready'  },
+    { name: 'Risk_Assessment_Templates.xlsx',  ext: 'xlsx', size: '780 KB', uploaded: 'Mar 5, 2026',  status: 'failed' }
+  ],
+  'ppe': [
+    { name: 'PPE_Requirements_Matrix.xlsx',     ext: 'xlsx', size: '1.1 MB', uploaded: 'Feb 20, 2026', status: 'ready'  },
+    { name: 'Certification_Standards_2026.pdf',ext: 'pdf',  size: '3.4 MB', uploaded: 'Jan 30, 2026', status: 'ready'  },
+    { name: 'EHS_Compliance_Checklist.docx',   ext: 'docx', size: '460 KB', uploaded: 'Jan 20, 2026', status: 'ready'  }
+  ],
+  'permits-authoring': [
+    { name: 'Hot_Work_Permit_Template.docx',    ext: 'docx', size: '380 KB', uploaded: 'Apr 4, 2026',  status: 'ready'  },
+    { name: 'OSHA_Permit_Requirements.pdf',    ext: 'pdf',  size: '2.1 MB', uploaded: 'Apr 4, 2026',  status: 'ready'  }
+  ]
+};
+
+const EXT_COLORS = {
+  pdf: '#e53935', docx: '#1565c0', xlsx: '#2e7d32',
+  txt: '#6e6e6e', csv: '#7c3aed', pptx: '#d84315'
+};
+
+let currentViewerDocIndex = -1;
+
+/* ================================================================
+   DOCUMENT TABLE RENDER
+================================================================ */
+function renderDocTable(agentKey) {
+  const docs  = AGENT_DOCS[agentKey] || [];
+  const tbody = document.getElementById('doc-tbody');
+  const label = document.getElementById('docs-count-label');
+  if (label) label.textContent = `Documents (${docs.length})`;
+  if (!tbody) return;
+
+  if (docs.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" class="doc-table-empty">No documents uploaded yet.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = docs.map((d, i) => {
+    const ext   = (d.ext || 'file').toLowerCase();
+    const color = EXT_COLORS[ext] || '#6e6e6e';
+    const isFailed = d.status === 'failed';
+    const statusHtml = isFailed
+      ? `<span class="doc-status-pill doc-status-failed"><span class="doc-status-dot"></span>Processing failed</span>`
+      : `<span class="doc-status-pill doc-status-ready"><span class="doc-status-dot"></span>Ready for AI agents</span>`;
+    const retryBtn = isFailed
+      ? `<button class="btn-doc-retry" onclick="retryDoc(${i});event.stopPropagation()" aria-label="Retry processing">↺ Retry</button>`
+      : '';
+    return `<tr class="${isFailed ? 'doc-row-failed' : ''}" onclick="openDocViewer(${i})" style="cursor:pointer" aria-label="View ${esc(d.name)}">
+      <td>
+        <div class="doc-name-cell">
+          <div class="doc-type-badge" style="background:${color}18;color:${color}">${esc(ext.toUpperCase())}</div>
+          <button class="doc-name-link" onclick="openDocViewer(${i});event.stopPropagation()" title="${esc(d.name)}">${esc(d.name)}</button>
+        </div>
+      </td>
+      <td class="doc-meta-cell">${esc(ext.toUpperCase())}</td>
+      <td class="doc-meta-cell">${esc(d.size)}</td>
+      <td class="doc-meta-cell">${esc(d.uploaded)}</td>
+      <td>${statusHtml}</td>
+      <td>
+        <div class="doc-action-cell">
+          ${retryBtn}
+          <button class="btn-remove" onclick="removeDocByIndex(${i});event.stopPropagation()" aria-label="Remove ${esc(d.name)}">Remove</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
 }
 
+function removeDocByIndex(i) {
+  const docs = AGENT_DOCS[currentAgentKey];
+  if (!docs) return;
+  docs.splice(i, 1);
+  renderDocTable(currentAgentKey);
+}
+
+function retryDoc(i) {
+  const docs = AGENT_DOCS[currentAgentKey];
+  if (!docs || !docs[i]) return;
+  docs[i].status = 'ready';
+  renderDocTable(currentAgentKey);
+  showSuccessToast('Document reprocessed successfully');
+}
+
+/* ================================================================
+   DOCUMENT VIEWER
+================================================================ */
+function openDocViewer(i) {
+  const docs = AGENT_DOCS[currentAgentKey];
+  if (!docs || !docs[i]) return;
+  const d = docs[i];
+  currentViewerDocIndex = i;
+  const ext   = (d.ext || 'file').toUpperCase();
+  const color = EXT_COLORS[d.ext] || '#6e6e6e';
+
+  document.getElementById('doc-viewer-title').textContent = d.name;
+  document.getElementById('dv-file-icon').textContent    = ext;
+  document.getElementById('dv-file-icon').style.background = color;
+  document.getElementById('dv-file-name').textContent    = d.name;
+  document.getElementById('dv-file-size').textContent    = d.size;
+  document.getElementById('dv-file-date').textContent    = 'Uploaded ' + d.uploaded;
+
+  const statusEl = document.getElementById('dv-file-status');
+  if (d.status === 'failed') {
+    statusEl.innerHTML = `<span class="doc-status-pill doc-status-failed"><span class="doc-status-dot"></span>Processing failed</span>`;
+    document.getElementById('dv-btn-retry').style.display = '';
+  } else {
+    statusEl.innerHTML = `<span class="doc-status-pill doc-status-ready"><span class="doc-status-dot"></span>Ready for AI agents</span>`;
+    document.getElementById('dv-btn-retry').style.display = 'none';
+  }
+  openModal('modal-doc-viewer');
+}
+
+function closeDocViewer() { closeModal('modal-doc-viewer'); }
+
+function retryDocFromViewer() {
+  retryDoc(currentViewerDocIndex);
+  closeDocViewer();
+}
+
+/* Legacy stub — kept so any existing callers still work */
+function removeDoc(btn) {
+  const tr = btn.closest('tr');
+  if (tr) {
+    tr.style.transition = 'opacity .15s';
+    tr.style.opacity = '0';
+    setTimeout(() => {
+      const idx = parseInt(btn.getAttribute('data-idx'));
+      if (!isNaN(idx)) removeDocByIndex(idx);
+    }, 150);
+  }
+}
 function updateDocCount() {
-  const n = document.querySelectorAll('#doc-list .doc-row').length;
+  const docs = AGENT_DOCS[currentAgentKey] || [];
   const el = document.getElementById('docs-count-label');
-  if (el) el.textContent = `Uploaded Documents (${n})`;
+  if (el) el.textContent = `Documents (${docs.length})`;
 }
 
 function esc(s) {
@@ -5987,12 +6720,17 @@ let bulkStep = 1;
 let bulkTimers = [];
 
 const BULK_AGENTS = [
-  { key:'wo-assistant', initials:'TR', color:'#3d5afe', name:'Troubleshoot', type:'Equipment & process diagnostics', status:'Deployed'  },
+  { key:'wo-assistant', initials:'TS', color:'#3d5afe', name:'Troubleshooting', type:'Equipment & process diagnostics', status:'Deployed'  },
   { key:'safety',       initials:'AS', color:'#2e7d32', name:'Assist',        type:'Work order & SOP assistant',       status:'Deployed'  },
-  { key:'parts',        initials:'RC', color:'#f59e0b', name:'RCA',            type:'Root cause analysis engine',       status:'Deployed'  },
-  { key:'eq-health',    initials:'IR', color:'#1565c0', name:'Issue Report',   type:'Structured issue reporting',       status:'Deployed'  },
-  { key:'scheduler',    initials:'WC', color:'#7c3aed', name:'WO Create',      type:'Work order automation',            status:'Available' },
-  { key:'calibration',  initials:'CT', color:'#0891b2', name:'Calibration Tracker', type:'SAP PM + QM integration',    status:'Available' },
+  { key:'parts',        initials:'5W', color:'#f59e0b', name:'5 Whys (RCA)',   type:'Root cause analysis engine',       status:'Deployed'  },
+  { key:'eq-health',    initials:'DT', color:'#1565c0', name:'Detect',         type:'Anomaly detection & alerting',     status:'Deployed'  },
+  { key:'scheduler',    initials:'PL', color:'#7c3aed', name:'Plan',           type:'Work order planning & scheduling', status:'Available' },
+  { key:'calibration',  initials:'RE', color:'#0891b2', name:'Recommendation', type:'AI-driven maintenance recommendations', status:'Available' },
+  { key:'autofill',       initials:'AF', color:'#059669', name:'Autofill',          type:'Form & work order auto-population',        status:'Deployed'  },
+  { key:'permits-autofill', initials:'PA', color:'#0f766e', name:'Permits Autofill', type:'Permit field auto-population',              status:'Available' },
+  { key:'ppe',            initials:'PP', color:'#9333ea', name:'PPE',               type:'PPE compliance & verification',             status:'Deployed'  },
+  { key:'shift-report',   initials:'FM', color:'#7c3aed', name:'Forms',             type:'Digital form generation',                   status:'Coming Soon'},
+  { key:'energy',         initials:'DW', color:'#d97706', name:'DWI',               type:'Digital Work Instructions',                 status:'Coming Soon'},
 ];
 
 /* ----------------------------------------------------------------
@@ -6274,18 +7012,36 @@ function bulkStartProcessing() {
 
 function bulkFinishProcessing() {
   const agentCount = bulkSelectedAgents.size;
+  let failedCount  = 0;
+
+  // Add each file to the selected agents' document tables
+  // Simulate ~15% failure rate for realism
+  bulkFiles.forEach((f, fi) => {
+    const ext    = f.name.split('.').pop().toLowerCase();
+    const sz     = f.size ? (f.size > 1048576
+      ? (f.size / 1048576).toFixed(1) + ' MB'
+      : Math.round(f.size / 1024) + ' KB') : '—';
+    const status = (fi % 7 === 6) ? 'failed' : 'ready'; // ~1 in 7 fails
+    if (status === 'failed') failedCount++;
+
+    bulkSelectedAgents.forEach(agentKey => {
+      addDocToList({ name: f.name, ext, sz }, agentKey, status);
+    });
+  });
+
+  const readyCount = bulkFiles.length - failedCount;
   document.getElementById('success-sub').textContent =
     `${bulkFiles.length} document${bulkFiles.length!==1?'s':''} processed and assigned to ${agentCount} agent${agentCount!==1?'s':''}.`;
   const stats = document.getElementById('success-stats');
   stats.innerHTML = `
-    <div class="sstat"><div class="sstat-val">${bulkFiles.length}</div><div class="sstat-lbl">Files uploaded</div></div>
-    <div class="sstat"><div class="sstat-val">${agentCount}</div><div class="sstat-lbl">Agents updated</div></div>
-    <div class="sstat"><div class="sstat-val">${bulkFiles.length * agentCount}</div><div class="sstat-lbl">Assignments</div></div>`;
-  // Mark step 5 circle as done
+    <div class="sstat"><div class="sstat-val">${readyCount}</div><div class="sstat-lbl">Ready for AI agents</div></div>
+    <div class="sstat"><div class="sstat-val">${failedCount > 0 ? failedCount : '—'}</div><div class="sstat-lbl" style="${failedCount > 0 ? 'color:#c61919' : ''}">Processing failed</div></div>
+    <div class="sstat"><div class="sstat-val">${agentCount}</div><div class="sstat-lbl">Agents updated</div></div>`;
+
   const bsb5 = document.getElementById('bsb-5');
   if (bsb5) { bsb5.classList.remove('active'); bsb5.classList.add('done'); }
   bulkSetStep(5);
-  showSuccessToast(`${bulkFiles.length} file${bulkFiles.length!==1?'s':''} uploaded successfully`);
+  showSuccessToast(`${readyCount} file${readyCount!==1?'s':''} ready · ${failedCount} failed`);
 }
 
 function bulkRetry() {
@@ -6298,23 +7054,19 @@ function bulkRetry() {
 ================================================================ */
 // startUpload / cancelUpload / finishUpload removed — handled by bulk processing flow
 
-function addDocToList(info) {
-  const list  = document.getElementById('doc-list');
-  if (!list) return;
+function addDocToList(info, agentKey, status) {
+  const key  = agentKey || currentAgentKey;
   const today = new Date();
   const date  = today.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-  const div   = document.createElement('div');
-  div.className = 'doc-row new-entry';
-  div.setAttribute('role','listitem');
-  div.innerHTML = `
-    <div class="doc-type-badge">${esc(info.ext.toUpperCase())}</div>
-    <div class="doc-info">
-      <div class="doc-name">${esc(info.name)}</div>
-      <div class="doc-meta">${esc(info.sz)} · Uploaded ${date}</div>
-    </div>
-    <button class="btn-remove" onclick="removeDoc(this)" aria-label="Remove ${esc(info.name)}">Remove</button>`;
-  list.insertBefore(div, list.firstChild);
-  updateDocCount();
+  if (!AGENT_DOCS[key]) AGENT_DOCS[key] = [];
+  AGENT_DOCS[key].unshift({
+    name: info.name,
+    ext:  info.ext || info.name.split('.').pop().toLowerCase(),
+    size: info.sz || info.size || '—',
+    uploaded: date,
+    status: status || 'ready'
+  });
+  if (key === currentAgentKey) renderDocTable(currentAgentKey);
 }
 
 /* ================================================================
@@ -6349,7 +7101,7 @@ const KPI_IMPACT_DATA = {
     accentColor: '#3d5afe',
     agents: [
       {
-        initials: 'TR', color: '#3d5afe', name: 'Troubleshoot', pct: 45,
+        initials: 'TS', color: '#3d5afe', name: 'Troubleshooting', pct: 45,
         insight: 'Reduced diagnosis time by guiding technicians through root cause analysis step-by-step.'
       },
       {
@@ -6357,7 +7109,7 @@ const KPI_IMPACT_DATA = {
         insight: 'Provided step-by-step SOPs to speed up repair execution in the field.'
       },
       {
-        initials: 'IR', color: '#1565c0', name: 'Issue Report', pct: 20,
+        initials: 'DT', color: '#1565c0', name: 'Detect', pct: 20,
         insight: 'Captured structured failure data so similar issues resolve faster next time.'
       }
     ]
@@ -6370,7 +7122,7 @@ const KPI_IMPACT_DATA = {
     accentColor: '#2e7d32',
     agents: [
       {
-        initials: 'TR', color: '#3d5afe', name: 'Troubleshoot', pct: 42,
+        initials: 'TS', color: '#3d5afe', name: 'Troubleshooting', pct: 42,
         insight: 'Improved fix accuracy by guiding technicians to the right solution before they start.'
       },
       {
@@ -6378,7 +7130,7 @@ const KPI_IMPACT_DATA = {
         insight: 'Ensured the correct procedure was followed on the first attempt, reducing rework.'
       },
       {
-        initials: 'IR', color: '#1565c0', name: 'Issue Report', pct: 20,
+        initials: 'DT', color: '#1565c0', name: 'Detect', pct: 20,
         insight: 'Surfaced historical issue patterns to help avoid repeat mistakes.'
       }
     ]
@@ -6391,7 +7143,7 @@ const KPI_IMPACT_DATA = {
     accentColor: '#f59e0b',
     agents: [
       {
-        initials: 'WC', color: '#7c3aed', name: 'WO Create', pct: 38,
+        initials: 'PL', color: '#7c3aed', name: 'Plan', pct: 38,
         insight: 'Reduced time spent manually creating work orders — from minutes to seconds.'
       },
       {
@@ -6399,7 +7151,7 @@ const KPI_IMPACT_DATA = {
         insight: 'Reduced dependency on supervisors for guidance, keeping technicians moving.'
       },
       {
-        initials: 'TR', color: '#3d5afe', name: 'Troubleshoot', pct: 28,
+        initials: 'TS', color: '#3d5afe', name: 'Troubleshooting', pct: 28,
         insight: 'Enabled faster task completion through rapid, in-context diagnosis support.'
       }
     ]
@@ -6412,15 +7164,15 @@ const KPI_IMPACT_DATA = {
     accentColor: '#c62828',
     agents: [
       {
-        initials: 'TR', color: '#3d5afe', name: 'Troubleshoot', pct: 44,
+        initials: 'TS', color: '#3d5afe', name: 'Troubleshooting', pct: 44,
         insight: 'Flagged early failure signals so teams could act before equipment went down.'
       },
       {
-        initials: 'RC', color: '#f59e0b', name: 'RCA', pct: 36,
+        initials: '5W', color: '#f59e0b', name: '5 Whys (RCA)', pct: 36,
         insight: 'Identified root causes that eliminated recurring failures causing repeat downtime.'
       },
       {
-        initials: 'WC', color: '#7c3aed', name: 'WO Create', pct: 20,
+        initials: 'PL', color: '#7c3aed', name: 'Plan', pct: 20,
         insight: 'Automated work order creation accelerated maintenance response time.'
       }
     ]
@@ -6510,12 +7262,61 @@ function selectDateFilter(label, el) {
   document.getElementById('btn-date-filter').setAttribute('aria-expanded','false');
 }
 
+/* ================================================================
+   OVERVIEW TAB — TIMELINE FILTER
+================================================================ */
+// Metric data keyed by period for each agent
+const OV_METRICS = {
+  'Last 7 days':    { sessions: '34',   success: '94.2%', response: '2.6s' },
+  'Last 30 days':   { sessions: '218',  success: '93.1%', response: '2.8s' },
+  'Last 3 months':  { sessions: '621',  success: '92.5%', response: '2.9s' },
+  'Last 6 months':  { sessions: '1,180',success: '91.8%', response: '3.0s' },
+  'Last 12 months': { sessions: '1,876',success: '92.3%', response: '2.9s' },
+  'All time':       { sessions: '2,103',success: '93.1%', response: '2.8s' }
+};
+
+function toggleOvFilter(e) {
+  e.stopPropagation();
+  const btn = document.getElementById('btn-ov-filter');
+  const dd  = document.getElementById('ov-filter-dropdown');
+  const open = dd.classList.toggle('open');
+  btn.setAttribute('aria-expanded', String(open));
+  // close dashboard filter if open
+  const dashDd = document.getElementById('date-filter-dropdown');
+  if (dashDd) { dashDd.classList.remove('open'); document.getElementById('btn-date-filter').setAttribute('aria-expanded','false'); }
+  document.getElementById('more-dropdown-main').classList.remove('open');
+  document.getElementById('btn-more-main').setAttribute('aria-expanded','false');
+}
+
+function selectOvFilter(label, el) {
+  // Update button label and dropdown active state
+  document.getElementById('ov-filter-label').textContent = label;
+  document.getElementById('ov-filter-period-label').textContent = 'Showing data for: ' + label;
+  document.querySelectorAll('#ov-filter-dropdown .dfd-item').forEach(b => {
+    b.classList.toggle('active', b === el);
+    b.setAttribute('aria-selected', String(b === el));
+  });
+  document.getElementById('ov-filter-dropdown').classList.remove('open');
+  document.getElementById('btn-ov-filter').setAttribute('aria-expanded','false');
+
+  // Update metric values & sub-labels
+  const m = OV_METRICS[label] || OV_METRICS['Last 30 days'];
+  document.getElementById('ov-sessions').textContent    = m.sessions;
+  document.getElementById('ov-sessions-sub').textContent = label;
+  document.getElementById('ov-success').textContent     = m.success;
+  document.getElementById('ov-success-sub').textContent = label;
+  document.getElementById('ov-response').textContent    = m.response;
+  document.getElementById('ov-response-sub').textContent = label;
+}
+
 // Close all dropdowns when clicking outside
 document.addEventListener('click', function() {
   document.getElementById('more-dropdown-main').classList.remove('open');
   document.getElementById('btn-more-main').setAttribute('aria-expanded','false');
   const dd = document.getElementById('date-filter-dropdown');
   if (dd) { dd.classList.remove('open'); document.getElementById('btn-date-filter').setAttribute('aria-expanded','false'); }
+  const ovDd = document.getElementById('ov-filter-dropdown');
+  if (ovDd) { ovDd.classList.remove('open'); document.getElementById('btn-ov-filter').setAttribute('aria-expanded','false'); }
 });
 
 /* ================================================================
@@ -6527,7 +7328,11 @@ document.addEventListener('keydown', e => {
   document.getElementById('btn-more-main').setAttribute('aria-expanded','false');
   const dfd = document.getElementById('date-filter-dropdown');
   if (dfd) { dfd.classList.remove('open'); document.getElementById('btn-date-filter').setAttribute('aria-expanded','false'); }
+  const ovDd = document.getElementById('ov-filter-dropdown');
+  if (ovDd) { ovDd.classList.remove('open'); document.getElementById('btn-ov-filter').setAttribute('aria-expanded','false'); }
   if (document.getElementById('modal-bulk-upload').classList.contains('open')) closeUploadModal();
+  if (document.getElementById('modal-doc-viewer').classList.contains('open')) closeDocViewer();
+  if (document.getElementById('modal-add-skill').classList.contains('open')) closeAddSkillModal();
   if (document.getElementById('kpi-drawer-overlay').classList.contains('open')) closeKpiDrilldown();
 });
 
@@ -6536,6 +7341,12 @@ document.addEventListener('keydown', e => {
 ================================================================ */
 document.getElementById('modal-bulk-upload').addEventListener('click', function(e) {
   if (e.target === this) closeUploadModal();
+});
+document.getElementById('modal-doc-viewer').addEventListener('click', function(e) {
+  if (e.target === this) closeDocViewer();
+});
+document.getElementById('modal-add-skill').addEventListener('click', function(e) {
+  if (e.target === this) closeAddSkillModal();
 });
 
 /* ================================================================
@@ -6551,7 +7362,94 @@ document.querySelectorAll('.nav-item, .nav-sub-item, .settings-nav-item').forEac
    INIT: render agent list on load
 ================================================================ */
 renderAgentList('wo-assistant');
+renderSkills('wo-assistant');
+renderDocTable('wo-assistant');
 </script>
+
+<!-- ============================================================
+     DOCUMENT VIEWER MODAL
+============================================================ -->
+<div id="modal-doc-viewer" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="doc-viewer-title">
+  <div class="doc-viewer-modal">
+    <div class="modal-header">
+      <h2 class="modal-title" id="doc-viewer-title">Document Preview</h2>
+      <button class="modal-close" onclick="closeDocViewer()" aria-label="Close">✕</button>
+    </div>
+    <div class="doc-viewer-preview">
+      <div class="doc-viewer-file-icon" id="dv-file-icon" style="background:#3d5afe">PDF</div>
+      <div class="doc-viewer-name" id="dv-file-name">filename.pdf</div>
+      <div class="doc-viewer-info-row">
+        <span id="dv-file-size">—</span>
+        <span class="doc-viewer-info-sep">·</span>
+        <span id="dv-file-date">—</span>
+        <span class="doc-viewer-info-sep">·</span>
+        <span id="dv-file-status"></span>
+      </div>
+      <div style="margin-top:8px;font-family:var(--font-inter);font-size:12px;color:#b0b0b0;text-align:center">
+        Preview not available in this environment.<br>Use Download to open the full document.
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeDocViewer()">Close</button>
+      <button class="btn-primary" id="dv-btn-retry" style="display:none" onclick="retryDocFromViewer()">↺ Retry Processing</button>
+      <button class="btn-primary" onclick="showInfoToast('Download started');closeDocViewer()">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true" style="margin-right:4px">
+          <path d="M6.5 1.5v7M6.5 8.5L4 6M6.5 8.5L9 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M1.5 10.5v.3c0 .39.31.7.7.7h8.6c.39 0 .7-.31.7-.7v-.3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        Download
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     ADD SKILL MODAL
+============================================================ -->
+<div id="modal-add-skill" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="add-skill-title">
+  <div class="add-skill-modal">
+    <div class="modal-header">
+      <h2 class="modal-title" id="add-skill-title">Add New Skill</h2>
+      <button class="modal-close" onclick="closeAddSkillModal()" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" style="padding:20px 24px">
+      <div class="skill-field-group">
+        <div class="skill-field-label">Skill Name <span style="color:var(--error)">*</span></div>
+        <input id="skill-name-input" class="skill-input" type="text" placeholder="e.g. Fault Diagnosis"
+               onkeydown="if(event.key==='Enter')addSkill()" maxlength="80" autocomplete="off">
+      </div>
+      <div class="skill-row-2">
+        <div class="skill-field-group">
+          <div class="skill-field-label">Category</div>
+          <select id="skill-cat-select" class="skill-select">
+            <option value="Diagnostic">Diagnostic</option>
+            <option value="Integration">Integration</option>
+            <option value="Analysis">Analysis</option>
+            <option value="Automation">Automation</option>
+            <option value="Reporting">Reporting</option>
+            <option value="Safety">Safety</option>
+          </select>
+        </div>
+        <div class="skill-field-group">
+          <div class="skill-field-label">Proficiency Level</div>
+          <select id="skill-level-select" class="skill-select">
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate" selected>Intermediate</option>
+            <option value="Expert">Expert</option>
+          </select>
+        </div>
+      </div>
+      <div class="skill-field-group" style="margin-bottom:0">
+        <div class="skill-field-label">Description <span style="color:var(--text-gray);font-weight:400">(optional)</span></div>
+        <textarea id="skill-desc-input" class="skill-textarea" placeholder="What does this skill enable the agent to do?"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeAddSkillModal()">Cancel</button>
+      <button class="btn-primary" onclick="addSkill()">Add Skill</button>
+    </div>
+  </div>
+</div>
 
 <!-- ============================================================
      DEPLOY AGENT MODAL (4-step wizard)
@@ -6627,7 +7525,7 @@ renderAgentList('wo-assistant');
         <div style="font-family:var(--font-inter);font-size:12px;color:var(--text-gray);margin-bottom:14px">Review agent configuration before proceeding.</div>
 
         <div class="cfg-table">
-          <div class="cfg-table-row"><span class="cfg-table-key">Agent</span><span class="cfg-table-val" id="cfg2-agent">Troubleshoot</span></div>
+          <div class="cfg-table-row"><span class="cfg-table-key">Agent</span><span class="cfg-table-val" id="cfg2-agent">Troubleshooting</span></div>
           <div class="cfg-table-row"><span class="cfg-table-key">Version</span><span class="cfg-table-val">v1.3 → v1.4</span></div>
           <div class="cfg-table-row"><span class="cfg-table-key">Model</span><span class="cfg-table-val">Claude Sonnet 4.6</span></div>
           <div class="cfg-table-row"><span class="cfg-table-key">Temperature</span><span class="cfg-table-val">0.3 (focused)</span></div>
@@ -6695,7 +7593,7 @@ renderAgentList('wo-assistant');
         <div class="cfg-table" style="margin-bottom:14px">
           <div class="cfg-table-row"><span class="cfg-table-key">Environment</span><span class="cfg-table-val" id="confirm-env" style="color:var(--link);font-weight:700">Production</span></div>
           <div class="cfg-table-row"><span class="cfg-table-key">Version</span><span class="cfg-table-val" id="confirm-version">v1.4-production</span></div>
-          <div class="cfg-table-row"><span class="cfg-table-key">Agent</span><span class="cfg-table-val" id="confirm-agent">Troubleshoot</span></div>
+          <div class="cfg-table-row"><span class="cfg-table-key">Agent</span><span class="cfg-table-val" id="confirm-agent">Troubleshooting</span></div>
           <div class="cfg-table-row"><span class="cfg-table-key">Model</span><span class="cfg-table-val">Claude Sonnet 4.6</span></div>
           <div class="cfg-table-row"><span class="cfg-table-key">Logging</span><span class="cfg-table-val val-success" id="confirm-logging">Enabled</span></div>
           <div class="cfg-table-row"><span class="cfg-table-key">Monitoring</span><span class="cfg-table-val val-success" id="confirm-monitoring">Enabled</span></div>
@@ -6738,7 +7636,7 @@ renderAgentList('wo-assistant');
     </div>
     <div class="deploying-agent-row">
       <div>
-        <div class="deploying-agent-name" id="deploying-agent-name">Troubleshoot</div>
+        <div class="deploying-agent-name" id="deploying-agent-name">Troubleshooting</div>
         <div class="deploying-agent-meta" id="deploying-agent-meta">v1.4-production · Production</div>
       </div>
     </div>
@@ -6963,7 +7861,7 @@ function selectEnvCard(env) {
 }
 
 function updateConfirmSummary() {
-  const agentName = document.getElementById('detail-name') ? document.getElementById('detail-name').textContent : 'Troubleshoot';
+  const agentName = document.getElementById('detail-name') ? document.getElementById('detail-name').textContent : 'Troubleshooting';
   const version   = (document.getElementById('deploy-version-tag') || {}).value || 'v1.4-production';
   const envLabel  = deployEnv === 'production' ? 'Production' : deployEnv === 'staging' ? 'Staging / Test' : 'Draft';
   document.getElementById('confirm-env').textContent     = envLabel;

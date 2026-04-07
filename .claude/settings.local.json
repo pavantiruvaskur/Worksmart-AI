@@ -17,7 +17,11 @@
       "Bash(python3 -c \" import json, sys lines = sys.stdin.readlines\\(\\) for line in lines[-5:]: try: d = json.loads\\(line.strip\\(\\)\\) print\\(json.dumps\\(d, indent=2\\)[:500]\\) print\\('==='\\) except: pass \")",
       "Bash(curl -s http://127.0.0.1:3845/mcp)",
       "Bash(curl -sv http://127.0.0.1:3845/sse)",
-      "Bash(node --input-type=module)"
+      "Bash(node --input-type=module)",
+      "Read(//opt/homebrew/**)",
+      "Bash(brew list:*)",
+      "Bash(pyenv versions:*)",
+      "Bash(brew install:*)"
     ]
   }
 }
