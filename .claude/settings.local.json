@@ -21,7 +21,14 @@
       "Read(//opt/homebrew/**)",
       "Bash(brew list:*)",
       "Bash(pyenv versions:*)",
-      "Bash(brew install:*)"
+      "Bash(brew install:*)",
+      "Bash(ls:*)",
+      "Bash(curl -L -o /Users/igdclt0585/Desktop/Claude_Project/CWP/vendor/highcharts-more.js \"https://cdn.jsdelivr.net/npm/highcharts@12/highcharts-more.js\")",
+      "Bash(curl -L -o /Users/igdclt0585/Desktop/Claude_Project/CWP/vendor/solid-gauge.js \"https://cdn.jsdelivr.net/npm/highcharts@12/modules/solid-gauge.js\")",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git remote:*)"
     ]
   }
 }
