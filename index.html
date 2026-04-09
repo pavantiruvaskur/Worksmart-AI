@@ -9454,6 +9454,7 @@ function initPerfCharts() {
         '<button class="widget-action-btn" aria-label="More options" aria-haspopup="true" aria-expanded="false" title="More" onclick="toggleWidgetMenu(\'more-' + uid + '\',event)">' + moreSVG + '</button>' +
         '<div class="widget-action-menu" id="more-' + uid + '">' +
           '<button class="wam-item" onclick="widgetViewDetails(event)">View Details</button>' +
+          '<button class="wam-item" onclick="widgetEmail(event)">Email</button>' +
         '</div>' +
       '</div>';
     header.appendChild(wrap);
@@ -9485,6 +9486,16 @@ function widgetViewDetails(e) {
   var t = document.createElement('div');
   t.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#1b1b3c;color:#fff;padding:9px 18px;border-radius:8px;font-size:12px;font-family:var(--font-inter);z-index:9999;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,.2);';
   t.textContent = 'Opening widget details\u2026';
+  document.body.appendChild(t);
+  setTimeout(function() { document.body.removeChild(t); }, 2400);
+}
+
+function widgetEmail(e) {
+  e.stopPropagation();
+  document.querySelectorAll('.widget-action-menu.open').forEach(function(m) { m.classList.remove('open'); });
+  var t = document.createElement('div');
+  t.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#1b1b3c;color:#fff;padding:9px 18px;border-radius:8px;font-size:12px;font-family:var(--font-inter);z-index:9999;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,.2);';
+  t.textContent = 'Preparing email\u2026';
   document.body.appendChild(t);
   setTimeout(function() { document.body.removeChild(t); }, 2400);
 }
